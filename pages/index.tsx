@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   // callAPI();
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen w-screen bg-[#020202]">
+    <div className="flex flex-col justify-center items-center h-screen w-screen bg-[#020202] overflow-x-clip overflow-y-clip">
       <h1 className="text-[64px] ">🏗</h1>
 
       {/* {data?.data !== undefined && (
