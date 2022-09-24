@@ -1,6 +1,9 @@
 {
-  "routes": [
-    { "handle": "filesystem" },
-     { "src": "/mun", "status": 308, "headers": { "Location": "https://docs.google.com/document/d/1V9T2-nPqIIQida0uGtADep-6WnxHMIY2NGMWwUUAPdc/edit?usp=sharing" } },
+  "redirects": [
+    {
+      "source": "/mun",
+      "destination": "https://docs.google.com/document/d/1V9T2-nPqIIQida0uGtADep-6WnxHMIY2NGMWwUUAPdc/edit",
+      "permanent": true
+    }
   ]
 }
