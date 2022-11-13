@@ -4,35 +4,75 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
-  // const [data, setData] = useState();
-  // const callAPI = async () => {
-  //   try {
-  //     const res = await fetch(
-  //       `https://api.lanyard.rest/v1/users/532914066558156800`
-  //     );
-  //     setData(await res.json());
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const [data, setData] = useState();
+  let testData;
+  const [widthState, setWidthState] = useState(0);
+  const callAPI = async () => {
+    try {
+      const res = await fetch(
+        `https://api.lanyard.rest/v1/users/532914066558156800`
+      );
 
-  // callAPI();
+      setData(await res.json());
+
+      setWidthState(
+        (Math.floor((Date.now() - data.data.spotify.timestamps.start) / 1000) /
+          Math.floor(
+            (data.data.spotify.timestamps.end -
+              data.data.spotify.timestamps.start) /
+              1000
+          )) *
+          100
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  callAPI();
 
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen bg-[#020202] overflow-x-clip overflow-y-clip">
-      <h1 className="text-[64px] ">🏗</h1>
+      <div className="absolute left-[24px] top-[36px] ">
+        <h1 className="font-krona text-white text-[24px]">akshith.io</h1>
+      </div>
 
-      {/* {data?.data !== undefined && (
-        <div>
-          <h1 className="text-[64px] text-white">{data.data.spotify.song}</h1>
-          <Image
-            src={data.data.spotify.album_art_url}
-            alt=""
-            width={320}
-            height={320}
-          />
+      {data?.data.spotify !== undefined && (
+        <div className="absolute bottom-[16px] left-[16px]">
+          {data?.data.spotify !== null && (
+            <div className="flex">
+              <div>
+                <Image
+                  className="rounded-[5px]"
+                  src={data?.data.spotify.album_art_url}
+                  alt=""
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <div className="ml-[8px] mt-[4px]">
+                <h1 className="text-[12px] text-white font-krona">
+                  {data?.data.spotify.song}
+                </h1>
+                <h1 className="text-[8px] text-white font-krona">
+                  {data?.data.spotify.artist.replaceAll(";", ",")}
+                </h1>
+
+                <div className="text-white w-[125px] h-[3px] bg-[#a9a9a9] rounded-[13px] relative mt-[4px]">
+                  <div
+                    className="text-white h-[2px] bg-[#FFFFFF] rounded-[13px] relative"
+                    style={{ width: widthState + "%" }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )} */}
+      )}
+
+      <h1 className="text-[64px] ">🏗</h1>
+      <h1 className="text-white font-krona text-[20px] mt-[-12px]">
+        WIP™️</h1>
 
       <div className="absolute bottom-5">
         <a
