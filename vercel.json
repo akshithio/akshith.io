@@ -1,5 +1,9 @@
 {
   "redirects": [
-  
+    {
+      "source": "/cgc",
+      "destination": "https://akshithio.github.io/casgc/",
+      "permanent": true
+    }
   ]
 }
