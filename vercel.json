@@ -11,7 +11,7 @@
       "permanent": true
     },
      {
-      "source": "/how-are-you",
+      "source": "/bio",
       "destination": "https://www.youtube.com/watch?v=FZUcpVmEHuk",
       "permanent": true
     }
