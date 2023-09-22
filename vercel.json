@@ -11,6 +11,11 @@
       "permanent": true
     },
      {
+      "source": "/meet",
+      "destination": "https://calendly.com/akshithio",
+      "permanent": true
+    },
+     {
       "source": "/bio",
       "destination": "https://www.youtube.com/watch?v=FZUcpVmEHuk",
       "permanent": true
