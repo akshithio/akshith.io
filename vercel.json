@@ -19,6 +19,13 @@
       "source": "/bio",
       "destination": "https://www.youtube.com/watch?v=FZUcpVmEHuk",
       "permanent": true
+    },
+    {
+      "source": "/mun",
+      "destination": "https://dull-bike-5ee.notion.site/Experience-Sheet-f126b5bd791e4e448d21b708d3bdb383?pvs=4",
+      "permanent": true
     }
+
+
   ]
 }
