@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "framer-motion": "^9.0.1",
+    "gpu.js": "^2.16.0",
     "next": "^14.0.4",
     "react": "18.1.0",
     "react-dom": "18.1.0",
