@@ -10,6 +10,8 @@ import React, { useRef, useCallback, useEffect, useState } from "react";
 
 //@ts-ignore
 
+// this is a test to see if this works as expected
+
 // Use the x and y coordinates to generate
 // rgb colors in a deterministic manner
 const generateColor = (x, y) => {
