@@ -1,6 +1,6 @@
-let latestLocation = null; // Store only the latest location
+let latestLocation: any = null; // Store only the latest location
 
-export async function POST(req) {
+export async function POST(req: any) {
   const { city, timezone } = await req.json();
 
   // Validate the input
