@@ -1,140 +1,345 @@
-import { erika, bitscript, passenger, duplet } from "../helpers/fonts";
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { duplet, erika, passenger } from "../helpers/fonts";
 
 export default function HomePage() {
-  return (
-    // pick right / left dark mode / light mode v1
-    <body className="flex h-screen w-screen overflow-x-hidden overflow-y-hidden">
-      <div className="relative h-screen w-1/2 bg-[#111]">
-        <h1
-          className={`${erika.className} absolute bottom-4 right-8 z-[1] w-1/2 select-none text-[9px] leading-[34px] text-[#eee]`}
-        >
-          I looked you in the eye. “The meaning of life, the reason I made this
-          whole universe, is for you to mature.” “You mean mankind? You want us
-          to mature?” “No, just you. I made this whole universe for you. With
-          each new life you grow and mature and become a larger and greater
-          intellect.” “Just me? What about everyone else?” “There is no one
-          else,” I said. “In this universe, there’s just you and me.” You stared
-          blankly at me. “But all the people on earth…” “All you. Different
-          incarnations of you.” “Wait. I’m everyone!?” “Now you’re getting it,”
-          I said, with a congratulatory slap on the back. “I’m every human being
-          who ever lived?” “Or who will ever live, yes.” “I’m Abraham Lincoln?”
-          “And you’re John Wilkes Booth, too,” I added. “I’m Hitler?” You said,
-          appalled. “And you’re the millions he killed.” “I’m Jesus?” “And
-          you’re everyone who followed him.” You fell silent. “Every time you
-          victimized someone,” I said, “you were victimizing yourself. Every act
-          of kindness you’ve done, you’ve done to yourself. Every happy and sad
-          moment ever experienced by any human was, or will be, experienced by
-          you.” You thought for a long time. “Why?” You asked me. “Why do all
-          this?” “Because someday, you will become like me. Because that’s what
-          you are. You’re one of my kind. You’re my child.” “Whoa,” you said,
-          incredulous. “You mean I’m a god?” “No. Not yet. You’re a fetus.
-          You’re still growing. Once you’ve lived every human life throughout
-          all time, you will have grown enough to be born.” “So the whole
-          universe,” you said, “it’s just…” “An egg.” I answered. “Now it’s time
-          for you to move on to your next life.” And I sent you on your way.
-        </h1>
-        <div className="absolute left-0 top-0 z-[100] select-none">
-          <Image src="/image.png" width={564} height={778} alt="" />
-        </div>
+  const [theme, setTheme] = useState("light");
+  const [dataRaw, setDataRaw] = useState<Record<string, any>>();
+  const [data, setData] = useState("not listening to anything");
 
-        <div className="absolute bottom-[50%] right-[2.5%] flex items-center justify-center">
-          <h1 className={`${passenger.className} mr-8 text-[24px] text-[#eee]`}>
-            nox.{" "}
-            <span className={`${duplet.className} text-[12px] text-[#eee]`}>
-              (dark)
-            </span>
-          </h1>
+  // Load theme from localStorage on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  // Toggle theme and save to localStorage
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
+
+  const callAPI = async () => {
+    try {
+      const res = await fetch(
+        `https://api.lanyard.rest/v1/users/532914066558156800`,
+      );
+
+      setDataRaw(await res.json());
+
+      if (
+        dataRaw?.data.spotify !== undefined &&
+        dataRaw?.data.spotify !== null
+      ) {
+        const song = dataRaw?.data.spotify.song.toLowerCase();
+        let songName;
+
+        if (song.includes("(")) {
+          songName = song.substring(0, song.indexOf("("));
+        } else {
+          songName = song;
+        }
+
+        let artist =
+          dataRaw?.data.spotify.artist
+            .replaceAll(";", ",")
+            .toLowerCase()
+            .split(",")
+            .slice(0, 2)
+            .join(",") || "";
+
+        setData(songName + "1xe34" + artist);
+      } else {
+        setData("not listening to anything");
+      }
+    } catch (err) {}
+  };
+
+  callAPI();
+
+  return (
+    <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
+      <div
+        className={`${erika.className} flex gap-x-[48px] text-[18px] text-[#111] underline dark:text-[#eee]`}
+      >
+        <a href="/">
+          <h1>home</h1>
+        </a>
+
+        <a href="/writing">
+          <h1>writing</h1>
+        </a>
+
+        <a href="/work">
+          <h1>work</h1>
+        </a>
+
+        <a href="/reach-out">
+          <h1>reach out!</h1>
+        </a>
+      </div>
+
+      <div className="absolute bottom-0 right-0 mb-[8px] mr-[8px] ">
+        <h1 className={`${duplet.className} text-[16px] text-[#999]`}>
+          (🤖) akshith’s calendar tells me he’s up to no good
+        </h1>
+      </div>
+
+      <div className="absolute right-0 top-[10%]">
+        <Image
+          src="/image.png"
+          width={377}
+          height={812.5}
+          alt="background image of drawn gears"
+        />
+      </div>
+
+      <div className="absolute bottom-[8px] left-[8px] flex items-center justify-center gap-x-[12px]">
+        <a href="https://github.com/akshithio" target="_blank">
+          {" "}
           <svg
-            width="23"
-            height="60"
-            viewBox="0 0 23 60"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M22.1649 24.3774C22.1649 29.2545 22.0887 35.1984 21.3266 41.2186C20.7932 45.4861 19.7263 49.6011 17.5164 53.4113C16.6781 54.783 15.6875 56.0785 14.4682 57.1454C11.2676 59.8887 7.22875 59.8125 4.10436 56.9168C2.73267 55.6975 1.89442 54.1734 1.28478 52.4969C0.522738 50.2869 0.217919 47.9246 0.141715 45.5623C-0.239308 36.7987 0.141715 28.0352 1.36099 19.3479C1.81822 16.2235 2.42785 13.0991 3.49472 10.0509C4.25677 7.84096 5.24743 5.78343 6.61911 3.95452C7.99079 2.12561 9.7435 0.753922 12.0296 0.144285C13.0965 -0.0843288 14.0872 -0.0081241 15.154 0.144285C18.0498 0.677718 19.7263 2.35422 20.6408 5.09759C21.479 7.38373 21.86 9.74607 21.9362 12.1084C22.0124 15.8424 22.0887 19.5765 22.1649 24.3774ZM17.4402 19.8813C17.5164 19.5765 17.5164 19.3479 17.5164 19.1192C17.5164 16.7569 17.5926 14.3946 17.5164 12.1084C17.4402 10.5843 17.2116 9.06023 16.9829 7.61234C16.8305 6.77409 16.3733 5.93584 16.0685 5.09759C15.4588 3.57349 13.2489 3.11627 11.9534 4.18313C11.039 4.94518 10.2769 5.78343 9.8197 6.85029C9.13386 8.29818 8.52423 9.82228 8.067 11.3464C6.92393 15.69 6.3905 20.1099 6.00947 24.5298C5.62845 29.1783 5.39984 33.9029 5.24743 38.6276C5.09502 41.9806 5.17122 45.4098 5.62845 48.7629C5.78086 49.9821 6.08568 51.2014 6.61911 52.3445C8.1432 55.2402 10.658 55.5451 12.7155 53.0303C13.6299 51.9634 14.1634 50.7442 14.6206 49.4487C15.4588 47.1626 15.9161 44.8002 16.2209 42.4379C16.3733 41.4472 16.4495 40.4565 16.5257 39.4659C15.4588 38.9325 14.392 38.5514 13.4775 38.018C10.3531 36.2653 8.90525 33.5981 9.21007 29.9403C9.36248 27.7304 9.97211 25.6728 11.1152 23.6915C12.5631 21.4054 14.392 19.8051 17.4402 19.8813Z"
-              fill="#EEEEEE"
-            />
+            <g clip-path="url(#clip0_997_198)">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.00019 0.333374C6.10101 0.334359 4.2641 1.00701 2.81792 2.23106C1.37175 3.4551 0.410612 5.15071 0.106373 7.01471C-0.197866 8.8787 0.174628 10.7895 1.15726 12.4055C2.13989 14.0215 3.66857 15.2372 5.46996 15.8354C5.86738 15.9091 6.01707 15.6628 6.01707 15.4534C6.01707 15.2439 6.00912 14.6367 6.00647 13.9729C3.78094 14.4536 3.31067 13.0337 3.31067 13.0337C2.94769 12.1117 2.4231 11.8693 2.4231 11.8693C1.69715 11.3767 2.47742 11.3859 2.47742 11.3859C3.28153 11.4425 3.70411 12.2065 3.70411 12.2065C4.41681 13.4223 5.57594 13.0706 6.03164 12.8651C6.10318 12.3501 6.31116 11.9997 6.54034 11.8008C4.76256 11.6006 2.8947 10.9183 2.8947 7.87032C2.88368 7.07985 3.17869 6.31541 3.71868 5.73516C3.63655 5.53495 3.36233 4.7262 3.79684 3.62766C3.79684 3.62766 4.46848 3.41428 5.99721 4.443C7.30845 4.08646 8.69192 4.08646 10.0032 4.443C11.5306 3.41428 12.2009 3.62766 12.2009 3.62766C12.6367 4.72356 12.3625 5.53231 12.2804 5.73516C12.8221 6.3155 13.1177 7.08127 13.1057 7.87296C13.1057 10.9275 11.2338 11.6006 9.4534 11.7969C9.73954 12.0445 9.99522 12.5279 9.99522 13.2708C9.99522 14.3351 9.98594 15.1913 9.98594 15.4534C9.98594 15.6654 10.1303 15.9131 10.5357 15.8354C12.3373 15.2371 13.8661 14.0212 14.8488 12.4049C15.8314 10.7887 16.2037 8.87757 15.8991 7.01341C15.5945 5.14924 14.6329 3.45361 13.1862 2.22978C11.7396 1.00594 9.90224 0.333735 8.00283 0.333374H8.00019Z"
+                fill="#999999"
+              />
+              <path
+                d="M3.02963 11.7547C3.01241 11.7942 2.94883 11.806 2.89716 11.7784C2.8455 11.7507 2.80708 11.6993 2.82563 11.6585C2.84418 11.6177 2.90644 11.6071 2.9581 11.6348C3.00977 11.6625 3.04951 11.7152 3.02963 11.7547Z"
+                fill="#999999"
+              />
+              <path
+                d="M3.3542 12.1143C3.32677 12.128 3.29538 12.1319 3.26542 12.1252C3.23545 12.1184 3.20877 12.1015 3.18994 12.0774C3.13828 12.0221 3.12767 11.9457 3.16741 11.9115C3.20715 11.8772 3.2787 11.893 3.33036 11.9483C3.38202 12.0037 3.39395 12.0801 3.3542 12.1143Z"
+                fill="#999999"
+              />
+              <path
+                d="M3.66949 12.5714C3.62047 12.6056 3.53701 12.5714 3.49064 12.5029C3.47782 12.4906 3.46763 12.4758 3.46066 12.4595C3.4537 12.4433 3.4501 12.4257 3.4501 12.408C3.4501 12.3903 3.4537 12.3728 3.46066 12.3565C3.46763 12.3402 3.47782 12.3255 3.49064 12.3132C3.53966 12.2803 3.62312 12.3132 3.66949 12.3804C3.71585 12.4475 3.71718 12.5371 3.66949 12.5714Z"
+                fill="#999999"
+              />
+              <path
+                d="M4.09737 13.0139C4.05365 13.0626 3.9649 13.0494 3.89204 12.9836C3.81918 12.9177 3.80195 12.8281 3.84567 12.7807C3.88939 12.7333 3.97814 12.7465 4.05365 12.811C4.12916 12.8756 4.14373 12.9665 4.09737 13.0139Z"
+                fill="#999999"
+              />
+              <path
+                d="M4.69744 13.272C4.67757 13.3339 4.58749 13.3616 4.4974 13.3352C4.40732 13.3089 4.34771 13.2351 4.36493 13.1719C4.38215 13.1087 4.47356 13.0797 4.56497 13.1087C4.65637 13.1377 4.71466 13.2075 4.69744 13.272Z"
+                fill="#999999"
+              />
+              <path
+                d="M5.35189 13.3169C5.35189 13.3814 5.27771 13.4367 5.18233 13.438C5.08695 13.4394 5.00879 13.3867 5.00879 13.3221C5.00879 13.2576 5.08297 13.2023 5.17835 13.201C5.27373 13.1996 5.35189 13.251 5.35189 13.3169Z"
+                fill="#999999"
+              />
+              <path
+                d="M5.96127 13.2154C5.9732 13.28 5.90696 13.3472 5.81158 13.363C5.7162 13.3788 5.63274 13.3406 5.62082 13.2774C5.6089 13.2141 5.67778 13.1456 5.77051 13.1285C5.86324 13.1114 5.94935 13.1509 5.96127 13.2154Z"
+                fill="#999999"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_997_198">
+                <rect width="16" height="16" fill="white" />
+              </clipPath>
+            </defs>
           </svg>
-        </div>
-      </div>
-      <div className="relative h-screen w-1/2 bg-[#eee]">
-        <h1
-          className={`${erika.className} absolute right-4 top-4 z-[100] m-8 w-[45%] select-none text-right text-[9px] leading-[34px] text-[#111]`}
-        >
-          Shush… Sometimes the player read lines of code on a screen. Decoded
-          them into words; decoded words into meaning; decoded meaning into
-          feelings, emotions, theories, ideas, and the player started to breath
-          faster and deeper and realised it was alive, it was alive, those
-          thousand deaths had not been real, the player was alive <br />
-          You. You. You are alive. <br />
-          and sometimes the player believed the universe had spoken to it
-          through the sunlight that came through the shuffling leaves of the
-          summer trees
-          <br />
-          and sometimes the player believed the universe had spoken to it
-          through the light that fell from the crisp night sky of winter, where
-          a fleck of light in the corner of the player’s eye might be a star a
-          million times as massive as the sun, boiling its planets to plasma in
-          order to be visible for a moment to the player, walking home at the
-          far side of the universe, suddenly smelling food, almost at the
-          familiar door, about to dream again
-          <br />
-          and sometimes the player believed the universe had spoken to it
-          through the zeros and ones, through the electricity of the world,
-          through the scrolling words on a screen at the end of a dream
-          <br />
-          and the universe said I love you <br /> and the universe said you have
-          played the game well <br />
-          and the universe said everything you need is within you <br />
-          and the universe said you are stronger than you know <br />
-          and the universe said you are the daylight <br /> and the universe
-          said you are the night <br /> and the universe said the darkness you
-          fight is within you <br />
-          and the universe said the light you seek is within you <br /> and the
-          universe said you are not alone
-          <br />
-          and the universe said you are not separate from every other thing{" "}
-          <br />
-          and the universe said you are the universe tasting itself, talking to
-          itself, reading its own code <br /> and the universe said I love you
-          because you are love. <br />
-          And the game was over and the player woke up from the dream. And the
-          player began a new dream. And the player dreamed again, dreamed
-          better. And the player was the universe. And the player was love.
-          <br />
-          You are the player.
-          <br />
-          Wake up.
-        </h1>
-        <div className="absolute bottom-[50%] left-[2.5%] flex items-center justify-center">
-          <div>
+        </a>
+
+        <a href="https://x.com/akshithio" target="_blank">
+          <div className="mt-[2px]">
             <svg
-              width="23"
-              height="60"
-              viewBox="0 0 23 60"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g clip-path="url(#clip0_997_197)">
+                <path
+                  d="M5.03344 14.5C11.0697 14.5 14.3722 9.4978 14.3722 5.16124C14.3722 5.02062 14.3691 4.87687 14.3628 4.73624C15.0052 4.27164 15.5597 3.69617 16 3.03687C15.4017 3.30307 14.7664 3.47692 14.1159 3.55249C14.8009 3.14194 15.3137 2.49698 15.5594 1.73718C14.915 2.11904 14.2104 2.38841 13.4756 2.53374C12.9806 2.00771 12.326 1.65941 11.6131 1.5427C10.9003 1.42599 10.1688 1.54737 9.53183 1.88806C8.89486 2.22876 8.38787 2.7698 8.08923 3.42754C7.7906 4.08528 7.71695 4.82308 7.87969 5.52687C6.575 5.46139 5.29862 5.12247 4.13332 4.53207C2.96802 3.94166 1.9398 3.11296 1.11531 2.09968C0.696266 2.82216 0.568038 3.6771 0.756687 4.49073C0.945337 5.30436 1.43671 6.01563 2.13094 6.47999C1.60975 6.46344 1.09998 6.32312 0.64375 6.07062V6.11124C0.643283 6.86943 0.905399 7.60439 1.38554 8.19118C1.86568 8.77797 2.53422 9.18037 3.2775 9.32999C2.7947 9.46209 2.28799 9.48133 1.79656 9.38624C2.0063 10.0383 2.41438 10.6086 2.96385 11.0176C3.51331 11.4265 4.17675 11.6537 4.86156 11.6675C3.69895 12.5807 2.26278 13.0761 0.784375 13.0737C0.522191 13.0733 0.260266 13.0573 0 13.0256C1.5019 13.9892 3.24902 14.5009 5.03344 14.5Z"
+                  fill="#999999"
+                />
+              </g>
+              <defs>
+                <clipPath id="clip0_997_197">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+        </a>
+      </div>
+
+      <div className="absolute right-[16px] top-[16px]">
+        <button onClick={toggleTheme}>
+          {theme === "dark" && (
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M-6.24816e-05 24.3774C-6.24816e-05 29.2545 0.0761425 35.1984 0.838189 41.2186C1.37162 45.4861 2.43849 49.6011 4.64842 53.4113C5.48667 54.783 6.47733 56.0785 7.69661 57.1454C10.8972 59.8887 14.936 59.8125 18.0604 56.9168C19.4321 55.6975 20.2704 54.1734 20.88 52.4969C21.6421 50.2869 21.9469 47.9246 22.0231 45.5623C22.4041 36.7987 22.0231 28.0352 20.8038 19.3479C20.3466 16.2235 19.7369 13.0991 18.6701 10.0509C17.908 7.84096 16.9174 5.78343 15.5457 3.95452C14.174 2.12561 12.4213 0.753922 10.1352 0.144285C9.06829 -0.0843288 8.07763 -0.0081241 7.01077 0.144285C4.11499 0.677718 2.43849 2.35422 1.52403 5.09759C0.685779 7.38373 0.304757 9.74607 0.228552 12.1084C0.152348 15.8424 0.0761422 19.5765 -6.24816e-05 24.3774ZM4.72463 19.8813C4.64842 19.5765 4.64842 19.3479 4.64842 19.1192C4.64842 16.7569 4.57222 14.3946 4.64842 12.1084C4.72463 10.5843 4.95324 9.06023 5.18185 7.61234C5.33426 6.77409 5.79149 5.93584 6.09631 5.09759C6.70595 3.57349 8.91588 3.11627 10.2114 4.18313C11.1258 4.94518 11.8879 5.78343 12.3451 6.85029C13.0309 8.29818 13.6406 9.82228 14.0978 11.3464C15.2409 15.69 15.7743 20.1099 16.1553 24.5298C16.5363 29.1783 16.765 33.9029 16.9174 38.6276C17.0698 41.9806 16.9936 45.4098 16.5363 48.7629C16.3839 49.9821 16.0791 51.2014 15.5457 52.3445C14.0216 55.2402 11.5068 55.5451 9.44931 53.0303C8.53486 51.9634 8.00143 50.7442 7.5442 49.4487C6.70595 47.1626 6.24872 44.8002 5.9439 42.4379C5.79149 41.4472 5.71529 40.4565 5.63908 39.4659C6.70595 38.9325 7.77281 38.5514 8.68727 38.018C11.8117 36.2653 13.2595 33.5981 12.9547 29.9403C12.8023 27.7304 12.1927 25.6728 11.0496 23.6915C9.60172 21.4054 7.77281 19.8051 4.72463 19.8813Z"
-                fill="#111111"
+                d="M8.00004 12.6667C10.5774 12.6667 12.6667 10.5774 12.6667 8.00004C12.6667 5.42271 10.5774 3.33337 8.00004 3.33337C5.42271 3.33337 3.33337 5.42271 3.33337 8.00004C3.33337 10.5774 5.42271 12.6667 8.00004 12.6667Z"
+                fill="#999999"
+              />
+              <path
+                d="M7.99996 15.3066C7.63329 15.3066 7.33329 15.0333 7.33329 14.6666V14.6133C7.33329 14.2466 7.63329 13.9466 7.99996 13.9466C8.36663 13.9466 8.66663 14.2466 8.66663 14.6133C8.66663 14.98 8.36663 15.3066 7.99996 15.3066ZM12.76 13.4266C12.5866 13.4266 12.42 13.36 12.2866 13.2333L12.2 13.1466C11.94 12.8866 11.94 12.4666 12.2 12.2066C12.46 11.9466 12.88 11.9466 13.14 12.2066L13.2266 12.2933C13.4866 12.5533 13.4866 12.9733 13.2266 13.2333C13.1 13.36 12.9333 13.4266 12.76 13.4266ZM3.23996 13.4266C3.06663 13.4266 2.89996 13.36 2.76663 13.2333C2.50663 12.9733 2.50663 12.5533 2.76663 12.2933L2.85329 12.2066C3.11329 11.9466 3.53329 11.9466 3.79329 12.2066C4.05329 12.4666 4.05329 12.8866 3.79329 13.1466L3.70663 13.2333C3.57996 13.36 3.40663 13.4266 3.23996 13.4266ZM14.6666 8.66663H14.6133C14.2466 8.66663 13.9466 8.36663 13.9466 7.99996C13.9466 7.63329 14.2466 7.33329 14.6133 7.33329C14.98 7.33329 15.3066 7.63329 15.3066 7.99996C15.3066 8.36663 15.0333 8.66663 14.6666 8.66663ZM1.38663 8.66663H1.33329C0.966626 8.66663 0.666626 8.36663 0.666626 7.99996C0.666626 7.63329 0.966626 7.33329 1.33329 7.33329C1.69996 7.33329 2.02663 7.63329 2.02663 7.99996C2.02663 8.36663 1.75329 8.66663 1.38663 8.66663ZM12.6733 3.99329C12.5 3.99329 12.3333 3.92663 12.2 3.79996C11.94 3.53996 11.94 3.11996 12.2 2.85996L12.2866 2.77329C12.5466 2.51329 12.9666 2.51329 13.2266 2.77329C13.4866 3.03329 13.4866 3.45329 13.2266 3.71329L13.14 3.79996C13.0133 3.92663 12.8466 3.99329 12.6733 3.99329ZM3.32663 3.99329C3.15329 3.99329 2.98663 3.92663 2.85329 3.79996L2.76663 3.70663C2.50663 3.44663 2.50663 3.02663 2.76663 2.76663C3.02663 2.50663 3.44663 2.50663 3.70663 2.76663L3.79329 2.85329C4.05329 3.11329 4.05329 3.53329 3.79329 3.79329C3.66663 3.92663 3.49329 3.99329 3.32663 3.99329ZM7.99996 2.02663C7.63329 2.02663 7.33329 1.75329 7.33329 1.38663V1.33329C7.33329 0.966626 7.63329 0.666626 7.99996 0.666626C8.36663 0.666626 8.66663 0.966626 8.66663 1.33329C8.66663 1.69996 8.36663 2.02663 7.99996 2.02663Z"
+                fill="#999999"
               />
             </svg>
-          </div>
+          )}
 
-          <h1 className={`${passenger.className} ml-8 text-[24px] text-[#111]`}>
-            lumos.
-            <span
-              className={`${duplet.className} ml-2 text-[12px] font-semibold text-[#111]`}
+          {theme !== "dark" && (
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              (light)
-            </span>
-          </h1>
+              <path
+                d="M14.3533 10.62C14.2466 10.44 13.9466 10.16 13.1999 10.2933C12.7866 10.3667 12.3666 10.4 11.9466 10.38C10.3933 10.3133 8.98659 9.6 8.00659 8.5C7.13993 7.53333 6.60659 6.27333 6.59993 4.91333C6.59993 4.15333 6.74659 3.42 7.04659 2.72666C7.33993 2.05333 7.13326 1.7 6.98659 1.55333C6.83326 1.4 6.47326 1.18666 5.76659 1.48C3.03993 2.62666 1.35326 5.36 1.55326 8.28666C1.75326 11.04 3.68659 13.3933 6.24659 14.28C6.85993 14.4933 7.50659 14.62 8.17326 14.6467C8.27993 14.6533 8.38659 14.66 8.49326 14.66C10.7266 14.66 12.8199 13.6067 14.1399 11.8133C14.5866 11.1933 14.4666 10.8 14.3533 10.62Z"
+                fill="#999999"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      <div className="flex w-screen">
+        <div>
+          <div>
+            <div className="ml-[136px] mt-[58px]">
+              <h1
+                className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
+              >
+                ☀️ i'm in west lafayette and it's 17:24
+              </h1>
+
+              <div className="mt-[12px] flex">
+                <div
+                  className={`${theme === "dark" ? "text-white" : "text-black"}`}
+                >
+                  <svg
+                    width="32"
+                    height="35"
+                    viewBox="0 0 32 35"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12.3138 15.4526C12.3138 18.1621 12.2715 21.4643 11.8481 24.8089C11.5518 27.1797 10.9591 29.4658 9.73132 31.5826C9.26562 32.3447 8.71526 33.0644 8.03788 33.6571C6.25977 35.1812 4.01597 35.1388 2.2802 33.5301C1.51815 32.8527 1.05246 32.006 0.713769 31.0746C0.29041 29.8468 0.121066 28.5344 0.0787304 27.222C-0.132949 22.3534 0.0787304 17.4847 0.756105 12.6584C1.01012 10.9227 1.34881 9.1869 1.94151 7.49347C2.36487 6.26572 2.91524 5.12265 3.67728 4.10659C4.43933 3.09053 5.41306 2.32848 6.68313 1.9898C7.27584 1.86279 7.8262 1.90512 8.41891 1.9898C10.0277 2.28615 10.9591 3.21754 11.4671 4.74163C11.9328 6.01171 12.1445 7.32412 12.1868 8.63653C12.2291 10.711 12.2715 12.7855 12.3138 15.4526ZM9.68898 12.9548C9.73132 12.7855 9.73132 12.6584 9.73132 12.5314C9.73132 11.219 9.77365 9.90661 9.73132 8.63653C9.68898 7.78982 9.56198 6.9431 9.43497 6.13872C9.3503 5.67302 9.09628 5.20733 8.92694 4.74163C8.58825 3.89491 7.36051 3.6409 6.6408 4.2336C6.13277 4.65696 5.70941 5.12265 5.45539 5.71536C5.07437 6.51974 4.73568 7.36646 4.48167 8.21318C3.84663 10.6263 3.55028 13.0818 3.3386 15.5373C3.12692 18.1198 2.99991 20.7446 2.91524 23.3694C2.83056 25.2322 2.8729 27.1373 3.12692 29.0001C3.21159 29.6775 3.38093 30.3549 3.67728 30.9899C4.524 32.5987 5.92109 32.768 7.06416 31.3709C7.57219 30.7782 7.86854 30.1008 8.12255 29.3811C8.58825 28.1111 8.84226 26.7986 9.01161 25.4862C9.09628 24.9359 9.13862 24.3855 9.18095 23.8351C8.58825 23.5388 7.99555 23.3271 7.48751 23.0307C5.75174 22.057 4.94736 20.5753 5.1167 18.5431C5.20138 17.3154 5.54006 16.1723 6.1751 15.0716C6.97948 13.8015 7.99555 12.9125 9.68898 12.9548Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M19.2992 23.2424C19.4685 19.9826 19.7226 16.6804 20.1459 13.4628C20.4423 11.346 20.6963 9.27157 21.1196 7.19711C21.3313 5.96936 21.7547 4.78396 22.178 3.59855C22.3897 2.92118 22.7707 2.28614 23.1518 1.69344C23.4481 1.27008 23.8291 0.93139 24.2525 0.592703C24.6759 0.21168 25.2262 0 25.7766 0C27.5547 0.0846718 29.2481 0.381023 30.2219 2.15913C30.7299 3.09052 31.1532 4.02191 31.3649 5.03797C31.7883 6.94309 32 8.89054 32 10.838C32 15.2833 31.6189 19.6862 30.4759 24.0045C30.0102 25.8249 29.3328 27.5183 28.2321 29.0001C27.6817 29.7198 27.089 30.3549 26.3693 30.9052C23.6175 32.9373 20.1882 31.0322 19.5532 28.3227C19.4262 27.6877 19.3415 27.0527 19.3415 26.4176C19.2992 25.4016 19.2992 24.3008 19.2992 23.2424ZM29.3328 12.4891C29.3751 12.1504 29.4175 11.9387 29.3751 11.727C29.2481 9.99128 29.2058 8.2555 28.9941 6.51973C28.9094 5.67301 28.6131 4.82629 28.3591 4.02191C28.1051 3.21753 27.47 2.66716 26.708 2.32848C26.2846 2.1168 25.9036 2.20147 25.6072 2.54015C25.3956 2.79417 25.1839 3.09052 25.0145 3.38687C24.7605 3.97958 24.5065 4.57228 24.3372 5.16498C23.8291 6.81608 23.5751 8.55186 23.3211 10.2876C22.8131 13.8862 22.3897 17.5271 22.178 21.168C22.051 23.0307 22.0087 24.9359 21.924 26.7986C21.924 27.222 21.9664 27.6877 22.0934 28.0687C22.5167 29.3811 23.9138 29.8045 25.0145 28.9578C25.2686 28.7884 25.5226 28.5344 25.6919 28.2804C26.0729 27.7724 26.454 27.2643 26.7503 26.6716C27.47 25.3169 27.851 23.8351 28.1897 22.311C28.2321 22.184 28.1897 22.057 28.1897 21.8877C27.851 21.803 27.5547 21.7183 27.216 21.6337C26.5386 21.4643 25.9036 21.168 25.3532 20.7023C24.2948 19.8555 23.7868 18.7548 23.9138 17.4001C24.0408 15.749 24.8029 14.3519 26.0729 13.2511C26.835 12.6161 27.6817 12.2774 28.6978 12.3621C28.9094 12.4891 29.0788 12.4891 29.3328 12.4891Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+
+                <h1
+                  className={`ml-[12px] ${passenger.className} text-[24px] text-[#111] dark:text-[#eee]`}
+                >
+                  Akshith Garapati
+                </h1>
+              </div>
+
+              <div
+                className={`${duplet.className} mt-[26px] w-[332px] text-[16px] leading-6 text-[#111] dark:text-[#eee]`}
+              >
+                <p>
+                  I’m a comp sci (‘28) freshman{" "}
+                  <span className="font-semibold">@purdue</span> that’s
+                  currently tryna understand{" "}
+                  <span className="italic">
+                    why people work the way they do
+                  </span>
+                  .
+                </p>
+
+                <br />
+
+                <p>
+                  If you’ve ever even written down a simple todo list or are the
+                  kind of person that has 30 zapier integrations to hold your
+                  life together,{" "}
+                  <span className="underline">i want to talk to you</span>.
+                </p>
+
+                <br />
+
+                <p>
+                  I use this place to write in an effort to teach myself,
+                  experiment with new pieces of web tech, train my design
+                  muscles or overcome the twitter character limit.
+                </p>
+
+                <br />
+
+                <p>
+                  I've previously built organizational systems for teams{" "}
+                  <span className="font-semibold">@dimension</span>, goofed
+                  around with some crazy smart ppl{" "}
+                  <span className="font-semibold">@tks</span> and got my hs to
+                  agree to hosting an irl hackathon on campus with ~85 ppl
+                  participating over the weekend.
+                </p>
+
+                <br />
+
+                <p>
+                  I get my hands dirty quite often with projects that’ve
+                  included building a gen-z focused newsletter, a crypto
+                  UPI-like payment system, a socialized traveling web app, a
+                  linktree replacement amongst many other random chronicles in
+                  between.
+                </p>
+              </div>
+
+              {data !== "not listening to anything" && (
+                <div className="mt-[24px] w-full">
+                  <h1
+                    className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
+                  >
+                    listening to{" "}
+                    {data.substring(
+                      0,
+                      data.indexOf("1xe34"),
+                    )}{"  "}
+                    •{"  "}
+                    {data.substring(
+                      data.indexOf("1xe34") + 5,
+                    )}
+                  </h1>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="absolute bottom-0 right-0">
-          <Image src="/slice-1.png" width={424} height={563} alt="" />
+
+        <div className="relative ml-[20%] grid w-[40%] place-items-center">
+          <h1 className="text-[200px]">🍃</h1>
+          <h1
+            className={`${erika.className} absolute bottom-[20%] left-[15%] w-[145px] leading-6 text-[#111] dark:text-[#eee]`}
+          >
+            note: work in progress because i’m not really sure what to put here?
+            got ideas?{" "}
+            <a href="/reach-out">
+              {" "}
+              <span className="underline">pls tell me 🙏</span>{" "}
+            </a>
+          </h1>
         </div>
       </div>
     </body>
