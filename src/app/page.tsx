@@ -8,7 +8,7 @@ export default function HomePage() {
   const [theme, setTheme] = useState("light");
   const [dataRaw, setDataRaw] = useState<Record<string, any>>();
   const [data, setData] = useState("not listening to anything");
-  // const [dataRaw2, setDataRaw2] = useState<Record<string, any>>();
+  const [dataRaw2, setDataRaw2] = useState<Record<string, any>>();
 
   // Load theme from localStorage on mount
   useEffect(() => {
@@ -31,11 +31,6 @@ export default function HomePage() {
         `https://api.lanyard.rest/v1/users/532914066558156800`,
       );
 
-      const res2 = await fetch(
-        `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
-      );
-
-      // setDataRaw2(await res2.json());
       setDataRaw(await res.json());
 
       if (
@@ -66,7 +61,20 @@ export default function HomePage() {
     } catch (err) {}
   };
 
+  const callAPI2 = async () => {
+    try {
+      const res2 = await fetch(
+        `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
+      );
+
+      setDataRaw2(await res2.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   callAPI();
+  callAPI2();
 
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
@@ -226,13 +234,13 @@ export default function HomePage() {
         <div>
           <div>
             <div className="ml-[136px] mt-[58px]">
-              {/* {dataRaw2?.city !== undefined && dataRaw2?.city !== null && (
+              {dataRaw2?.city !== undefined && dataRaw2?.city !== null && (
                 <h1
                   className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
                 >
                   ☀️ i'm in {dataRaw2.city.toLowerCase()} and it's 17:24
                 </h1>
-              )} */}
+              )}
 
               <div className="mt-[12px] flex">
                 <div
