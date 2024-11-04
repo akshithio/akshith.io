@@ -5,6 +5,21 @@
 await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  async headers() {
+    return [
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value:
+              "interest-cohort=(),private-state-token-redemption=(),private-state-token-issuance=(),browsing-topics=()",
+          },
+        ],
+      },
+    ];
+  },
+};
 
 export default config;

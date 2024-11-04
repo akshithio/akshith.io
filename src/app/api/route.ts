@@ -15,12 +15,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Create the success response and store it
-    lastResponse = NextResponse.json(
+    const response = NextResponse.json(
       { message: "Location saved successfully", city, timezone },
       { status: 201 },
     );
+    lastResponse = response;
 
-    return lastResponse;
+    // Return the response
+    return response;
   } catch (error) {
     console.error("Error in POST:", error);
     return NextResponse.json(
@@ -30,7 +32,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   if (lastResponse) {
     return lastResponse;
   } else {
