@@ -225,6 +225,7 @@ export default function HomePage() {
       <div className="flex w-screen">
         <div>
           <div>
+            <div className="ml-[136px] mt-[58px]">
               {dataRaw2?.city !== undefined && dataRaw2?.city !== null && (
                 <h1
                   className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
