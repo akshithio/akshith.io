@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-let lastResponse: Response | null = null;
+let lastLocation: { city: string; timezone: string } | null = null;
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,15 +14,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create the success response and store it
-    const response = NextResponse.json(
+    // Save the location data
+    lastLocation = { city, timezone };
+
+    // Return the success response
+    return NextResponse.json(
       { message: "Location saved successfully", city, timezone },
       { status: 201 },
     );
-    lastResponse = response;
-
-    // Return the response
-    return response;
   } catch (error) {
     console.error("Error in POST:", error);
     return NextResponse.json(
@@ -33,8 +32,11 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  if (lastResponse) {
-    return lastResponse;
+  if (lastLocation) {
+    return NextResponse.json(
+      { message: "Location retrieved successfully", ...lastLocation },
+      { status: 200 },
+    );
   } else {
     return NextResponse.json({ message: "No location found" }, { status: 404 });
   }
