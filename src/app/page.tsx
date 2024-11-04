@@ -8,6 +8,7 @@ export default function HomePage() {
   const [theme, setTheme] = useState("light");
   const [dataRaw, setDataRaw] = useState<Record<string, any>>();
   const [data, setData] = useState("not listening to anything");
+  const [dataRaw2, setDataRaw2] = useState<Record<string, any>>();
 
   // Load theme from localStorage on mount
   useEffect(() => {
@@ -30,6 +31,11 @@ export default function HomePage() {
         `https://api.lanyard.rest/v1/users/532914066558156800`,
       );
 
+      const res2 = await fetch(
+        `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
+      );
+
+      setDataRaw2(await res2.json());
       setDataRaw(await res.json());
 
       if (
@@ -220,11 +226,13 @@ export default function HomePage() {
         <div>
           <div>
             <div className="ml-[136px] mt-[58px]">
-              <h1
-                className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
-              >
-                ☀️ i'm in west lafayette and it's 17:24
-              </h1>
+              {dataRaw2 !== undefined && (
+                <h1
+                  className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
+                >
+                  ☀️ i'm in {dataRaw2.city.toLowerCase()} and it's 17:24
+                </h1>
+              )}
 
               <div className="mt-[12px] flex">
                 <div
@@ -312,15 +320,9 @@ export default function HomePage() {
                   <h1
                     className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
                   >
-                    listening to{" "}
-                    {data.substring(
-                      0,
-                      data.indexOf("1xe34"),
-                    )}{"  "}
-                    •{"  "}
-                    {data.substring(
-                      data.indexOf("1xe34") + 5,
-                    )}
+                    listening to {data.substring(0, data.indexOf("1xe34"))}
+                    {"  "}•{"  "}
+                    {data.substring(data.indexOf("1xe34") + 5)}
                   </h1>
                 </div>
               )}
