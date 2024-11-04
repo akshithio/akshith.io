@@ -1,5 +1,3 @@
-let latestLocation: any = null; // Store only the latest location
-
 export async function POST(req: any) {
   const { city, timezone } = await req.json();
 
@@ -11,8 +9,10 @@ export async function POST(req: any) {
     );
   }
 
-  // Store the latest location
-  latestLocation = { city, timezone };
+  // Store the latest location in localStorage
+  const location = { city, timezone };
+  localStorage.setItem("latestLocation", JSON.stringify(location));
+
   return new Response(
     JSON.stringify({ message: "Location saved successfully", city, timezone }),
     { status: 201 },
@@ -20,9 +20,11 @@ export async function POST(req: any) {
 }
 
 export async function GET() {
-  // Handle GET request
-  if (latestLocation) {
-    return new Response(JSON.stringify(latestLocation), { status: 200 });
+  // Retrieve the latest location from localStorage
+  const storedLocation = localStorage.getItem("latestLocation");
+
+  if (storedLocation) {
+    return new Response(storedLocation, { status: 200 });
   } else {
     return new Response(JSON.stringify({ message: "No location found" }), {
       status: 404,
