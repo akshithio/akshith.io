@@ -6,15 +6,86 @@ import { duplet, erika, passenger } from "../helpers/fonts";
 
 export default function HomePage() {
   const [theme, setTheme] = useState("light");
-  const [dataRaw, setDataRaw] = useState<Record<string, any>>();
-  const [data, setData] = useState("not listening to anything");
-  const [dataRaw2, setDataRaw2] = useState<Record<string, any>>();
+  const [spotify, setSpotify] = useState("not listening to anything");
+  const [cityData, setCityData] = useState<{ city?: string }>();
+  const [lastFetchTime, setLastFetchTime] = useState(0);
 
   // Load theme from localStorage on mount
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
     document.documentElement.classList.toggle("dark", savedTheme === "dark");
+  }, []);
+
+  // Improved Spotify data fetching with debouncing
+  useEffect(() => {
+    const fetchSpotifyData = async () => {
+      const now = Date.now();
+      // Only fetch if more than 2 seconds have passed since last fetch
+      if (now - lastFetchTime < 2000) return;
+
+      try {
+        setLastFetchTime(now);
+        const res = await fetch(
+          `https://api.lanyard.rest/v1/users/532914066558156800`,
+          { cache: "no-store" }, // Disable caching to get fresh data
+        );
+        const data = await res.json();
+
+        if (data?.data?.spotify) {
+          const song = data.data.spotify.song.toLowerCase();
+          const songName = song.includes("(")
+            ? song.substring(0, song.indexOf("(")).trim()
+            : song;
+
+          const artist = data.data.spotify.artist
+            .replaceAll(";", ",")
+            .toLowerCase()
+            .split(",")
+            .slice(0, 2)
+            .join(",");
+
+          setSpotify(`${songName}1xe34${artist}`);
+        } else {
+          setSpotify("not listening to anything");
+        }
+      } catch (err) {
+        console.error("Error fetching Spotify data:", err);
+      }
+    };
+
+    // Initial fetch
+    fetchSpotifyData();
+
+    // Set up interval for periodic updates with shorter interval
+    const spotifyInterval = setInterval(fetchSpotifyData, 3000); // Update every 3 seconds
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(spotifyInterval);
+  }, [lastFetchTime]);
+
+  // Location data fetching
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const res = await fetch(
+          `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
+          { cache: "no-store" },
+        );
+        const data = await res.json();
+        setCityData(data);
+      } catch (err) {
+        console.error("Error fetching location data:", err);
+      }
+    };
+
+    // Initial fetch
+    fetchLocationData();
+
+    // Update location every minute
+    const locationInterval = setInterval(fetchLocationData, 60000);
+
+    return () => clearInterval(locationInterval);
   }, []);
 
   // Toggle theme and save to localStorage
@@ -24,57 +95,6 @@ export default function HomePage() {
     localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
-
-  const callAPI = async () => {
-    try {
-      const res = await fetch(
-        `https://api.lanyard.rest/v1/users/532914066558156800`,
-      );
-
-      setDataRaw(await res.json());
-
-      if (
-        dataRaw?.data.spotify !== undefined &&
-        dataRaw?.data.spotify !== null
-      ) {
-        const song = dataRaw?.data.spotify.song.toLowerCase();
-        let songName;
-
-        if (song.includes("(")) {
-          songName = song.substring(0, song.indexOf("("));
-        } else {
-          songName = song;
-        }
-
-        let artist =
-          dataRaw?.data.spotify.artist
-            .replaceAll(";", ",")
-            .toLowerCase()
-            .split(",")
-            .slice(0, 2)
-            .join(",") || "";
-
-        setData(songName + "1xe34" + artist);
-      } else {
-        setData("not listening to anything");
-      }
-    } catch (err) {}
-  };
-
-  const callAPI2 = async () => {
-    try {
-      const res2 = await fetch(
-        `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
-      );
-
-      setDataRaw2(await res2.json());
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  callAPI();
-  callAPI2();
 
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
@@ -234,11 +254,11 @@ export default function HomePage() {
         <div>
           <div>
             <div className="ml-[136px] mt-[108px]">
-              {dataRaw2?.city !== undefined && dataRaw2?.city !== null && (
+              {cityData?.city !== undefined && cityData?.city !== null && (
                 <h1
                   className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
                 >
-                  ☀️ i'm in {dataRaw2.city.toLowerCase()} and it's 17:24
+                  ☀️ i'm in {cityData.city.toLowerCase()} and it's 17:24
                 </h1>
               )}
 
@@ -323,14 +343,15 @@ export default function HomePage() {
                 </p>
               </div>
 
-              {data !== "not listening to anything" && (
+              {spotify !== "not listening to anything" && (
                 <div className="mt-[24px] w-full">
                   <h1
                     className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
                   >
-                    listening to {data.substring(0, data.indexOf("1xe34"))}
+                    listening to{" "}
+                    {spotify.substring(0, spotify.indexOf("1xe34"))}
                     {"  "}•{"  "}
-                    {data.substring(data.indexOf("1xe34") + 5)}
+                    {spotify.substring(spotify.indexOf("1xe34") + 5)}
                   </h1>
                 </div>
               )}
