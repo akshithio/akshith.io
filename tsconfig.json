@@ -37,6 +37,6 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts"
-  ],
+, "next.config.mjs", "src/mdx/post.mdx"  ],
   "exclude": ["node_modules"]
 }

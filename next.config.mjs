@@ -3,9 +3,11 @@
  * for Docker builds.
  */
 await import("./src/env.js");
+import createMDX from "@next/mdx";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   async headers() {
     return [
       {
@@ -22,4 +24,8 @@ const config = {
   },
 };
 
-export default config;
+const withMDX = createMDX({
+  // space to add markdown related config options
+});
+
+export default withMDX(config);
