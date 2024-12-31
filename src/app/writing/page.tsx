@@ -1,10 +1,12 @@
-"use client";
+"use client"
 
 import { useEffect, useState } from "react";
-import { duplet, erika, passenger } from "../../helpers/fonts";
+import { duplet, erika, passenger } from "~/helpers/fonts";
 
 export default function HomePage() {
   const [theme, setTheme] = useState("light");
+  const posts = {} // TODO: fix pls
+  // console.log(posts);
 
   // Load theme from localStorage on mount
   useEffect(() => {
