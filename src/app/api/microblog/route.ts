@@ -5,9 +5,7 @@ import { matter } from "vfile-matter";
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const searchString = searchParams.get("searchString");
-    const directory = "./src/mdx/";
+    const directory = "./src/content/";
 
     // Ensure the directory exists
     if (!fs.existsSync(directory)) {
@@ -24,27 +22,17 @@ export async function GET(request: NextRequest) {
         const filePath = `${directory}${file}`;
         const parsedFile = await read(filePath);
         matter(parsedFile, { strip: true });
+
+        // Extract just the matter data and flatten it
+        const matterData = parsedFile.data.matter || parsedFile.data;
+
         return {
-          matter: parsedFile.data, // Adjust based on actual front matter structure
-          contents: String(parsedFile),
+          ...matterData,
         };
       }),
     );
 
-    if (searchString === "all") {
-      return NextResponse.json(res);
-    }
-
-    const foundFile = res.find((file) => file.matter.url === searchString);
-
-    if (foundFile) {
-      return NextResponse.json(foundFile);
-    } else {
-      return NextResponse.json(
-        { error: "No such file found" },
-        { status: 404 },
-      );
-    }
+    return NextResponse.json(res);
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(
