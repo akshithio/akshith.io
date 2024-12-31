@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 import matter from "gray-matter";
-import { Metadata } from "next";
 import { compileMDX } from "next-mdx-remote/rsc";
 import path from "path";
 
@@ -8,11 +7,9 @@ import path from "path";
 interface FrontMatter {
   title: string;
   date: string;
-  description?: string;
-  // Add other front matter fields as needed
+  category: string;
 }
 
-// Correct params type - it's not a Promise
 interface PageProps {
   params: {
     slug: string;
@@ -21,12 +18,13 @@ interface PageProps {
 
 export async function generateMetadata({
   params,
-}: PageProps): Promise<Metadata> {
+}: PageProps): Promise<FrontMatter> {
   const { frontMatter } = await getPost(params.slug);
 
   return {
     title: frontMatter.title,
-    description: frontMatter.description,
+    date: frontMatter.date,
+    category: frontMatter.category,
   };
 }
 
@@ -56,7 +54,7 @@ export default async function Page({ params }: PageProps) {
     <article>
       <h1>{frontMatter.title}</h1>
       <time>{frontMatter.date}</time>
-      {frontMatter.description && <p>{frontMatter.description}</p>}
+      <p>{frontMatter.category}</p>
       {content}
     </article>
   );

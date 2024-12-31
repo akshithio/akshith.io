@@ -1,12 +1,45 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from "react";
 import { duplet, erika, passenger } from "~/helpers/fonts";
 
-export default function HomePage() {
+interface BlogPostMatter {
+  title: string;
+  category: string;
+  date: string;
+  url: string;
+  description?: string;
+}
+
+export default function WritingPage() {
+  const [posts, setPosts] = useState<BlogPostMatter[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/posts?searchString=all")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        return response.json();
+      })
+      .then((postsData) => {
+        // Sort posts by date
+        const sortedPosts = postsData.sort(
+          (a: BlogPostMatter, b: BlogPostMatter) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime(),
+        );
+        setPosts(sortedPosts);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err instanceof Error ? err.message : "Failed to load posts");
+        setIsLoading(false);
+      });
+  }, []);
+
   const [theme, setTheme] = useState("light");
-  const posts = {} // TODO: fix pls
-  // console.log(posts);
 
   // Load theme from localStorage on mount
   useEffect(() => {
@@ -219,7 +252,7 @@ export default function HomePage() {
           <div className="relative mt-[36px] flex items-center">
             <div className="justify-start">
               <h1 className={`${passenger.className} text-[24px] italic`}>
-                stuff.
+                writings.
               </h1>
             </div>
 
@@ -267,294 +300,45 @@ export default function HomePage() {
           </div>
 
           <div className="mt-[38px]">
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/a-top-level-understanding-of-chess-algorithms"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  a top level understanding of chess algorithms.
-                </a>
+            {posts.map((post) => (
+              <div>
+                <div className="mt-[4px] flex">
+                  <div className="relative mt-[4px] w-[800px]">
+                    <a
+                      href="/writing/a-top-level-understanding-of-chess-algorithms"
+                      className={`${duplet.className} text-[16px] font-semibold`}
+                    >
+                      {post.title.toLowerCase()}
+                    </a>
 
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <div className="absolute right-0 top-0 flex items-center justify-center ">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
+                          fill="#999999"
+                        />
+                        <path
+                          d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
+                          fill="#999999"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <h1
+                    className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
                   >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
+                    {post.category}
+                  </h1>
                 </div>
               </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                technical
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/on-competition-and-friendship"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  on competition & friendship.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                non-technical
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/all-you-will-ever-need-to-know-about-embeddings"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  all you will ever need to know about embeddings.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                deep-dive
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/building-a-calendar-scheduling-system-in-under-48-hrs"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  building a calendar scheduling system in under 48 hrs.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                experiments
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="understanding-ownership-and-referencing-in-rust-for-a-non-systems-programmer"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  understanding ownership & referencing in rust for a
-                  non-systems programmer.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                technical
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/the-cuda-gpu-system-for-the-uninitiated"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  the cuda gpu system for the uninitiated.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                technical
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/startups-and-venture-funding"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  startups & venture funding.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                non-technical
-              </h1>
-            </div>
-
-            <div className="mt-[4px] flex">
-              <div className="relative mt-[4px] w-[800px]">
-                <a
-                  href="/writing/accountability-as-a-service"
-                  className={`${duplet.className} text-[16px] font-semibold`}
-                >
-                  accountability as a service.
-                </a>
-
-                <div className="absolute right-0 top-0 flex items-center justify-center ">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M13.7139 4.95915C14.1832 5.46811 13.7171 6.16668 13.0248 6.16668H2.33325C1.78097 6.16668 1.33325 5.71896 1.33325 5.16668V4.28001C1.33325 2.65334 2.65325 1.33334 4.27992 1.33334H5.82659C6.91325 1.33334 7.25325 1.68668 7.68659 2.26668L8.61992 3.50668C8.82659 3.78001 8.85325 3.81334 9.23992 3.81334H11.0999C12.1329 3.81334 13.064 4.2543 13.7139 4.95915Z"
-                      fill="#999999"
-                    />
-                    <path
-                      d="M13.6566 7.16649C14.2076 7.16648 14.6548 7.61213 14.6566 8.1631L14.6666 11.1C14.6666 13.0667 13.0666 14.6667 11.0999 14.6667H4.89992C2.93325 14.6667 1.33325 13.0667 1.33325 11.1V8.16664C1.33325 7.61436 1.78096 7.16665 2.33324 7.16664L13.6566 7.16649Z"
-                      fill="#999999"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <h1
-                className={`${duplet.className} ml-[6px] mt-[-2px] text-[16px] font-semibold text-[#999]`}
-              >
-                non-technical
-              </h1>
-            </div>
+            ))}
           </div>
         </div>
       </div>
