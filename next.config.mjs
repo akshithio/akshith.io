@@ -1,31 +1,15 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
-await import("./src/env.js");
 import createMDX from "@next/mdx";
 
-/** @type {import("next").NextConfig} */
-const config = {
-  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-  async headers() {
-    return [
-      {
-        source: "/api/:path*",
-        headers: [
-          {
-            key: "Permissions-Policy",
-            value:
-              "interest-cohort=(),private-state-token-redemption=(),private-state-token-issuance=(),browsing-topics=()",
-          },
-        ],
-      },
-    ];
-  },
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Configure `pageExtensions` to include markdown and MDX files
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
+  // Optionally, add any other Next.js config below
 };
 
 const withMDX = createMDX({
-  // space to add markdown related config options
+  // Add markdown plugins here, as desired
 });
 
-export default withMDX(config);
+// Merge MDX config with Next.js config
+export default withMDX(nextConfig);

@@ -26,7 +26,8 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -36,7 +37,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
-, "next.config.mjs", "src/mdx/post.mdx"  ],
+    ".next/types/**/*.ts",
+    "next.config.mjs",
+    "src/mdx/post.mdx"
+  ],
   "exclude": ["node_modules"]
 }
