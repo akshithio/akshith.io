@@ -1,9 +1,6 @@
-import { duplet, erika, passenger } from "../../helpers/fonts";
+import { duplet, erika } from "@/helpers/fonts";
 
 export default function HomePage() {
-
-  
-
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px]">
       <div
@@ -121,9 +118,7 @@ export default function HomePage() {
         </svg>
       </div>
 
-      <div className="flex w-screen">
-
-      </div>
+      <div className="flex w-screen"></div>
     </body>
   );
 }
