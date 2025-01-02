@@ -9,6 +9,7 @@ interface BlogPostMatter {
   date: string;
   url: string;
   description?: string;
+  filename: string;
 }
 
 export default function WritingPage() {
@@ -305,7 +306,7 @@ export default function WritingPage() {
                 <div className="mt-[4px] flex">
                   <div className="relative mt-[4px] w-[800px]">
                     <a
-                      href="/writing/a-top-level-understanding-of-chess-algorithms"
+                      href={"/writing/" + post.filename}
                       className={`${duplet.className} text-[16px] font-semibold`}
                     >
                       {post.title.toLowerCase()}

@@ -9,20 +9,53 @@ human language and the true meanings associated with each word. Algorithms that 
 to capture the nuance of these words via numeric representations are referred to as word
 embedding algorithms.
 
-Image 1: A diagram describing vectors and stuff [creds]
+<ImageComp
+  src="/blog/image.png"
+  width={768}
+  height={362.5}
+  alt="test image"
+  creds="https://www.wikipedia.org/"
+  description="A diagram describing vectors and stuff"
+  num={1}
+/>
+
+<SideNoteComp
+  num={1}
+  description="This is technically true but there is an issue with something else because of some other issue so we just unfortunately have to deal with that. sort of? i don’t really know? "
+/>
 
 Alternatively, while a significant correlation score improvement is observed with a nearly
-1000-fold increase in dataset size [@1], the gains are not linearly proportional but exhibit
+1000-fold increase in dataset size <SideCitationComp>[@1]</SideCitationComp>, the gains are not linearly proportional but exhibit
 a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
 that fastText optimally utilises its available data, rather than GloVe disproportionately
 benefiting from larger dataset sizes.
 
-This is some **bold** and _italics_ text.
+<InTextCitationComp
+  type="book"
+  name="Attention is all you need"
+  authors="Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin"
+/>
 
-This is a list in markdown:
+Alternatively, while a significant correlation score improvement is observed with a nearly
+1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit
+a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
+that fastText optimally utilizes its available data, rather than GloVe disproportionately
+benefiting from larger dataset sizes.
 
-- One
-- Two
-- Three
+<QuoteComp
+  author="Akshith Garapati"
+  quote="A wiseman once said something about doing something but idk what he said so he was probably a wiseman for saying it i’m not really sure. A wiseman once said something about doing something but idk what he said so he was probably."
+/>
 
-Checkout my React component:
+Alternatively, while a significant correlation score improvement is observed with a nearly
+1000-fold increase in dataset size for GloVe.
+
+<ul>
+  <li>the gains are not linearly proportional but exhibit</li>
+  <li>
+    a more logarithmic trend. This suggests diminishing returns as dataset size
+    grows, indicating
+  </li>
+</ul>
+
+Alternatively, while a significant correlation score improvement is observed with a nearly 1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit.

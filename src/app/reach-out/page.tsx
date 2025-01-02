@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { duplet, erika, passenger } from "../../helpers/fonts";
+import { duplet, erika, passenger } from "@/helpers/fonts";
 
 export default function HomePage() {
   return (
@@ -32,7 +32,7 @@ export default function HomePage() {
 
       <div className="absolute right-0 top-[10%]">
         <Image
-          src="/image.png"
+          src="/site/image.png"
           width={377}
           height={812.5}
           alt="background image of drawn gears"

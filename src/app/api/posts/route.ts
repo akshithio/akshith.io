@@ -1,9 +1,9 @@
 import fs from "fs";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const directory = "./src/content/";
 
@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
 
         return {
           ...matterData,
+          filename: file.replace(".mdx", ""), // Add filename to the response object
         };
       }),
     );
