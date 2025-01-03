@@ -19,6 +19,7 @@ const serviceAccountSchema = z.object({
 });
 
 
+
 const serviceAccount = serviceAccountSchema.parse(
   JSON.parse(env.FIREBASE_SERVICE_ACCOUNT_KEY),
 );
