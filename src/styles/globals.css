@@ -13,3 +13,13 @@
     -ms-overflow-style: none; /* IE and Edge */
   }
 }
+
+html.dark {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light) {
+    color-scheme: dark;
+  }
+}

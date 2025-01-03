@@ -1,21 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { duplet, erika, passenger } from "@/helpers/fonts";
+import Navbar from "~/components/layout/Navbar";
 
 export default function HomePage() {
-  const [theme, setTheme] = useState("light");
   const [spotify, setSpotify] = useState("not listening to anything");
   const [cityData, setCityData] = useState<{ city?: string }>();
   const [lastFetchTime, setLastFetchTime] = useState(0);
-
-  // Load theme from localStorage on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
-  }, []);
 
   // Improved Spotify data fetching with debouncing
   useEffect(() => {
@@ -98,35 +91,17 @@ export default function HomePage() {
     return () => clearInterval(locationInterval);
   }, []);
 
-  // Toggle theme and save to localStorage
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
+  // // Toggle theme and save to localStorage
+  // const toggleTheme = () => {
+  //   const newTheme = theme === "light" ? "dark" : "light";
+  //   setTheme(newTheme);
+  //   localStorage.setItem("theme", newTheme);
+  //   document.documentElement.classList.toggle("dark", newTheme === "dark");
+  // };
 
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
-      <div
-        className={`${erika.className} flex gap-x-[48px] text-[18px] text-[#111] underline dark:text-[#eee]`}
-      >
-        <a href="/">
-          <h1>home</h1>
-        </a>
-
-        <a href="/writing">
-          <h1>writing</h1>
-        </a>
-
-        <a href="/work">
-          <h1>work</h1>
-        </a>
-
-        <a href="/reach-out">
-          <h1>reach out!</h1>
-        </a>
-      </div>
+      <Navbar />
 
       <div className="absolute bottom-0 right-0 mb-[8px] mr-[8px] ">
         <h1 className={`${duplet.className} text-[16px] text-[#999]`}>
@@ -222,7 +197,7 @@ export default function HomePage() {
         </a>
       </div>
 
-      <div className="absolute right-[16px] top-[16px]">
+      {/* <div className="absolute right-[16px] top-[16px]">
         <button onClick={toggleTheme}>
           {theme === "dark" && (
             <svg
@@ -258,7 +233,7 @@ export default function HomePage() {
             </svg>
           )}
         </button>
-      </div>
+      </div> */}
 
       <div className="flex w-screen">
         <div>
@@ -273,9 +248,7 @@ export default function HomePage() {
               )}
 
               <div className="mt-[12px] flex">
-                <div
-                  className={`${theme === "dark" ? "text-white" : "text-black"}`}
-                >
+                <div className="dark:text-white text-black">
                   <svg
                     width="32"
                     height="35"

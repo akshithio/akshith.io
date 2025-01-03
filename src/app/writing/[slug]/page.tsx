@@ -1,23 +1,12 @@
 import fs from "fs/promises";
-import path from "path";
-import ImageComp from "~/components/blog/standard/ImageComp";
-import InTextCitationComp from "~/components/blog/standard/InTextCitationComp";
-import QuoteComp from "~/components/blog/standard/QuoteComp";
-import SideCitationComp from "~/components/blog/standard/SideCitationComp";
-import SideNoteComp from "~/components/blog/standard/SideNoteComp";
-import { duplet, erika, passenger } from "~/helpers/fonts";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
-
-// Define components object for MDX
-const components = {
-  ImageComp: ImageComp,
-  SideNoteComp: SideNoteComp,
-  SideCitationComp: SideCitationComp,
-  InTextCitationComp: InTextCitationComp,
-  QuoteComp: QuoteComp,
-};
-
+import path from "path";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
+import Navbar from "~/components/layout/Navbar";
+import { duplet, passenger } from "~/helpers/fonts";
+import { components } from "~/helpers/markdownComponents";
 interface FrontMatter {
   title: string;
   date: string;
@@ -34,12 +23,50 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<FrontMatter> {
   const { frontMatter } = await getPost(params.slug);
-
   return {
     title: frontMatter.title,
     date: frontMatter.date,
     category: frontMatter.category,
   };
+}
+
+function convertDate(date: string): string {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const [year, month, day] = date.split("-").map(Number);
+
+  const suffix = (day: number): string => {
+    if (day >= 11 && day <= 13) return `${day}th`;
+    switch (day % 10) {
+      case 1:
+        return `${day}st`;
+      case 2:
+        return `${day}nd`;
+      case 3:
+        return `${day}rd`;
+      default:
+        return `${day}th`;
+    }
+  };
+
+  if (month === undefined || day === undefined) {
+    throw new Error("Invalid date format");
+  }
+
+  return `${months[month - 1]} ${suffix(day)}, ${year}`;
 }
 
 async function getPost(slug: string) {
@@ -49,11 +76,17 @@ async function getPost(slug: string) {
   // Parse front matter
   const { data: frontMatter, content } = matter(fileContent);
 
-  // Compile MDX with components
+  // Compile MDX with components and plugins
   const { content: compiled } = await compileMDX({
     source: content,
     components,
-    options: { parseFrontmatter: true },
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeSlug],
+      },
+    },
   });
 
   return {
@@ -64,48 +97,13 @@ async function getPost(slug: string) {
 
 export default async function Page({ params }: PageProps) {
   const { content, frontMatter } = await getPost(params.slug);
-  // const [theme, setTheme] = useState("light");
 
   return (
     <body
-      className={`${duplet.className} h-screen w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] dark:bg-[#111]`}
+      className={`${duplet.className} w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] text-[#111] dark:bg-[#111] dark:text-[#eee] `}
     >
-      <div
-        className={`${erika.className} flex gap-x-[48px] text-[18px] text-[#111] underline dark:text-[#eee]`}
-      >
-        <a href="/">
-          <h1>home</h1>
-        </a>
+      <Navbar />
 
-        <a href="/writing">
-          <h1>writing</h1>
-        </a>
-
-        <a href="/work">
-          <h1>work</h1>
-        </a>
-
-        <a href="/reach-out">
-          <h1>reach out!</h1>
-        </a>
-      </div>
-
-      <div className="absolute right-[16px] top-[16px]">
-        <button>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.3533 10.62C14.2466 10.44 13.9466 10.16 13.1999 10.2933C12.7866 10.3667 12.3666 10.4 11.9466 10.38C10.3933 10.3133 8.98659 9.6 8.00659 8.5C7.13993 7.53333 6.60659 6.27333 6.59993 4.91333C6.59993 4.15333 6.74659 3.42 7.04659 2.72666C7.33993 2.05333 7.13326 1.7 6.98659 1.55333C6.83326 1.4 6.47326 1.18666 5.76659 1.48C3.03993 2.62666 1.35326 5.36 1.55326 8.28666C1.75326 11.04 3.68659 13.3933 6.24659 14.28C6.85993 14.4933 7.50659 14.62 8.17326 14.6467C8.27993 14.6533 8.38659 14.66 8.49326 14.66C10.7266 14.66 12.8199 13.6067 14.1399 11.8133C14.5866 11.1933 14.4666 10.8 14.3533 10.62Z"
-              fill="#999999"
-            />
-          </svg>
-        </button>
-      </div>
       <div className="ml-[20px] mt-[40px] flex h-full w-[90%]">
         <div className="mt-[40px]">
           <svg
@@ -128,14 +126,14 @@ export default async function Page({ params }: PageProps) {
 
         <div className="ml-[40px] h-full w-[75%]">
           <div className={`${passenger.className}`}>
-            <h1>December 17th, 2024 • 24,384 views</h1>
+            <h1>{convertDate(frontMatter.date)} • 24,384 views</h1>
             <h1 className="text-[48px] font-semibold italic">
               {frontMatter.title}
             </h1>
           </div>
 
-          <div className="mt-[20px] relative">
-            <div>{content}</div>
+          <div className="relative mt-[20px]">
+            <div className="mb-[40px]">{content}</div>
           </div>
         </div>
       </div>
