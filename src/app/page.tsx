@@ -1,104 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import Image from "next/image";
 import { duplet, erika, passenger } from "@/helpers/fonts";
+import Image from "next/image";
 import Navbar from "~/components/layout/Navbar";
+import CityStatus from "~/components/pages/root/CityStatus";
+import SpotifyStatus from "~/components/pages/root/SpotifyStatus";
 
 export default function HomePage() {
-  const [spotify, setSpotify] = useState("not listening to anything");
-  const [cityData, setCityData] = useState<{ city?: string }>();
-  const [lastFetchTime, setLastFetchTime] = useState(0);
-
-  // Improved Spotify data fetching with debouncing
-  useEffect(() => {
-    const fetchSpotifyData = async () => {
-      const now = Date.now();
-      // Only fetch if more than 2 seconds have passed since last fetch
-      if (now - lastFetchTime < 2000) return;
-
-      try {
-        setLastFetchTime(now);
-        const res = await fetch(
-          `https://api.lanyard.rest/v1/users/532914066558156800`,
-          { cache: "no-store" }, // Disable caching to get fresh data
-        );
-        const data = await res.json();
-
-        if (data?.data?.spotify) {
-          const song = data.data.spotify.song.toLowerCase();
-          const songName = song.includes("(")
-            ? song.substring(0, song.indexOf("(")).trim()
-            : song;
-
-          let artist = data.data.spotify.artist
-            .replaceAll(";", ",")
-            .toLowerCase()
-            .split(",")
-            .slice(0, 2)
-            .join(",");
-
-          let songString = songName + artist + "  •  ";
-
-          if (songString.length > 55) {
-            artist = data.data.spotify.artist
-              .replaceAll(";", ",")
-              .toLowerCase()
-              .split(",")
-              .slice(0, 1);
-          }
-
-          setSpotify(`${songName}1xe34${artist}`);
-        } else {
-          setSpotify("not listening to anything");
-        }
-      } catch (err) {
-        console.error("Error fetching Spotify data:", err);
-      }
-    };
-
-    // Initial fetch
-    fetchSpotifyData();
-
-    // Set up interval for periodic updates with shorter interval
-    const spotifyInterval = setInterval(fetchSpotifyData, 3000); // Update every 3 seconds
-
-    // Cleanup interval on component unmount
-    return () => clearInterval(spotifyInterval);
-  }, [lastFetchTime]);
-
-  // Location data fetching
-  useEffect(() => {
-    const fetchLocationData = async () => {
-      try {
-        const res = await fetch(
-          `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
-          { cache: "no-store" },
-        );
-        const data = await res.json();
-        setCityData(data);
-      } catch (err) {
-        console.error("Error fetching location data:", err);
-      }
-    };
-
-    // Initial fetch
-    fetchLocationData();
-
-    // Update location every minute
-    const locationInterval = setInterval(fetchLocationData, 60000);
-
-    return () => clearInterval(locationInterval);
-  }, []);
-
-  // // Toggle theme and save to localStorage
-  // const toggleTheme = () => {
-  //   const newTheme = theme === "light" ? "dark" : "light";
-  //   setTheme(newTheme);
-  //   localStorage.setItem("theme", newTheme);
-  //   document.documentElement.classList.toggle("dark", newTheme === "dark");
-  // };
-
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
       <Navbar />
@@ -197,58 +103,13 @@ export default function HomePage() {
         </a>
       </div>
 
-      {/* <div className="absolute right-[16px] top-[16px]">
-        <button onClick={toggleTheme}>
-          {theme === "dark" && (
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8.00004 12.6667C10.5774 12.6667 12.6667 10.5774 12.6667 8.00004C12.6667 5.42271 10.5774 3.33337 8.00004 3.33337C5.42271 3.33337 3.33337 5.42271 3.33337 8.00004C3.33337 10.5774 5.42271 12.6667 8.00004 12.6667Z"
-                fill="#999999"
-              />
-              <path
-                d="M7.99996 15.3066C7.63329 15.3066 7.33329 15.0333 7.33329 14.6666V14.6133C7.33329 14.2466 7.63329 13.9466 7.99996 13.9466C8.36663 13.9466 8.66663 14.2466 8.66663 14.6133C8.66663 14.98 8.36663 15.3066 7.99996 15.3066ZM12.76 13.4266C12.5866 13.4266 12.42 13.36 12.2866 13.2333L12.2 13.1466C11.94 12.8866 11.94 12.4666 12.2 12.2066C12.46 11.9466 12.88 11.9466 13.14 12.2066L13.2266 12.2933C13.4866 12.5533 13.4866 12.9733 13.2266 13.2333C13.1 13.36 12.9333 13.4266 12.76 13.4266ZM3.23996 13.4266C3.06663 13.4266 2.89996 13.36 2.76663 13.2333C2.50663 12.9733 2.50663 12.5533 2.76663 12.2933L2.85329 12.2066C3.11329 11.9466 3.53329 11.9466 3.79329 12.2066C4.05329 12.4666 4.05329 12.8866 3.79329 13.1466L3.70663 13.2333C3.57996 13.36 3.40663 13.4266 3.23996 13.4266ZM14.6666 8.66663H14.6133C14.2466 8.66663 13.9466 8.36663 13.9466 7.99996C13.9466 7.63329 14.2466 7.33329 14.6133 7.33329C14.98 7.33329 15.3066 7.63329 15.3066 7.99996C15.3066 8.36663 15.0333 8.66663 14.6666 8.66663ZM1.38663 8.66663H1.33329C0.966626 8.66663 0.666626 8.36663 0.666626 7.99996C0.666626 7.63329 0.966626 7.33329 1.33329 7.33329C1.69996 7.33329 2.02663 7.63329 2.02663 7.99996C2.02663 8.36663 1.75329 8.66663 1.38663 8.66663ZM12.6733 3.99329C12.5 3.99329 12.3333 3.92663 12.2 3.79996C11.94 3.53996 11.94 3.11996 12.2 2.85996L12.2866 2.77329C12.5466 2.51329 12.9666 2.51329 13.2266 2.77329C13.4866 3.03329 13.4866 3.45329 13.2266 3.71329L13.14 3.79996C13.0133 3.92663 12.8466 3.99329 12.6733 3.99329ZM3.32663 3.99329C3.15329 3.99329 2.98663 3.92663 2.85329 3.79996L2.76663 3.70663C2.50663 3.44663 2.50663 3.02663 2.76663 2.76663C3.02663 2.50663 3.44663 2.50663 3.70663 2.76663L3.79329 2.85329C4.05329 3.11329 4.05329 3.53329 3.79329 3.79329C3.66663 3.92663 3.49329 3.99329 3.32663 3.99329ZM7.99996 2.02663C7.63329 2.02663 7.33329 1.75329 7.33329 1.38663V1.33329C7.33329 0.966626 7.63329 0.666626 7.99996 0.666626C8.36663 0.666626 8.66663 0.966626 8.66663 1.33329C8.66663 1.69996 8.36663 2.02663 7.99996 2.02663Z"
-                fill="#999999"
-              />
-            </svg>
-          )}
-
-          {theme !== "dark" && (
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M14.3533 10.62C14.2466 10.44 13.9466 10.16 13.1999 10.2933C12.7866 10.3667 12.3666 10.4 11.9466 10.38C10.3933 10.3133 8.98659 9.6 8.00659 8.5C7.13993 7.53333 6.60659 6.27333 6.59993 4.91333C6.59993 4.15333 6.74659 3.42 7.04659 2.72666C7.33993 2.05333 7.13326 1.7 6.98659 1.55333C6.83326 1.4 6.47326 1.18666 5.76659 1.48C3.03993 2.62666 1.35326 5.36 1.55326 8.28666C1.75326 11.04 3.68659 13.3933 6.24659 14.28C6.85993 14.4933 7.50659 14.62 8.17326 14.6467C8.27993 14.6533 8.38659 14.66 8.49326 14.66C10.7266 14.66 12.8199 13.6067 14.1399 11.8133C14.5866 11.1933 14.4666 10.8 14.3533 10.62Z"
-                fill="#999999"
-              />
-            </svg>
-          )}
-        </button>
-      </div> */}
-
       <div className="flex w-screen">
         <div>
           <div>
             <div className="ml-[136px] mt-[108px]">
-              {cityData?.city !== undefined && cityData?.city !== null && (
-                <h1
-                  className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
-                >
-                  ☀️ i'm in {cityData.city.toLowerCase()} and it's 17:24
-                </h1>
-              )}
-
+              <CityStatus />
               <div className="mt-[12px] flex">
-                <div className="dark:text-white text-black">
+                <div className="text-black dark:text-white">
                   <svg
                     width="32"
                     height="35"
@@ -324,20 +185,7 @@ export default function HomePage() {
                   linktree replacement amongst many other random chronicles in
                   between.
                 </p>
-
-                {spotify !== "not listening to anything" && (
-                  <div className="absolute bottom-[-48px]">
-                    <h1
-                      className={`${duplet.className} whitespace-nowrap text-[16px] text-[#999] dark:text-[#999]`}
-                    >
-                      listening to{" "}
-                      {spotify.substring(0, spotify.indexOf("1xe34"))}
-                      {"  "}•{"  "}
-                      {spotify.substring(spotify.indexOf("1xe34") + 5)}{" "}
-                      {"            "}
-                    </h1>
-                  </div>
-                )}
+                <SpotifyStatus />
               </div>
             </div>
           </div>

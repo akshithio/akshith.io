@@ -1,13 +1,14 @@
-import Navbar from "~/components/layout/Navbar";
+"use client";
+
 import { bitscript, duplet } from "~/helpers/fonts";
+import { useTheme } from "~/hooks/useTheme";
 
 export default function NotFoundPage() {
+  const { theme } = useTheme();
+
   return (
-    <div className="flex justify-center items-center h-screen w-screen overflow-hidden bg-[#eee] dark:bg-[#111] text-[#111] dark:text-[#eee]">
-      <div className="hidden">
-        <Navbar />
-      </div>
-      <div className="flex flex-col justify-center items-center">
+    <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-[#eee] text-[#111] dark:bg-[#111] dark:text-[#eee]">
+      <div className="flex flex-col items-center justify-center">
         <svg
           width="58"
           height="63"
@@ -21,7 +22,7 @@ export default function NotFoundPage() {
         </svg>
 
         <h1
-          className={`${duplet.className} font-semibold text-center text-[24px] w-[370px] my-[28px]`}
+          className={`${duplet.className} my-[28px] w-[370px] text-center text-[24px] font-semibold`}
         >
           we’ve been lookin around but <br /> can’t seem to find what you want.{" "}
           <br /> go back to{" "}

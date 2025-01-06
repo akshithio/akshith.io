@@ -1,23 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { erika } from "~/helpers/fonts";
+import { useTheme } from "~/hooks/useTheme";
 
 export default function Navbar() {
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.classList.toggle("dark", newTheme === "dark");
-  };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
-  }, []);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="w-full">

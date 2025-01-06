@@ -22,8 +22,8 @@ export default function ImageComp(props: ImageProps) {
         />
       </div>
       <h1 className="mt-[12px]">
-        Image {props.num}: {props.description}
-        {" "}{props.creds && (
+        Image {props.num}: {props.description}{" "}
+        {props.creds && (
           <a className="text-[#00f]" href={props.creds} target="_blank">
             [creds]
           </a>

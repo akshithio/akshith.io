@@ -1,3 +1,5 @@
+import "katex/dist/katex.min.css";
+import "prismjs/themes/prism-tomorrow.css";
 import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
@@ -15,6 +17,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
