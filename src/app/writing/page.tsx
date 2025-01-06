@@ -13,8 +13,17 @@ interface BlogPostMatter {
   filename: string;
 }
 
+interface Microblog {
+  id: string;
+  content: string;
+  time: string;
+  formattedTime: string;
+  formattedDate: string;
+}
+
 export default function WritingPage() {
   const [posts, setPosts] = useState<BlogPostMatter[]>([]);
+  const [microblogs, setMicroblogs] = useState<Microblog[]>([]);
   // const [isLoading, setIsLoading] = useState(true);
   // const [error, setError] = useState<string | null>(null);
 
@@ -41,6 +50,53 @@ export default function WritingPage() {
       });
   }, []);
 
+  useEffect(() => {
+    fetch("/api/microblog")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
+        return response.json();
+      })
+      .then((postsData) => {
+        const sortedPosts = postsData.data.map((post: Microblog) => {
+          const postDate = new Date(post.time);
+          const now = new Date();
+          const diffTime = Math.abs(now.getTime() - postDate.getTime());
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+
+          const formattedTime = postDate.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+          });
+
+          // Format the date based on how recent it is
+          const formattedDate = diffDays <= 7
+            ? postDate.toLocaleDateString([], { weekday: "short" })
+            : postDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+              }).replace(/(\d+)/, "$1th").toLowerCase();
+
+          return {
+            ...post,
+            formattedTime,
+            formattedDate
+          };
+        }).sort((a: Microblog, b: Microblog) =>
+          new Date(b.time).getTime() - new Date(a.time).getTime()
+        );
+
+        const recentPosts = sortedPosts.slice(0, 15);
+        setMicroblogs(recentPosts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
       <Navbar />
@@ -56,6 +112,7 @@ export default function WritingPage() {
               whatever else tbh. inspired from{" "}
               <a
                 href="https://udara.io/microblog"
+                target="_blank"
                 className={`${duplet.className} font-semibold underline`}
               >
                 udara.io
@@ -63,120 +120,24 @@ export default function WritingPage() {
             </h1>
           </div>
 
-          <div className="mt-[24px] w-[336px] text-[#111] dark:text-[#eee]">
-            <div>
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                19:10, tue
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>call me king kong the way i be ding-donging</h1>
-              </div>
-            </div>
-
-            <div className="mt-[24px]">
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                14:23, tue
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>
-                  some semi-serious thought about why i think startups are cool
-                  and stuff like that. idk bro i’m just yappin and shi ✨ wanna
-                  talk to me? don’t. i’m just a bazooka man doing bazooka thing,
-                  all that and all that ykwim?
+          <div className="ml-[6px] mt-[24px] w-[336px] text-[#111] dark:text-[#eee]">
+            {microblogs.map((microblog) => (
+              <div key={microblog.id} className="mt-[24px]">
+                <h1
+                  className={`${duplet.className} font-semibold right-0 ml-[81%] text-[12px] text-[#999]`}
+                >
+                  {microblog.formattedTime}, {microblog.formattedDate}
                 </h1>
+                <div
+                  className={`${erika.className} rounded-[24px] border-[1px] border-solid border-[#111] px-[18px] py-[6px] dark:border-[#eee]`}
+                >
+                  <h1>{microblog.content}</h1>
+                </div>
               </div>
-            </div>
-
-            <div className="mt-[24px]">
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                23:17, mon
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>
-                  hackclub is a very very cool place. theoretically just built
-                  my first programming language cuz of em?
-                </h1>
-              </div>
-            </div>
-
-            <div className="mt-[24px]">
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                07:12, mon
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>
-                  perfectionism as a quality that is under-appreciated in
-                  building things. for example clay: today they announced a
-                  duplicate harmonizer system that gets rid of all duplicate
-                  contacts. one of the main factors that disillusioned me with
-                  that product is the fact that i spent hours trying to get rid
-                  of duplicates so i’m now not as interested to go back and try
-                  it
-                </h1>
-              </div>
-            </div>
-
-            <div className="mt-[24px]">
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                07:12, mon
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>
-                  perfectionism as a quality that is under-appreciated in
-                  building things. for example clay: today they announced a
-                  duplicate harmonizer system that gets rid of all duplicate
-                  contacts. one of the main factors that disillusioned me with
-                  that product is the fact that i spent hours trying to get rid
-                  of duplicates so i’m now not as interested to go back and try
-                  it
-                </h1>
-              </div>
-            </div>
-
-            <div className="mt-[24px]">
-              <h1
-                className={`${duplet.className} right-0 ml-[82%] text-[12px] text-[#999]`}
-              >
-                07:12, mon
-              </h1>
-              <div
-                className={` ${erika.className} flex items-center justify-center rounded-[24px] border-[1px] border-solid border-[#111] px-[8px] py-[6px] dark:border-[#eee]`}
-              >
-                <h1>
-                  perfectionism as a quality that is under-appreciated in
-                  building things. for example clay: today they announced a
-                  duplicate harmonizer system that gets rid of all duplicate
-                  contacts. one of the main factors that disillusioned me with
-                  that product is the fact that i spent hours trying to get rid
-                  of duplicates so i’m now not as interested to go back and try
-                  it
-                </h1>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* issue with flex center i think? */}
         <div className="ml-[130px] mt-[24px] text-[#111] dark:text-[#eee]">
           <div className="relative mt-[36px] flex items-center">
             <div className="justify-start">

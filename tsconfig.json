@@ -13,6 +13,7 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
+    "noImplicitAny": false, // This helps with the Prism language imports
 
     /* Bundled projects */
     "lib": ["dom", "dom.iterable", "ES2022"],
@@ -22,6 +23,7 @@
     "jsx": "preserve",
     "plugins": [{ "name": "next" }],
     "incremental": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
 
     /* Path Aliases */
     "baseUrl": ".",
@@ -39,7 +41,8 @@
     "**/*.js",
     ".next/types/**/*.ts",
     "next.config.mjs",
-    "src/mdx/post.mdx"
+    "src/mdx/post.mdx",
+    "src/types/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }

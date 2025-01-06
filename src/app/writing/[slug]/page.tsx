@@ -2,8 +2,10 @@ import fs from "fs/promises";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
 import path from "path";
+import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import Navbar from "~/components/layout/Navbar";
 import { duplet, passenger } from "~/helpers/fonts";
 import { components } from "~/helpers/markdownComponents";
@@ -73,18 +75,26 @@ async function getPost(slug: string) {
   const filePath = path.join(process.cwd(), "src/content", `${slug}.mdx`);
   const fileContent = await fs.readFile(filePath, "utf8");
 
-  // Parse front matter
   const { data: frontMatter, content } = matter(fileContent);
 
-  // Compile MDX with components and plugins
   const { content: compiled } = await compileMDX({
     source: content,
     components,
     options: {
       parseFrontmatter: true,
       mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        rehypePlugins: [rehypeSlug],
+        remarkPlugins: [remarkGfm, remarkMath],
+        rehypePlugins: [
+          rehypeSlug,
+          [
+            rehypeKatex,
+            {
+              strict: false,
+              trust: true,
+              throwOnError: false,
+            },
+          ],
+        ],
       },
     },
   });
