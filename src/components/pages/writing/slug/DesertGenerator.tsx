@@ -1,43 +1,71 @@
+import { useState } from "react";
+
 export default function DesertGenerator() {
-  function hashStringToSeed(input: string): number {
-    let hash = 0;
-    for (let i = 0; i < input.length; i++) {
-      hash = (hash << 5) - hash + input.charCodeAt(i);
-      hash |= 0; // Convert to 32-bit integer
-    }
-    return hash >>> 0; // Convert to unsigned
+  const [desert, setDesert] = useState<Desert[]>([]);
+  interface Desert {
+    type: string;
+    length: number;
+    height: number;
+    cactus: boolean;
+    star: boolean;
+    frog: boolean;
+    rabbit: boolean;
   }
 
+  // djb2
+  function hash(input: string): number {
+    let hash = 5381;
+    for (let i = 0; i < input.length; i++) {
+      let charCode = input.charCodeAt(i);
+      hash = hash * 33 + charCode;
+    }
+    return hash >>> 0;
+  }
+
+  // Lehmer / Park-Miller RNG / LCG
   function random(seed: number): () => number {
     return function () {
-      seed = (seed * 9301 + 49297) % 233280;
-      return seed / 233280.0;
+      seed = (seed * 16807 + 49297) % 2147483647;
+      return seed / 2147483647.0;
     };
   }
 
   function generateDesert(title: string, numBlocks: number): Array<any> {
-    const seed = hashStringToSeed(title);
+    const seed = hash(title);
     const rng = random(seed);
 
-    const desert = [];
+    const desert: Desert[] = [];
     for (let i = 0; i < numBlocks; i++) {
       const isWater = rng() < 0.35;
-      const hasCactusOrStar = rng() < 0.45;
-      const hasFrogOrRabbit = rng() < 0.25;
+      const hasCactus = rng() < 0.25;
+      const hasStar = rng() < 0.45;
+      const hasFrog = rng() < 0.25;
+      const hasRabbit = rng() < 0.25;
 
-      desert.push({
+      const desertObject: Desert = {
         type: isWater ? "water" : "sand",
-        length: isWater ? undefined : Math.floor(rng() * 5) + 1, // 1-5 units for sand
-        height: isWater ? undefined : Math.floor(rng() * 3) + 1, // 1-3 units for sand
-        cactusOrStar: isWater ? false : hasCactusOrStar,
-        frogOrRabbit: hasFrogOrRabbit,
-      });
+        length: Math.floor(rng() * 5) + 1,
+        height: Math.floor(rng() * 3) + 1,
+        cactus: isWater ? false : hasCactus, // light-mode specific
+        frog: hasFrog, // light-mode specific
+        star: hasStar ? false : hasStar, // dark-mode specific
+        rabbit: hasRabbit, // dark-mode specific
+      };
+
+      desert.push(desertObject);
     }
+
     return desert;
   }
 
-  // Example usage:
   const blogTitle = "A top level understanding of vector embeddings";
   const desertBlocks = generateDesert(blogTitle, 10);
   console.log(desertBlocks);
+  setDesert(desertBlocks);
+
+  return (
+    <div>
+      <h1>Hello World</h1>
+    </div>
+  );
 }
