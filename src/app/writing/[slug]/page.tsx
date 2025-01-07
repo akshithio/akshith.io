@@ -112,7 +112,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <body
-      className={`${duplet.className} w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] text-[#111] dark:bg-[#111] dark:text-[#eee] `}
+      className={`${duplet.className} w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] text-[#111] dark:bg-[#111] dark:text-[#eee]`}
     >
       <Navbar />
 
@@ -143,7 +143,7 @@ export default async function Page({ params }: PageProps) {
               {frontMatter.title}
             </h1>
           </div>
-          <ContentHeightTracker content={content} />
+          <ContentHeightTracker content={content} title={frontMatter.title} />
         </div>
       </div>
     </body>

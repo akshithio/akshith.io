@@ -2,21 +2,24 @@
 
 import { debounce } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
+import DesertGenerator from "./DesertGenerator";
 
-interface ContentHeightTrackerProps {
+interface ContentHeightTrackerInterface {
   content: React.ReactNode;
+  title: string;
 }
 
-const ContentHeightTracker: React.FC<ContentHeightTrackerProps> = ({
-  content,
-}) => {
+const ContentHeightTracker = (props: ContentHeightTrackerInterface) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const calculationsPending = useRef(false);
 
   useEffect(() => {
     const calculateContentHeight = debounce(() => {
       const element = contentRef.current;
-      if (!element) return;
+      if (!element || calculationsPending.current) return;
+
+      calculationsPending.current = true;
 
       requestAnimationFrame(() => {
         const citationHolder = element.querySelector(".CitationHolder");
@@ -25,29 +28,47 @@ const ContentHeightTracker: React.FC<ContentHeightTrackerProps> = ({
           ? citationHolder.getBoundingClientRect().height
           : 0;
 
-        setContentHeight(totalHeight - citationHeight);
+        const newHeight = totalHeight - citationHeight;
+
+        if (newHeight > 0) {
+          setContentHeight(newHeight);
+        }
+
+        calculationsPending.current = false;
       });
-    }, 250);
+    }, 100); // Reduced debounce time since we have other safeguards
 
-    const timeoutId = setTimeout(calculateContentHeight, 0);
+    // Initial calculation
+    const timeoutId = setTimeout(calculateContentHeight, 200); // Increased initial delay
 
-    const resizeObserver = new ResizeObserver(calculateContentHeight);
+    const resizeObserver = new ResizeObserver(
+      (entries: ResizeObserverEntry[]) => {
+        const entry = entries[0];
+        if ((entry?.contentRect?.height ?? 0) > 0) {
+          calculateContentHeight();
+        }
+      },
+    );
+
     if (contentRef.current) {
       resizeObserver.observe(contentRef.current);
     }
 
     return () => {
+      calculationsPending.current = false;
       calculateContentHeight.cancel();
       resizeObserver.disconnect();
       clearTimeout(timeoutId);
     };
-  }, [content]);
+  }, [props.content]);
 
   return (
-    <div className="relative mt-[20px]" ref={contentRef}>
-      <div className="mb-[40px]">{content}</div>
-      <div className="fixed right-4 top-4 rounded bg-black/10 p-2 text-sm">
-        Content Height: {Math.round(contentHeight)}px
+    <div>
+      {contentHeight !== null && contentHeight > 0 && (
+        <DesertGenerator length={contentHeight} title={props.title} />
+      )}
+      <div className="relative mt-[20px]" ref={contentRef}>
+        <div className="mb-[40px]">{props.content}</div>
       </div>
     </div>
   );
