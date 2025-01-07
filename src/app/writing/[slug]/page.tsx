@@ -7,8 +7,10 @@ import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import Navbar from "~/components/layout/Navbar";
+import ContentHeightTracker from "~/components/pages/writing/slug/ContentHeightTracker";
 import { duplet, passenger } from "~/helpers/fonts";
 import { components } from "~/helpers/markdownComponents";
+
 interface FrontMatter {
   title: string;
   date: string;
@@ -141,10 +143,7 @@ export default async function Page({ params }: PageProps) {
               {frontMatter.title}
             </h1>
           </div>
-
-          <div className="relative mt-[20px]">
-            <div className="mb-[40px]">{content}</div>
-          </div>
+          <ContentHeightTracker content={content} />
         </div>
       </div>
     </body>
