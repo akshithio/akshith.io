@@ -1,62 +1,20 @@
 import { useEffect, useState } from "react";
-import { useTheme } from "~/hooks/useTheme";
+import { useTheme } from "@/hooks/useTheme";
 import CactusIcon from "./desert/CactusIcon";
 import FrogIcon from "./desert/FrogIcon";
 import StarIcon from "./desert/StarIcon";
 import TurtleIcon from "./desert/TurtleIcon";
 
-interface DesertGeneratorInterface {
-  length: number;
-  title: string;
-}
+import { createRng, hash } from "@/utils/random";
+import {
+  DesertElement,
+  DesertElementType,
+  DesertGeneratorProps,
+} from "@/types/desert";
 
-type DesertElementType =
-  | "sand"
-  | "water"
-  | "cactus"
-  | "star"
-  | "turtle"
-  | "frog";
-
-interface DesertElement {
-  type: DesertElementType;
-  length: number;
-  height: number;
-  starHeightMultiplier: number;
-  specialFeaturePosition?: number;
-  starHeight?: number;
-  direction: "up" | "down"; // Remove optional flag
-  id: number;
-}
-
-interface TempBlock {
-  isWater: boolean;
-  blockLength: number;
-  hasCactus: boolean;
-  hasFrog: boolean;
-  hasStar: boolean;
-  hasTurtle: boolean;
-}
-
-export default function DesertGenerator(props: DesertGeneratorInterface) {
+export default function DesertGenerator(props: DesertGeneratorProps) {
   const [desert, setDesert] = useState<DesertElement[]>([]);
   const { theme } = useTheme();
-
-  function hash(input: string): number {
-    let hash = 5381;
-    for (let i = 0; i < input.length; i++) {
-      let charCode = input.charCodeAt(i);
-      hash = hash * 33 + charCode;
-    }
-    return hash >>> 0;
-  }
-
-  function random(seed: number): () => number {
-    return function () {
-      seed = (seed * 16807 + 49297) % 2147483647;
-      return seed / 2147483647.0;
-    };
-  }
 
   function generateDesert(title: string): Array<DesertElement> {
     if (!props.length) {
@@ -65,7 +23,7 @@ export default function DesertGenerator(props: DesertGeneratorInterface) {
     }
 
     const seed = hash(title);
-    const rng = random(seed);
+    const rng = createRng(seed);
 
     const MIN_BLOCK_LENGTH = 25;
     const MAX_BLOCK_LENGTH = 150;

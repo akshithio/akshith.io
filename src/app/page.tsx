@@ -1,8 +1,8 @@
+import Navbar from "@/components/layout/Navbar";
+import CityStatus from "@/components/pages/root/CityStatus";
+import SpotifyStatus from "@/components/pages/root/SpotifyStatus";
 import { duplet, erika, passenger } from "@/helpers/fonts";
 import Image from "next/image";
-import Navbar from "~/components/layout/Navbar";
-import CityStatus from "~/components/pages/root/CityStatus";
-import SpotifyStatus from "~/components/pages/root/SpotifyStatus";
 
 export default function HomePage() {
   return (

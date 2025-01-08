@@ -1,6 +1,6 @@
+import "@/styles/globals.css";
 import "katex/dist/katex.min.css";
 import "prismjs/themes/prism-tomorrow.css";
-import "~/styles/globals.css";
 
 import { GeistSans } from "geist/font/sans";
 
