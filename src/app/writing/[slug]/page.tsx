@@ -1,3 +1,7 @@
+import Navbar from "@/components/layout/Navbar";
+import ContentHeightTracker from "@/components/pages/writing/slug/ContentHeightTracker";
+import { duplet, passenger } from "@/helpers/fonts";
+import { components } from "@/helpers/markdownComponents";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
@@ -6,11 +10,6 @@ import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
-import Navbar from "~/components/layout/Navbar";
-import ContentHeightTracker from "~/components/pages/writing/slug/ContentHeightTracker";
-import { duplet, passenger } from "~/helpers/fonts";
-import { components } from "~/helpers/markdownComponents";
-
 
 interface FrontMatter {
   title: string;

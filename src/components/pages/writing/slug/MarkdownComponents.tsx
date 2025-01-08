@@ -2,9 +2,9 @@ import ImageComp from "@/components/blog/standard/ImageComp";
 import InTextCitationComp from "@/components/blog/standard/InTextCitationComp";
 import SideCitationComp from "@/components/blog/standard/SideCitationComp";
 import SideNoteComp from "@/components/blog/standard/SideNoteComp";
-import CodeBlock from "../components/blog/standard/CodeBlockComp";
+import CodeBlock from "../../../blog/standard/CodeBlockComp";
 
-import { passenger } from "./fonts";
+import { passenger } from "../../../../utils/fonts";
 
 const MarkdownComponents = {
   h1: (props: any) => (

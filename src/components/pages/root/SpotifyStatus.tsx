@@ -1,7 +1,7 @@
 "use client";
 
+import { duplet } from "@/helpers/fonts";
 import { useEffect, useState } from "react";
-import { duplet } from "~/helpers/fonts";
 
 export default function SpotifyStatus() {
   const [spotify, setSpotify] = useState("not listening to anything");

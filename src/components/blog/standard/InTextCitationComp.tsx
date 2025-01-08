@@ -1,7 +1,7 @@
 "use client";
 
-import { passenger } from "~/helpers/fonts";
-import { useTheme } from "~/hooks/useTheme";
+import { passenger } from "@/helpers/fonts";
+import { useTheme } from "@/hooks/useTheme";
 
 interface InTextCitationProps {
   type: string; // define a type?

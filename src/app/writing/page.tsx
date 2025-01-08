@@ -1,8 +1,8 @@
 "use client";
 
+import Navbar from "@/components/layout/Navbar";
+import { duplet, erika, passenger } from "@/helpers/fonts";
 import { useEffect, useState } from "react";
-import Navbar from "~/components/layout/Navbar";
-import { duplet, erika, passenger } from "~/helpers/fonts";
 
 interface BlogPostMatter {
   title: string;
@@ -59,35 +59,41 @@ export default function WritingPage() {
         return response.json();
       })
       .then((postsData) => {
-        const sortedPosts = postsData.data.map((post: Microblog) => {
-          const postDate = new Date(post.time);
-          const now = new Date();
-          const diffTime = Math.abs(now.getTime() - postDate.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const sortedPosts = postsData.data
+          .map((post: Microblog) => {
+            const postDate = new Date(post.time);
+            const now = new Date();
+            const diffTime = Math.abs(now.getTime() - postDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+            const formattedTime = postDate.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            });
 
-          const formattedTime = postDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false
-          });
+            // Format the date based on how recent it is
+            const formattedDate =
+              diffDays <= 7
+                ? postDate.toLocaleDateString([], { weekday: "short" })
+                : postDate
+                    .toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
+                    .replace(/(\d+)/, "$1th")
+                    .toLowerCase();
 
-          // Format the date based on how recent it is
-          const formattedDate = diffDays <= 7
-            ? postDate.toLocaleDateString([], { weekday: "short" })
-            : postDate.toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-              }).replace(/(\d+)/, "$1th").toLowerCase();
-
-          return {
-            ...post,
-            formattedTime,
-            formattedDate
-          };
-        }).sort((a: Microblog, b: Microblog) =>
-          new Date(b.time).getTime() - new Date(a.time).getTime()
-        );
+            return {
+              ...post,
+              formattedTime,
+              formattedDate,
+            };
+          })
+          .sort(
+            (a: Microblog, b: Microblog) =>
+              new Date(b.time).getTime() - new Date(a.time).getTime(),
+          );
 
         const recentPosts = sortedPosts.slice(0, 15);
         setMicroblogs(recentPosts);
@@ -124,7 +130,7 @@ export default function WritingPage() {
             {microblogs.map((microblog) => (
               <div key={microblog.id} className="mt-[24px]">
                 <h1
-                  className={`${duplet.className} font-semibold right-0 ml-[81%] text-[12px] text-[#999]`}
+                  className={`${duplet.className} right-0 ml-[81%] text-[12px] font-semibold text-[#999]`}
                 >
                   {microblog.formattedTime}, {microblog.formattedDate}
                 </h1>

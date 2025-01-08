@@ -1,7 +1,7 @@
 "use client";
 
-import { erika } from "~/helpers/fonts";
-import { useTheme } from "~/hooks/useTheme";
+import { erika } from "@/helpers/fonts";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
