@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
-import CactusIcon from "./desert/CactusIcon";
-import FrogIcon from "./desert/FrogIcon";
-import StarIcon from "./desert/StarIcon";
-import TurtleIcon from "./desert/TurtleIcon";
+import { useEffect, useState } from "react";
+import CactusIcon from "./icons/CactusIcon";
+import FrogIcon from "./icons/FrogIcon";
+import StarIcon from "./icons/StarIcon";
+import TurtleIcon from "./icons/TurtleIcon";
 
-import { createRng, hash } from "@/utils/random";
 import {
   DesertElement,
   DesertElementType,
   DesertGeneratorProps,
 } from "@/types/desert";
+import { createRng, hash } from "@/utils/random";
 
 export default function DesertGenerator(props: DesertGeneratorProps) {
   const [desert, setDesert] = useState<DesertElement[]>([]);

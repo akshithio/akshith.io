@@ -1,10 +1,10 @@
-import ImageComp from "@/components/blog/standard/ImageComp";
-import InTextCitationComp from "@/components/blog/standard/InTextCitationComp";
-import SideCitationComp from "@/components/blog/standard/SideCitationComp";
-import SideNoteComp from "@/components/blog/standard/SideNoteComp";
-import CodeBlock from "../../../blog/standard/CodeBlockComp";
+import ImageComp from "@/components/pages/writing/slug/mdx/standard/ImageComp";
+import InTextCitationComp from "@/components/pages/writing/slug/mdx/standard/InTextCitationComp";
+import SideCitationComp from "@/components/pages/writing/slug/mdx/standard/SideCitationComp";
+import SideNoteComp from "@/components/pages/writing/slug/mdx/standard/SideNoteComp";
+import CodeBlock from "./standard/CodeBlockComp";
 
-import { passenger } from "../../../../utils/fonts";
+import { passenger } from "../../../../../utils/fonts";
 
 const MarkdownComponents = {
   h1: (props: any) => (
