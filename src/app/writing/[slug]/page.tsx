@@ -11,6 +11,7 @@ import ContentHeightTracker from "~/components/pages/writing/slug/ContentHeightT
 import { duplet, passenger } from "~/helpers/fonts";
 import { components } from "~/helpers/markdownComponents";
 
+
 interface FrontMatter {
   title: string;
   date: string;

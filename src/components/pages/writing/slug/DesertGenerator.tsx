@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "~/hooks/useTheme";
-import StarIcon from "./desert/StarIcon";
-import FrogIcon from "./desert/FrogIcon";
-import TurtleIcon from "./desert/TurtleIcon";
 import CactusIcon from "./desert/CactusIcon";
+import FrogIcon from "./desert/FrogIcon";
+import StarIcon from "./desert/StarIcon";
+import TurtleIcon from "./desert/TurtleIcon";
 
 interface DesertGeneratorInterface {
-  length: number; 
+  length: number;
   title: string;
 }
 
-interface Desert {
-  type: string;
+type DesertElementType =
+  | "sand"
+  | "water"
+  | "cactus"
+  | "star"
+  | "turtle"
+  | "frog";
+
+interface DesertElement {
+  type: DesertElementType;
   length: number;
   height: number;
   starHeightMultiplier: number;
   specialFeaturePosition?: number;
-  cactus: boolean;
-  star: boolean;
-  frog: boolean;
-  turtle: boolean;
+  starHeight?: number;
+  direction: "up" | "down"; // Remove optional flag
   id: number;
 }
 
@@ -33,7 +39,7 @@ interface TempBlock {
 }
 
 export default function DesertGenerator(props: DesertGeneratorInterface) {
-  const [desert, setDesert] = useState<Desert[]>([]);
+  const [desert, setDesert] = useState<DesertElement[]>([]);
   const { theme } = useTheme();
 
   function hash(input: string): number {
@@ -52,7 +58,7 @@ export default function DesertGenerator(props: DesertGeneratorInterface) {
     };
   }
 
-  function generateDesert(title: string): Array<Desert> {
+  function generateDesert(title: string): Array<DesertElement> {
     if (!props.length) {
       console.warn("Length is zero or undefined, skipping generation");
       return [];
@@ -60,41 +66,28 @@ export default function DesertGenerator(props: DesertGeneratorInterface) {
 
     const seed = hash(title);
     const rng = random(seed);
-    const desert: Desert[] = [];
 
     const MIN_BLOCK_LENGTH = 25;
     const MAX_BLOCK_LENGTH = 150;
     const MIN_BLOCK_HEIGHT = 15;
     const MAX_BLOCK_HEIGHT = 20;
+    const MIN_STAR_HEIGHT = 50;
+    const MAX_STAR_HEIGHT = 150;
 
     let currentId = 0;
     let accumulatedLength = 0;
     let previousSandHeight = 0;
     let nextSandHeight = 0;
 
-    // First pass to determine next sand heights
-    const tempBlocks: TempBlock[] = [];
+    const tempBlocks: Array<{
+      type: DesertElementType;
+      blockLength: number;
+    }> = [];
+
     while (accumulatedLength < props.length) {
       const isWater = rng() < 0.35;
+      const blockType = isWater ? "water" : "sand";
 
-      // Only generate special features for sand blocks
-      const lightModeFeature = rng();
-      const hasCactus = !isWater && lightModeFeature < 0.25;
-      const hasFrog =
-        !isWater &&
-        !hasCactus &&
-        lightModeFeature >= 0.25 &&
-        lightModeFeature < 0.5;
-
-      const darkModeFeature = rng();
-      const hasStar = !isWater && darkModeFeature < 0.95;
-      const hasTurtle =
-        !isWater &&
-        !hasStar &&
-        darkModeFeature >= 0.45 &&
-        darkModeFeature < 0.7;
-
-      // Generate block length
       let blockLength;
       const remainingLength = props.length - accumulatedLength;
       if (remainingLength <= MAX_BLOCK_LENGTH) {
@@ -105,132 +98,146 @@ export default function DesertGenerator(props: DesertGeneratorInterface) {
           MIN_BLOCK_LENGTH;
       }
 
-      if (!isWater) {
-        const sandHeight =
-          Math.floor(rng() * (MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + 1)) +
-          MIN_BLOCK_HEIGHT;
-        nextSandHeight = sandHeight;
-      }
       tempBlocks.push({
-        isWater,
+        type: blockType,
         blockLength,
-        hasCactus,
-        hasFrog,
-        hasStar,
-        hasTurtle,
       });
-      accumulatedLength += blockLength;
-    }
 
-    // Reset for actual generation
-    accumulatedLength = 0;
-
-    // Second pass to generate actual blocks with correct heights
-    for (let i = 0; i < tempBlocks.length; i++) {
-      const block = tempBlocks[i];
-      if (!block) continue;
-      const { isWater, blockLength, hasCactus, hasFrog, hasStar, hasTurtle } =
-        block;
-
-      // Find next sand height
-      nextSandHeight = 0;
-      for (let j = i + 1; j < tempBlocks.length; j++) {
-        const block = tempBlocks[j];
-        if (block && !block.isWater) {
-          nextSandHeight =
-            Math.floor(rng() * (MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + 1)) +
-            MIN_BLOCK_HEIGHT;
-          break;
+      if (blockType === "sand") {
+        if (theme === "light") {
+          if (rng() < 0.5) tempBlocks.push({ type: "cactus", blockLength: 0 });
+          if (rng() < 0.5) tempBlocks.push({ type: "turtle", blockLength: 0 });
+        } else {
+          if (rng() < 0.5) tempBlocks.push({ type: "star", blockLength: 0 });
+          if (rng() < 0.5) tempBlocks.push({ type: "frog", blockLength: 0 });
         }
       }
 
-      // Generate height considering water level
-      let blockHeight;
-      if (isWater) {
-        const minHeight = MIN_BLOCK_HEIGHT;
-        const maxHeight = Math.min(
-          previousSandHeight || MAX_BLOCK_HEIGHT,
-          nextSandHeight || MAX_BLOCK_HEIGHT,
-        );
-        blockHeight = Math.floor(rng() * (maxHeight - minHeight)) + minHeight;
-      } else {
-        blockHeight =
-          Math.floor(rng() * (MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + 1)) +
-          MIN_BLOCK_HEIGHT;
-        previousSandHeight = blockHeight;
+      accumulatedLength += blockLength;
+    }
+
+    accumulatedLength = 0;
+    const desert: DesertElement[] = [];
+
+    for (let i = 0; i < tempBlocks.length; i++) {
+      const block = tempBlocks[i];
+      if (!block) continue;
+
+      let blockHeight = 0;
+
+      if (block.type === "sand" || block.type === "water") {
+        nextSandHeight = 0;
+        for (let j = i + 1; j < tempBlocks.length; j++) {
+          const nextBlock = tempBlocks[j];
+          if (nextBlock && nextBlock.type === "sand") {
+            nextSandHeight =
+              Math.floor(rng() * (MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + 1)) +
+              MIN_BLOCK_HEIGHT;
+            break;
+          }
+        }
+
+        if (block.type === "water") {
+          const minHeight = MIN_BLOCK_HEIGHT;
+          const maxHeight = Math.min(
+            previousSandHeight || MAX_BLOCK_HEIGHT,
+            nextSandHeight || MAX_BLOCK_HEIGHT,
+          );
+          blockHeight = Math.floor(rng() * (maxHeight - minHeight)) + minHeight;
+        } else {
+          blockHeight =
+            Math.floor(rng() * (MAX_BLOCK_HEIGHT - MIN_BLOCK_HEIGHT + 1)) +
+            MIN_BLOCK_HEIGHT;
+          previousSandHeight = blockHeight;
+        }
       }
 
-      // For sand blocks, generate a random position for the special feature
-      const specialFeaturePosition = !isWater
-        ? Math.floor(rng() * blockLength)
-        : undefined;
-
-      const desertObject: Desert = {
+      const desertObject: DesertElement = {
         id: currentId++,
-        type: isWater ? "water" : "sand",
-        length: blockLength,
+        type: block.type,
+        length: block.blockLength,
         height: blockHeight,
         starHeightMultiplier: Math.floor(rng() * 5.5) + 1,
-        specialFeaturePosition,
-        cactus: hasCactus,
-        frog: hasFrog,
-        star: hasStar,
-        turtle: hasTurtle,
+        specialFeaturePosition:
+          block.type === "sand"
+            ? Math.floor(rng() * block.blockLength)
+            : undefined,
+        starHeight:
+          block.type === "star"
+            ? Math.floor(rng() * (MAX_STAR_HEIGHT - MIN_STAR_HEIGHT)) +
+              MIN_STAR_HEIGHT
+            : undefined,
+        direction: rng() < 0.5 ? "up" : "down", // Always generate a direction
       };
 
-      accumulatedLength += blockLength;
       desert.push(desertObject);
     }
 
+    console.log(desert);
     return desert;
   }
 
   useEffect(() => {
-    console.log("Effect running with length:", props.length);
     const blogTitle = props.title;
     const desertBlocks = generateDesert(blogTitle);
     setDesert(desertBlocks);
-  }, [props.length]);
+  }, [props.length, theme]);
 
   return (
     <div className="absolute right-[20px] origin-right scale-x-[-1]">
-      {desert.map((desertBlock) => (
-        <div
-          key={desertBlock.id}
-          style={{
-            width: `${desertBlock.height}px`,
-            height: `${desertBlock.length}px`,
-            backgroundColor:
-              desertBlock.type === "water" ? "#C8DCE3" : "#D5B59E",
-          }}
-          className="relative"
-        >
-          {desertBlock.type === "sand" &&
-            desertBlock.specialFeaturePosition !== undefined && (
+      {desert.map((desertBlock) => {
+        if (desertBlock.type === "sand" || desertBlock.type === "water") {
+          return (
+            <div key={desertBlock.id}>
               <div
-                className="absolute"
                 style={{
-                  right: `${-36}px`,
-                  top: `${desertBlock.specialFeaturePosition}px`,
+                  width: `${desertBlock.height}px`,
+                  height: `${desertBlock.length}px`,
+                  backgroundColor:
+                    desertBlock.type === "sand" ? "#D5B59E" : "#C8DCE3",
                 }}
+                className="relative"
               >
-                {theme === "light" && (
-                  <>
-                    {desertBlock.cactus && <CactusIcon />}
-                    {desertBlock.turtle && <TurtleIcon />}
-                  </>
-                )}
-
-                {theme === "dark" && (
-                  <>
-                    {desertBlock.star && <StarIcon />}
-                    {desertBlock.frog && <FrogIcon />}
-                  </>
-                )}
+                {desert
+                  .filter(
+                    (special) =>
+                      special.id === desertBlock.id + 1 &&
+                      ["cactus", "star", "turtle", "frog"].includes(
+                        special.type,
+                      ),
+                  )
+                  .map((special) => (
+                    <div
+                      key={special.id}
+                      className="absolute left-0"
+                      style={{
+                        top: `${special.specialFeaturePosition}px`,
+                        left:
+                          special.type === "star"
+                            ? `${special.starHeight}px`
+                            : `${desertBlock.height}px`,
+                      }}
+                    >
+                      {theme === "light" && special.type === "cactus" && (
+                        <CactusIcon />
+                      )}
+                      {theme === "light" && special.type === "turtle" && (
+                        <TurtleIcon direction={special.direction} />
+                      )}
+                      {theme === "dark" && special.type === "star" && (
+                        <StarIcon />
+                      )}
+                      {theme === "dark" && special.type === "frog" && (
+                        <FrogIcon direction={special.direction} />
+                      )}
+                    </div>
+                  ))}
               </div>
-            )}
-        </div>
-      ))}
+            </div>
+          );
+        }
+        return null;
+      })}
     </div>
   );
 }
