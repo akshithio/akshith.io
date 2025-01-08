@@ -1,5 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
-import ContentHeightTracker from "@/components/pages/writing/slug/ContentHeightTracker";
+import ContentHeightTracker from "@/components/pages/writing/slug/desert/ContentHeightTracker";
 import { duplet, passenger } from "@/helpers/fonts";
 import { components } from "@/helpers/markdownComponents";
 import fs from "fs/promises";
