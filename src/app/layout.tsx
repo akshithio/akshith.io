@@ -1,8 +1,7 @@
 import "@/styles/globals.css";
 import "katex/dist/katex.min.css";
+import { ThemeProvider } from "next-themes";
 import "prismjs/themes/prism-tomorrow.css";
-
-import { GeistSans } from "geist/font/sans";
 
 export const metadata = {
   title: "Create T3 App",
@@ -16,20 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                const savedTheme = localStorage.getItem('theme') || 'light';
-                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-              } catch (e) {}
-            `,
-          }}
-        />
-      </head>
-      <body>{children}</body>
+    <html suppressHydrationWarning>
+      <head />
+      <body className="overflow-x-hidden">
+        <ThemeProvider attribute="class">{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function HomePage() {
   return (
-    <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
+    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
       <Navbar />
 
       <div className="absolute bottom-0 right-0 mb-[8px] mr-[8px] ">
@@ -205,6 +205,6 @@ export default function HomePage() {
           </h1>
         </div>
       </div>
-    </body>
+    </div>
   );
 }

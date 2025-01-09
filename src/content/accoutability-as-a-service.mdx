@@ -9,20 +9,89 @@ human language and the true meanings associated with each word. Algorithms that 
 to capture the nuance of these words via numeric representations are referred to as word
 embedding algorithms.
 
-Image 1: A diagram describing vectors and stuff [creds]
+<ImageComp
+  src="/blog/image.png"
+  width={768}
+  height={362.5}
+  alt="test image"
+  creds="https://www.wikipedia.org/"
+  description="A diagram describing vectors and stuff"
+  num={1}
+/>
+
+<SideNoteComp
+  num={1}
+  description="This is technically true but there is an issue with something else because of some other issue so we just unfortunately have to deal with that. sort of? i don’t really know? "
+/>
 
 Alternatively, while a significant correlation score improvement is observed with a nearly
-1000-fold increase in dataset size [@1], the gains are not linearly proportional but exhibit
+1000-fold increase in dataset size <SideCitationComp>[@1]</SideCitationComp>, the gains are not linearly proportional but exhibit
 a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
 that fastText optimally utilises its available data, rather than GloVe disproportionately
 benefiting from larger dataset sizes.
 
-This is some **bold** and _italics_ text.
+<InTextCitationComp
+  type="book"
+  name="Attention is all you need"
+  authors="Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin"
+/>
 
-This is a list in markdown:
+Alternatively, while a significant correlation score improvement is observed with a nearly
+1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit
+a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
+that fastText optimally utilizes its available data, rather than GloVe disproportionately
+benefiting from larger dataset sizes.
 
-- One
-- Two
-- Three
+> A wiseman once said something about doing something but idk what he said so he was probably a wiseman for saying it i’m not really sure. A wiseman once said something about doing something but idk what he said so he was probably. **~ Akshith Garapati**
 
-Checkout my React component:
+Alternatively, while a significant correlation score improvement is observed with a nearly
+1000-fold increase in dataset size for GloVe.
+
+- the gains are not linearly proportional but exhibit
+- a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
+
+Alternatively, while a significant correlation score improvement is observed with a nearly 1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit.
+
+# Oops Heading Time
+
+So that’s it my friends I am done let’s think aboiut this being some sort of conclusion paragraph because i don’t know how this really work and all that stuff but yes very cool, i had very much fun making this and all that because yotu know stuff and all happens and stuff and cool stuff.
+
+## $$ \sqrt{x^2} $$
+
+```js
+import ImageComp from "@/components/blog/standard/ImageComp";
+import InTextCitationComp from "@/components/blog/standard/InTextCitationComp";
+import SideCitationComp from "@/components/blog/standard/SideCitationComp";
+import SideNoteComp from "@/components/blog/standard/SideNoteComp";
+
+import { passenger } from "./fonts";
+
+const MarkdownComponents = {
+  h1: (props: any) => (
+    <h1 className=" my-6 text-4xl md:text-5xl dark:text-white" {...props} />
+  ),
+  h2: (props: any) => (
+    <h2 className=" my-5 text-3xl md:text-4xl dark:text-white" {...props} />
+  ),
+  h3: (props: any) => (
+    <h3 className=" my-4 text-2xl md:text-3xl dark:text-white" {...props} />
+  ),
+  h4: (props: any) => (
+    <h4 className=" my-3 text-xl md:text-2xl dark:text-white" {...props} />
+  ),
+  h5: (props: any) => (
+    <h5 className=" my-2 text-lg md:text-xl dark:text-white" {...props} />
+  ),
+  h6: (props: any) => (
+    <h6 className=" my-2 text-base md:text-lg dark:text-white" {...props} />
+  ),
+```
+
+{/*
+<CitationHolder>
+  <CitationItem>1</CitationItem>
+  <CitationItem>2</CitationItem>
+  <CitationItem>3</CitationItem>
+  <CitationItem>4</CitationItem>
+</CitationHolder> */}
+
