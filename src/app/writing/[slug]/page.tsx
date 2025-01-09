@@ -21,7 +21,7 @@ export async function generateMetadata({ params }) {
       description: frontMatter.category,
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/opengraph-image/${params.slug}`,
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}/opengraph-image/${params.slug}`,
           width: 1200,
           height: 630,
           alt: frontMatter.title,
