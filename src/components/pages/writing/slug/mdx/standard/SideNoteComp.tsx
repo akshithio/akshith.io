@@ -1,7 +1,7 @@
 "use client";
 
 import { bitscript, erika } from "@/helpers/fonts";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "next-themes";
 
 interface SideNoteProps {
   num: number;

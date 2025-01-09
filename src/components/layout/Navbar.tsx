@@ -1,10 +1,37 @@
 "use client";
 
 import { erika } from "@/helpers/fonts";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [systemTheme, setSystemTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    setSystemTheme(mediaQuery.matches ? "dark" : "light");
+
+    const handleThemeChange = (e) => {
+      setSystemTheme(e.matches ? "dark" : "light");
+    };
+
+    mediaQuery.addEventListener("change", handleThemeChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleThemeChange);
+    };
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
     <div className="w-full">
@@ -14,23 +41,20 @@ export default function Navbar() {
         <a href="/">
           <h1>home</h1>
         </a>
-
         <a href="/writing">
           <h1>writing</h1>
         </a>
-
         <a href="/work">
           <h1>work</h1>
         </a>
-
         <a href="/reach-out">
           <h1>reach out!</h1>
         </a>
       </div>
 
       <div className="absolute right-[16px] top-[16px]">
-        <button onClick={toggleTheme}>
-          {theme === "dark" && (
+        {currentTheme === "dark" && (
+          <button onClick={() => setTheme("light")}>
             <svg
               width="16"
               height="16"
@@ -47,9 +71,11 @@ export default function Navbar() {
                 fill="#999999"
               />
             </svg>
-          )}
+          </button>
+        )}
 
-          {theme !== "dark" && (
+        {currentTheme === "light" && (
+          <button onClick={() => setTheme("dark")}>
             <svg
               width="16"
               height="16"
@@ -62,8 +88,8 @@ export default function Navbar() {
                 fill="#999999"
               />
             </svg>
-          )}
-        </button>
+          </button>
+        )}
       </div>
     </div>
   );

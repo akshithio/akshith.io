@@ -1,7 +1,7 @@
 "use client";
 
 import { bitscript, duplet } from "@/helpers/fonts";
-import { useTheme } from "@/hooks/useTheme";
+import { useTheme } from "next-themes";
 
 export default function NotFoundPage() {
   const { theme } = useTheme();

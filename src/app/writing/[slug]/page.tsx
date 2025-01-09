@@ -111,8 +111,8 @@ export default async function Page({ params }: PageProps) {
   const { content, frontMatter } = await getPost(params.slug);
 
   return (
-    <body
-      className={`${duplet.className} w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] text-[#111] dark:bg-[#111] dark:text-[#eee]`}
+    <div
+      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-[24px] text-[#111] dark:bg-[#111] dark:text-[#eee]`}
     >
       <Navbar />
 
@@ -146,8 +146,7 @@ export default async function Page({ params }: PageProps) {
           <ContentHeightTracker content={content} title={frontMatter.title} />
         </div>
       </div>
-    </body>
+    </div>
   );
 }
-
 export const dynamicParams = true;

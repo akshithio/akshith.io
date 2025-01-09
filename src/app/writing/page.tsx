@@ -104,7 +104,7 @@ export default function WritingPage() {
   }, []);
 
   return (
-    <body className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
+    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-[24px] dark:bg-[#111]">
       <Navbar />
       <div className="flex h-full w-full">
         {/* no scrollbar is room for a11y issues */}
@@ -238,6 +238,6 @@ export default function WritingPage() {
           </div>
         </div>
       </div>
-    </body>
+    </div>
   );
 }

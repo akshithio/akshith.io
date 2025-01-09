@@ -5,7 +5,7 @@ export type DesertElementType =
   | "star"
   | "turtle"
   | "frog";
-  
+
 export type Direction = "up" | "down";
 
 export interface DesertElement {
@@ -22,4 +22,10 @@ export interface DesertElement {
 export interface DesertGeneratorProps {
   length: number;
   title: string;
+}
+
+export interface DesertFeatureProps {
+  special: DesertElement;
+  blockHeight: number;
+  theme: "light" | "dark";
 }
