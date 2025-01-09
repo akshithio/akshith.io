@@ -119,6 +119,7 @@ export default function WritingPage() {
               <a
                 href="https://udara.io/microblog"
                 target="_blank"
+                aria-label="Link to Udara Jay's personal website"
                 className={`${duplet.className} font-semibold underline`}
               >
                 udara.io
@@ -129,11 +130,14 @@ export default function WritingPage() {
           <div className="ml-[6px] mt-[24px] w-[336px] text-[#111] dark:text-[#eee]">
             {microblogs.map((microblog) => (
               <div key={microblog.id} className="mt-[24px]">
-                <h1
-                  className={`${duplet.className} right-0 ml-[81%] text-[12px] font-semibold text-[#999]`}
-                >
-                  {microblog.formattedTime}, {microblog.formattedDate}
-                </h1>
+                <div className="relative h-[20px] w-full">
+                  <h1
+                    className={`${duplet.className} absolute right-2 text-xs font-semibold text-[#999]`}
+                  >
+                    {microblog.formattedTime}, {microblog.formattedDate}
+                  </h1>
+                </div>
+
                 <div
                   className={`${erika.className} rounded-[24px] border-[1px] border-solid border-[#111] px-[18px] py-[6px] dark:border-[#eee]`}
                 >
@@ -199,7 +203,7 @@ export default function WritingPage() {
             {posts.map((post) => (
               <div>
                 <div className="mt-[4px] flex">
-                  <div className="relative mt-[4px] w-[800px]">
+                  <div className="relative mt-1 w-[800px]">
                     <a
                       href={"/writing/" + post.filename}
                       className={`${duplet.className} text-[16px] font-semibold`}

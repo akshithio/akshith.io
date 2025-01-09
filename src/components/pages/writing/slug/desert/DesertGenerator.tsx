@@ -1,8 +1,8 @@
 import { useDesertGeneration } from "@/hooks/useDesertGeneration";
 import { DesertGeneratorProps } from "@/types/desert";
 import { useTheme } from "next-themes";
-import DesertFeature from "./DesertFeature";
 import { useEffect, useState } from "react";
+import DesertFeature from "./DesertFeature";
 
 export default function DesertGenerator({
   length,
@@ -37,7 +37,7 @@ export default function DesertGenerator({
 
   if (currentTheme === "dark") {
     return (
-      <div className="absolute right-[20px] origin-right scale-x-[-1]">
+      <div className="absolute right-[20px] origin-right scale-x-[-1] bg-[#111]">
         {desert.dark.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;
@@ -76,7 +76,7 @@ export default function DesertGenerator({
     );
   } else if (currentTheme === "light") {
     return (
-      <div className="absolute right-[20px] origin-right scale-x-[-1]">
+      <div className="absolute right-[20px] origin-right scale-x-[-1] bg-[#eee]">
         {desert.light.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;

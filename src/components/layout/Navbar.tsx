@@ -52,9 +52,13 @@ export default function Navbar() {
         </a>
       </div>
 
-      <div className="absolute right-[16px] top-[16px]">
+      <div className="">
         {currentTheme === "dark" && (
-          <button onClick={() => setTheme("light")}>
+          <button
+            className="absolute right-[8px] top-[8px] p-3"
+            aria-label="Switch to light mode"
+            onClick={() => setTheme("light")}
+          >
             <svg
               width="16"
               height="16"
@@ -75,7 +79,11 @@ export default function Navbar() {
         )}
 
         {currentTheme === "light" && (
-          <button onClick={() => setTheme("dark")}>
+          <button
+            className="absolute right-[20px] top-[8px] p-3"
+            aria-label="Switch to dark mode"
+            onClick={() => setTheme("dark")}
+          >
             <svg
               width="16"
               height="16"

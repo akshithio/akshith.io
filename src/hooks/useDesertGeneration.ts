@@ -93,7 +93,7 @@ function convertToDesertElements(
       type: block.type,
       length: block.blockLength,
       height: blockHeight,
-      starHeightMultiplier: Math.floor(rng() * 4.5) + 1,
+      starHeightMultiplier: Math.floor(rng() * DESERT_CONFIG.STAR_MULTIPLIER) + 1,
       specialFeaturePosition:
         block.type === "sand"
           ? Math.floor(rng() * block.blockLength)

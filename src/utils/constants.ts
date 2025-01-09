@@ -16,4 +16,5 @@ export const DESERT_CONFIG = {
     TURTLE: 0.3,
     FROG: 0.3,
   },
+  STAR_MULTIPLIER: 4.0,
 } as const;
