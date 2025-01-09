@@ -2,6 +2,7 @@ import Navbar from "@/components/layout/Navbar";
 import ContentHeightTracker from "@/components/pages/writing/slug/desert/ContentHeightTracker";
 import { duplet, passenger } from "@/helpers/fonts";
 import { components } from "@/helpers/markdownComponents";
+import { convertDate } from "@/utils/dates";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
@@ -23,57 +24,28 @@ interface PageProps {
   };
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<FrontMatter> {
+export async function generateMetadata({ params }) {
   const { frontMatter } = await getPost(params.slug);
+
   return {
     title: frontMatter.title,
-    date: frontMatter.date,
-    category: frontMatter.category,
+    description: frontMatter.category,
+    openGraph: {
+      title: frontMatter.title,
+      description: frontMatter.category,
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/opengraph-image/${params.slug}`,
+          width: 1200,
+          height: 630,
+          alt: frontMatter.title,
+        },
+      ],
+    },
   };
 }
 
-function convertDate(date: string): string {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const [year, month, day] = date.split("-").map(Number);
-
-  const suffix = (day: number): string => {
-    if (day >= 11 && day <= 13) return `${day}th`;
-    switch (day % 10) {
-      case 1:
-        return `${day}st`;
-      case 2:
-        return `${day}nd`;
-      case 3:
-        return `${day}rd`;
-      default:
-        return `${day}th`;
-    }
-  };
-
-  if (month === undefined || day === undefined) {
-    throw new Error("Invalid date format");
-  }
-
-  return `${months[month - 1]} ${suffix(day)}, ${year}`;
-}
-
-async function getPost(slug: string) {
+export async function getPost(slug: string) {
   const filePath = path.join(process.cwd(), "src/content", `${slug}.mdx`);
   const fileContent = await fs.readFile(filePath, "utf8");
 
@@ -136,7 +108,7 @@ export default async function Page({ params }: PageProps) {
           </svg>
         </div>
 
-        <div className="ml-[40px] h-full w-[75%]">
+        <div className="ml-10 h-full w-[75%]">
           <div className={`${passenger.className}`}>
             <h1>{convertDate(frontMatter.date)} • 24,384 views</h1>
             <h1 className="text-[48px] font-semibold italic">
@@ -150,3 +122,4 @@ export default async function Page({ params }: PageProps) {
   );
 }
 export const dynamicParams = true;
+

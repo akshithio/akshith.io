@@ -25,7 +25,11 @@ export default function HomePage() {
       </div>
 
       <div className="absolute bottom-[8px] left-[8px] flex items-center justify-center gap-x-[12px]">
-        <a href="https://github.com/akshithio" target="_blank">
+        <a
+          href="https://github.com/akshithio"
+          target="_blank"
+          aria-label="Link to akshithio on Github"
+        >
           {" "}
           <svg
             width="16"
@@ -78,7 +82,11 @@ export default function HomePage() {
           </svg>
         </a>
 
-        <a href="https://x.com/akshithio" target="_blank">
+        <a
+          href="https://x.com/akshithio"
+          target="_blank"
+          aria-label="Link to akshithio on X (formerly Twitter)"
+        >
           <div className="mt-[2px]">
             <svg
               width="16"
