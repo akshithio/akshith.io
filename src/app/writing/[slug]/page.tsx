@@ -16,18 +16,18 @@ export async function generateMetadata({ params }) {
   return {
     title: frontMatter.title,
     description: frontMatter.category,
-    openGraph: {
-      title: frontMatter.title,
-      description: frontMatter.category,
-      images: [
-        {
-          url: `${process.env.NEXT_PUBLIC_BASE_URL}/opengraph-image/${params.slug}`,
-          width: 1200,
-          height: 630,
-          alt: frontMatter.title,
-        },
-      ],
-    },
+    // openGraph: {
+    //   title: frontMatter.title,
+    //   description: frontMatter.category,
+    //   images: [
+    //     {
+    //       url: `${process.env.NEXT_PUBLIC_BASE_URL}/opengraph-image/${params.slug}`,
+    //       width: 1200,
+    //       height: 630,
+    //       alt: frontMatter.title,
+    //     },
+    //   ],
+    // },
   };
 }
 
