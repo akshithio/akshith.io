@@ -1,6 +1,6 @@
 import { DesertElement, DesertElementType } from "@/types/desert";
 import { DESERT_CONFIG } from "@/utils/constants";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createRng, hash } from "../utils/random";
 
 function calculateBlockLength(
@@ -21,13 +21,39 @@ function addSpecialFeatures(
   rng: () => number,
   type: "light" | "dark",
 ): void {
-  const features = type === "light" ? ["cactus", "turtle"] : ["star", "frog"];
+  const features =
+    type === "light"
+      ? [
+          {
+            type: "cactus" as const,
+            prob: DESERT_CONFIG.FEATURES_PROBABILITY.CACTUS,
+          },
+          {
+            type: "turtle" as const,
+            prob: DESERT_CONFIG.FEATURES_PROBABILITY.TURTLE,
+          },
+        ]
+      : [
+          {
+            type: "star" as const,
+            prob: DESERT_CONFIG.FEATURES_PROBABILITY.STAR,
+          },
+          {
+            type: "frog" as const,
+            prob: DESERT_CONFIG.FEATURES_PROBABILITY.FROG,
+          },
+        ];
 
-  features.forEach((feature) => {
-    if (rng() < DESERT_CONFIG.FEATURE_PROBABILITY) {
-      blocks.push({ type: feature as DesertElementType, blockLength: 0 });
+  const roll = rng();
+  let cumulativeProb = 0;
+
+  for (const { type: featureType, prob } of features) {
+    cumulativeProb += prob;
+    if (roll < cumulativeProb) {
+      blocks.push({ type: featureType, blockLength: 0 });
+      break;
     }
-  });
+  }
 }
 
 function convertToDesertElements(
@@ -67,7 +93,7 @@ function convertToDesertElements(
       type: block.type,
       length: block.blockLength,
       height: blockHeight,
-      starHeightMultiplier: Math.floor(rng() * 5.5) + 1,
+      starHeightMultiplier: Math.floor(rng() * 4.5) + 1,
       specialFeaturePosition:
         block.type === "sand"
           ? Math.floor(rng() * block.blockLength)

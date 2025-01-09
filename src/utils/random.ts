@@ -1,9 +1,10 @@
 export function hash(input: string): number {
-  let hash = 5381;
+  let hash = 2166136261 >>> 0; // FNV offset basis
   for (let i = 0; i < input.length; i++) {
-    hash = hash * 33 + input.charCodeAt(i);
+    hash ^= input.charCodeAt(i);
+    hash = (hash * 16777619) >>> 0; // FNV prime
   }
-  return hash >>> 0;
+  return hash;
 }
 
 export function createRng(seed: number) {

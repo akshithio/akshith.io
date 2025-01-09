@@ -9,6 +9,11 @@ export const DESERT_CONFIG = {
     MIN_HEIGHT: 50,
     MAX_HEIGHT: 150,
   },
-  WATER_PROBABILITY: 0.35,
-  FEATURE_PROBABILITY: 0.35,
+  WATER_PROBABILITY: 0.25,
+  FEATURES_PROBABILITY: {
+    CACTUS: 0.3,
+    STAR: 0.5,
+    TURTLE: 0.3,
+    FROG: 0.3,
+  },
 } as const;
