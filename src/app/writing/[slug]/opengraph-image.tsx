@@ -1,7 +1,7 @@
 import { convertDate } from "@/utils/dates";
+import { getPost } from "@/utils/getPost";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import { getPost } from "./page";
 
 const FolderIcon = () => (
   <svg

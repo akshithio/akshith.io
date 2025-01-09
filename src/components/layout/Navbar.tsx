@@ -80,7 +80,7 @@ export default function Navbar() {
 
         {currentTheme === "light" && (
           <button
-            className="absolute right-[20px] top-[8px] p-3"
+            className="absolute right-[8px] top-[8px] p-3"
             aria-label="Switch to dark mode"
             onClick={() => setTheme("dark")}
           >
