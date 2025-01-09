@@ -1,7 +1,6 @@
 import { convertDate } from "@/utils/dates";
 import { getPost } from "@/utils/getPost";
 import { ImageResponse } from "next/og";
-import { NextRequest } from "next/server";
 
 const FolderIcon = () => (
   <svg
@@ -41,11 +40,10 @@ const LogoIcon = () => (
   </svg>
 );
 
-export async function GET(req: NextRequest) {
+export default async function Image({ params }: { params: { slug: string } }) {
   try {
-    const slug = req.nextUrl.pathname.split("/").pop();
 
-    if (!slug) {
+    if (!params.slug) {
       return new Response("Slug not found", { status: 400 });
     }
 
@@ -68,7 +66,7 @@ export async function GET(req: NextRequest) {
       ),
     ).then((res) => res.arrayBuffer());
 
-    const { frontMatter } = await getPost(slug);
+    const { frontMatter } = await getPost(params.slug);
 
     return new ImageResponse(
       (
