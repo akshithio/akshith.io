@@ -1,8 +1,23 @@
 import Navbar from "@/components/layout/Navbar";
 import ContentHeightTracker from "@/components/pages/writing/slug/desert/ContentHeightTracker";
+import { components } from "@/components/pages/writing/slug/mdx/MarkdownComponents";
 import { duplet, passenger } from "@/helpers/fonts";
 import { convertDate } from "@/utils/dates";
-import { getPost } from "@/utils/getPost";
+import fs from "fs/promises";
+import matter from "gray-matter";
+import { compileMDX } from "next-mdx-remote/rsc";
+import path from "path";
+import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+
+interface FrontMatter {
+  title: string;
+  date: string;
+  category: string;
+  description: string;
+}
 
 interface PageProps {
   params: {
@@ -15,19 +30,45 @@ export async function generateMetadata({ params }) {
 
   return {
     title: frontMatter.title,
-    description: frontMatter.category,
-    // openGraph: {
-    //   title: frontMatter.title,
-    //   description: frontMatter.category,
-    //   images: [
-    //     {
-    //       url: `${process.env.NEXT_PUBLIC_BASE_URL}/opengraph-image/${params.slug}`,
-    //       width: 1200,
-    //       height: 630,
-    //       alt: frontMatter.title,
-    //     },
-    //   ],
-    // },
+    description: frontMatter.description,
+    openGraph: {
+      title: frontMatter.title,
+      description: frontMatter.description,
+    },
+  };
+}
+
+async function getPost(slug: string) {
+  const filePath = path.join(process.cwd(), "src/content", `${slug}.mdx`);
+  const fileContent = await fs.readFile(filePath, "utf8");
+
+  const { data: frontMatter, content } = matter(fileContent);
+
+  const { content: compiled } = await compileMDX({
+    source: content,
+    components,
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [remarkGfm, remarkMath],
+        rehypePlugins: [
+          rehypeSlug,
+          [
+            rehypeKatex,
+            {
+              strict: false,
+              trust: true,
+              throwOnError: false,
+            },
+          ],
+        ],
+      },
+    },
+  });
+
+  return {
+    frontMatter: frontMatter as FrontMatter,
+    content: compiled,
   };
 }
 

@@ -4,7 +4,7 @@ import SideCitationComp from "@/components/pages/writing/slug/mdx/standard/SideC
 import SideNoteComp from "@/components/pages/writing/slug/mdx/standard/SideNoteComp";
 import CodeBlock from "./standard/CodeBlockComp";
 
-import { passenger } from "../../../../../utils/fonts";
+import { passenger } from "@/helpers/fonts";
 
 const MarkdownComponents = {
   h1: (props: any) => (

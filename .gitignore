@@ -45,3 +45,5 @@ jspm_packages
 # Next
 .vercel
 .next
+
+.DS_Store
