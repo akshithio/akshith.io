@@ -8,6 +8,8 @@ export const erika = localFont({
       style: "regular",
     },
   ],
+  variable: "--font-erika",
+  display: "swap",
 });
 
 export const bitscript = localFont({
@@ -18,6 +20,8 @@ export const bitscript = localFont({
       style: "regular",
     },
   ],
+  variable: "--font-bitscript",
+  display: "swap",
 });
 
 export const duplet = localFont({
@@ -93,6 +97,8 @@ export const duplet = localFont({
       style: "italic",
     },
   ],
+  variable: "--font-duplet",
+  display: "swap",
 });
 
 export const passenger = localFont({
@@ -168,4 +174,66 @@ export const passenger = localFont({
       style: "italic",
     },
   ],
+  variable: "--font-passenger",
+  display: "swap",
 });
+
+export async function loadFontsForOG() {
+  const fonts = [
+    {
+      name: "Duplet",
+      weights: [
+        {
+          weight: "400",
+          style: "regular",
+          path: "../../public/fonts/Duplet-Regular.otf",
+        },
+        {
+          weight: "600",
+          style: "regular",
+          path: "../../public/fonts/Duplet-Semibold.otf",
+        },
+      ],
+    },
+    {
+      name: "PassengerSerif",
+      weights: [
+        {
+          weight: "400",
+          style: "regular",
+          path: "../../public/fonts/PassengerSerif-Regular.otf",
+        },
+        {
+          weight: "600",
+          style: "regular",
+          path: "../../public/fonts/PassengerSerif-Semibold.otf",
+        },
+      ],
+    },
+    {
+      name: "ErikaHand",
+      weights: [
+        {
+          weight: "400",
+          style: "regular",
+          path: "../../public/fonts/ErikaHand-Regular.otf",
+        },
+      ],
+    },
+  ];
+
+  const loadedFonts = await Promise.all(
+    fonts.flatMap((font) =>
+      font.weights.map(async (weight) => ({
+        name: font.name,
+        data: await fetch(new URL(weight.path, import.meta.url)).then((res) =>
+          res.arrayBuffer(),
+        ),
+        weight: weight.weight,
+        style: weight.style,
+      })),
+    ),
+  );
+
+  return loadedFonts;
+}
