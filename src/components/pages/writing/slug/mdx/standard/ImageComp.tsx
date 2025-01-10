@@ -12,8 +12,8 @@ interface ImageProps {
 
 export default function ImageComp(props: ImageProps) {
   return (
-    <div className="my-[36px] flex w-full flex-col items-center justify-center font-semibold">
-      <div className="rounded-[24px]">
+    <div className="my-9 flex w-full flex-col items-center justify-center font-semibold">
+      <div className="rounded-3xl">
         <Image
           src={props.src}
           width={props.width}
@@ -21,7 +21,7 @@ export default function ImageComp(props: ImageProps) {
           alt={props.alt}
         />
       </div>
-      <h1 className="mt-[12px]">
+      <h1 className="mt-3">
         Image {props.num}: {props.description}{" "}
         {props.creds && (
           <a className="text-[#00f]" href={props.creds} target="_blank">

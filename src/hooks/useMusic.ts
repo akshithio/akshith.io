@@ -1,15 +1,19 @@
 "use client";
-
-import { duplet } from "@/helpers/fonts";
 import { useEffect, useState } from "react";
 
-export default function SpotifyStatus() {
-  const [spotify, setSpotify] = useState("not listening to anything");
+// Custom hook to handle music status logic
+export const useMusic = () => {
+  const [music, setMusic] = useState("not listening to anything");
   const [lastFetchTime, setLastFetchTime] = useState(0);
 
-  // Improved Spotify data fetching with debouncing
+  // used to split between the artist and song in the set state,
+  // if this ever appears in a song title or artist's name,
+  // the app would not function as expected
+  const SPLITTING_STRING = "1xe3489d8das98dsa0ads"; // string length: 21
+
+  // improved data fetching with debouncing
   useEffect(() => {
-    const fetchSpotifyData = async () => {
+    const fetchMusicData = async () => {
       const now = Date.now();
       // Only fetch if more than 2 seconds have passed since last fetch
       if (now - lastFetchTime < 2000) return;
@@ -35,8 +39,7 @@ export default function SpotifyStatus() {
             .slice(0, 2)
             .join(",");
 
-          let songString = songName + artist + "  •  ";
-
+          let songString = songName + artist + " • ";
           if (songString.length > 55) {
             artist = data.data.spotify.artist
               .replaceAll(";", ",")
@@ -45,38 +48,24 @@ export default function SpotifyStatus() {
               .slice(0, 1);
           }
 
-          setSpotify(`${songName}1xe34${artist}`);
+          setMusic(`${songName}${SPLITTING_STRING}${artist}`);
         } else {
-          setSpotify("not listening to anything");
+          setMusic("not listening to anything");
         }
       } catch (err) {
-        console.error("Error fetching Spotify data:", err);
+        console.error("Error fetching Music data:", err);
       }
     };
 
     // Initial fetch
-    fetchSpotifyData();
+    fetchMusicData();
 
     // Set up interval for periodic updates with shorter interval
-    const spotifyInterval = setInterval(fetchSpotifyData, 3000);
+    const musicInterval = setInterval(fetchMusicData, 3000);
 
     // Cleanup interval on component unmount
-    return () => clearInterval(spotifyInterval);
+    return () => clearInterval(musicInterval);
   }, [lastFetchTime]);
 
-  return (
-    <div>
-      {spotify !== "not listening to anything" && (
-        <div className="absolute bottom-[-48px]">
-          <h1
-            className={`${duplet.className} whitespace-nowrap text-[16px] text-[#999] dark:text-[#999]`}
-          >
-            listening to {spotify.substring(0, spotify.indexOf("1xe34"))}
-            {"  "}•{"  "}
-            {spotify.substring(spotify.indexOf("1xe34") + 5)} {"            "}
-          </h1>
-        </div>
-      )}
-    </div>
-  );
-}
+  return { music, SPLITTING_STRING };
+};

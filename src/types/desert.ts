@@ -19,7 +19,7 @@ export interface DesertElement {
   id: number;
 }
 
-export interface DesertGeneratorProps {
+export interface DesertProps {
   length: number;
   title: string;
 }

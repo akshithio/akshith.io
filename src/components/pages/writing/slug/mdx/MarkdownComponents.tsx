@@ -4,7 +4,7 @@ import SideCitationComp from "@/components/pages/writing/slug/mdx/standard/SideC
 import SideNoteComp from "@/components/pages/writing/slug/mdx/standard/SideNoteComp";
 import CodeBlock from "./standard/CodeBlockComp";
 
-import { passenger } from "@/helpers/fonts";
+import { passenger } from "@/utils/fonts";
 
 const MarkdownComponents = {
   h1: (props: any) => (
@@ -71,8 +71,8 @@ const MarkdownComponents = {
     <div
       className={`${passenger.className} flex w-full items-center justify-center`}
     >
-      <div className="border-l-solid my-6 w-[95%] border-l-[3px] px-[12px] py-[12px] [border-image:linear-gradient(to_bottom,#FF0000,#EBB751,#A6EB6A)_1]">
-        <div className="ml-[12px]">
+      <div className="border-l-solid my-6 w-[95%] border-l-[3px] px-3 py-3 [border-image:linear-gradient(to_bottom,#FF0000,#EBB751,#A6EB6A)_1]">
+        <div className="ml-3">
           <h1 className="text-[#111]">{props.children}</h1>
         </div>
       </div>

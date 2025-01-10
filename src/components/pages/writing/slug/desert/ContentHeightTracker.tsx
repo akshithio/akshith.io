@@ -2,7 +2,7 @@
 
 import { debounce } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import DesertGenerator from "./DesertGenerator";
+import DesertGenerator from "./Desert";
 
 interface ContentHeightTrackerInterface {
   content: React.ReactNode;
@@ -67,8 +67,8 @@ const ContentHeightTracker = (props: ContentHeightTrackerInterface) => {
       {contentHeight !== null && contentHeight > 0 && (
         <DesertGenerator length={contentHeight} title={props.title} />
       )}
-      <div className="relative mt-[20px]" ref={contentRef}>
-        <div className="mb-[40px]">{props.content}</div>
+      <div className="relative mt-5" ref={contentRef}>
+        <div className="mb-10">{props.content}</div>
       </div>
     </div>
   );
