@@ -1,3 +1,6 @@
+// Used on the /writing page to show the category
+// Used on the /writing/slug/opengraph-image to show the category of the blog
+
 export default function FolderIcon() {
   return (
     <svg

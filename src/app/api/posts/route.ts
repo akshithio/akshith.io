@@ -3,11 +3,13 @@ import { NextResponse } from "next/server";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const searchString = searchParams.get("searchString");
+
   try {
     const directory = "./src/content/";
 
-    // Ensure the directory exists
     if (!fs.existsSync(directory)) {
       return NextResponse.json(
         { error: "Directory not found" },
@@ -23,17 +25,20 @@ export async function GET() {
         const parsedFile = await read(filePath);
         matter(parsedFile, { strip: true });
 
-        // Extract just the matter data and flatten it
         const matterData = parsedFile.data.matter || parsedFile.data;
-
         return {
           ...matterData,
-          filename: file.replace(".mdx", ""), // Add filename to the response object
+          filename: file.replace(".mdx", ""),
         };
       }),
     );
 
-    return NextResponse.json(res);
+    const filteredRes =
+      searchString === "all"
+        ? res
+        : res.filter((item) => item.filename === searchString);
+
+    return NextResponse.json(filteredRes);
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(

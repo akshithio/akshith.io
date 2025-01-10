@@ -16,25 +16,21 @@ export default async function Image({ params }: { params: { slug: string } }) {
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 
-  const frontMatter = await fetch(`${baseURL}/api/posts?searchString=all`).then(
-    (res) => res.json(),
-  );
-
-  const post = frontMatter.find(
-    (item: { filename: string }) => item.filename === params.slug,
-  );
+  const post = await fetch(
+    `${baseURL}/api/posts?searchString=${params.slug}`,
+  ).then((res) => res.json());
 
   try {
     const dupletSemiBold = await fetch(
-      new URL("./Duplet-Semibold.otf", import.meta.url),
+      new URL("/public/fonts/Duplet-Semibold.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const passengerRegular = await fetch(
-      new URL("./PassengerSerif-Regular.otf", import.meta.url),
+      new URL("/public/fonts/PassengerSerif-Regular.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const erikaRegular = await fetch(
-      new URL("./ErikaHand-Regular.otf", import.meta.url),
+      new URL("/public/fonts/ErikaHand-Regular.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     return new ImageResponse(
@@ -109,11 +105,11 @@ export default async function Image({ params }: { params: { slug: string } }) {
               marginLeft: "48px",
             }}
           >
-            <LogoIcon />
+            <LogoIcon type="opengraph" />
             <h1
               style={{
                 fontFamily: "PassengerSerif",
-                marginLeft: "48px",
+                marginLeft: "16px",
                 fontSize: "36px",
               }}
             >

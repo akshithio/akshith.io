@@ -115,7 +115,7 @@ function calculateHeight(rng: () => number): number {
   return Math.floor(rng() * (MAX_HEIGHT - MIN_HEIGHT + 1)) + MIN_HEIGHT;
 }
 
-export function useDesertGeneration(title: string, length: number) {
+export function useDesert(title: string, length: number) {
   const [desert, setDesert] = useState<{
     light: DesertElement[];
     dark: DesertElement[];

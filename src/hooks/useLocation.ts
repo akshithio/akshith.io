@@ -1,12 +1,8 @@
-"use client";
-
-import { duplet } from "@/helpers/fonts";
 import { useEffect, useState } from "react";
 
-export default function () {
+export const useLocation = () => {
   const [cityData, setCityData] = useState<{ city?: string }>();
 
-  // Location data fetching
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
@@ -30,15 +26,5 @@ export default function () {
     return () => clearInterval(locationInterval);
   }, []);
 
-  return (
-    <div>
-      {cityData?.city !== undefined && cityData?.city !== null && (
-        <h1
-          className={`${duplet.className} text-[16px] text-[#999] dark:text-[#999]`}
-        >
-          ☀️ i'm in {cityData.city.toLowerCase()} and it's 17:24
-        </h1>
-      )}
-    </div>
-  );
-}
+  return cityData;
+};

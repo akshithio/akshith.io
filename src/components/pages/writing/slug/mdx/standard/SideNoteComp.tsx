@@ -1,6 +1,6 @@
 "use client";
 
-import { bitscript, erika } from "@/helpers/fonts";
+import { bitscript, erika } from "@/utils/fonts";
 import { useTheme } from "next-themes";
 
 interface SideNoteProps {
