@@ -1,11 +1,10 @@
 import fs from "fs";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const searchString = searchParams.get("searchString");
+export async function GET(request: NextRequest) {
+  const searchString = request.nextUrl.searchParams.get("searchString");
 
   try {
     const directory = "./src/content/";
