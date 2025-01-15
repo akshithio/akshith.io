@@ -16,9 +16,17 @@ export default async function Image({ params }: { params: { slug: string } }) {
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 
-  const post = await fetch(
-    `${baseURL}/api/posts?searchString=${params.slug}`,
-  ).then((res) => res.json());
+  const post = (
+    await fetch(`${baseURL}/api/posts?searchString=${params.slug}`).then(
+      (res) => res.json(),
+    )
+  )[0];
+
+  if (post.length > 1) {
+    console.log(
+      "more than one posts detected with slug param, possibility of duplicate files",
+    );
+  }
 
   try {
     const dupletSemiBold = await fetch(
@@ -105,7 +113,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
               marginLeft: "48px",
             }}
           >
-            <LogoIcon type="opengraph" />
+            <LogoIcon src="/writing/[slug]" />
             <h1
               style={{
                 fontFamily: "PassengerSerif",

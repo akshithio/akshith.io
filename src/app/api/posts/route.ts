@@ -1,43 +1,44 @@
-import fs from "fs";
+import { promises as fs } from "fs";
+import matter from "gray-matter";
 import { NextRequest, NextResponse } from "next/server";
-import { read } from "to-vfile";
-import { matter } from "vfile-matter";
+import path from "path";
 
 export async function GET(request: NextRequest) {
   const searchString = request.nextUrl.searchParams.get("searchString");
 
+  if (!searchString) {
+    return NextResponse.json(
+      { error: "searchString parameter is required" },
+      { status: 400 },
+    );
+  }
+
   try {
-    const directory = "./src/content/";
+    const contentDir = path.join(process.cwd(), "src/content");
+    const files = await fs.readdir(contentDir);
 
-    if (!fs.existsSync(directory)) {
-      return NextResponse.json(
-        { error: "Directory not found" },
-        { status: 404 },
-      );
-    }
+    const posts = await Promise.all(
+      files
+        .filter((filename) => filename.endsWith(".mdx"))
+        .map(async (filename) => {
+          const filePath = path.join(contentDir, filename);
+          const fileContent = await fs.readFile(filePath, "utf8");
 
-    const files = fs.readdirSync(directory);
+          const { data: frontmatter } = matter(fileContent);
 
-    const res = await Promise.all(
-      files.map(async (file) => {
-        const filePath = `${directory}${file}`;
-        const parsedFile = await read(filePath);
-        matter(parsedFile, { strip: true });
-
-        const matterData = parsedFile.data.matter || parsedFile.data;
-        return {
-          ...matterData,
-          filename: file.replace(".mdx", ""),
-        };
-      }),
+          return {
+            ...frontmatter,
+            filename: filename.replace(".mdx", ""),
+          };
+        }),
     );
 
-    const filteredRes =
+    const filteredPosts =
       searchString === "all"
-        ? res
-        : res.filter((item) => item.filename === searchString);
+        ? posts
+        : posts.filter((post) => post.filename === searchString);
 
-    return NextResponse.json(filteredRes);
+    return NextResponse.json(filteredPosts);
   } catch (error) {
     console.error("Error processing request:", error);
     return NextResponse.json(
