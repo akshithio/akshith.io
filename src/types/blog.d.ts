@@ -7,9 +7,9 @@ export interface FrontMatter {
 
 export interface BlogPostMatter {
   title: string;
-  category: string;
   date: string;
-  url: string;
+  category: string;
   description?: string;
+  url: string;
   filename: string;
 }

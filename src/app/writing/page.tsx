@@ -41,7 +41,9 @@ export default function WritingPage() {
             </div>
 
             <div className="absolute right-0 flex items-center justify-end">
-              <RSSIcon />
+              <a href="/rss" target="_blank">
+                <RSSIcon src="/writing" />
+              </a>
 
               <div className="ml-4" />
 

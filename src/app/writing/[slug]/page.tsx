@@ -1,18 +1,10 @@
 import Navbar from "@/components/layout/Navbar";
 import ContentHeightTracker from "@/components/pages/writing/slug/desert/ContentHeightTracker";
-import { components } from "@/components/pages/writing/slug/mdx/MarkdownComponents";
 import LogoIcon from "@/icons/LogoIcon";
-import { FrontMatter } from "@/types/blog";
+import RSSIcon from "@/icons/RSSIcon";
 import { convertDate } from "@/utils/dates";
 import { duplet, passenger } from "@/utils/fonts";
-import fs from "fs/promises";
-import matter from "gray-matter";
-import { compileMDX } from "next-mdx-remote/rsc";
-import path from "path";
-import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import { getPost } from "@/utils/getPost";
 
 interface PageProps {
   params: {
@@ -33,40 +25,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-async function getPost(slug: string) {
-  const filePath = path.join(process.cwd(), "src/content", `${slug}.mdx`);
-  const fileContent = await fs.readFile(filePath, "utf8");
-
-  const { data: frontMatter, content } = matter(fileContent);
-
-  const { content: compiled } = await compileMDX({
-    source: content,
-    components,
-    options: {
-      parseFrontmatter: true,
-      mdxOptions: {
-        remarkPlugins: [remarkGfm, remarkMath],
-        rehypePlugins: [
-          rehypeSlug,
-          [
-            rehypeKatex,
-            {
-              strict: false,
-              trust: true,
-              throwOnError: false,
-            },
-          ],
-        ],
-      },
-    },
-  });
-
-  return {
-    frontMatter: frontMatter as FrontMatter,
-    content: compiled,
-  };
-}
-
 export default async function Page({ params }: PageProps) {
   const { content, frontMatter } = await getPost(params.slug);
 
@@ -78,13 +36,20 @@ export default async function Page({ params }: PageProps) {
 
       <div className="ml-5 mt-10 flex h-full w-[90%]">
         <div className="mt-10">
-          <LogoIcon type="writing/slug" />
+          <LogoIcon src="/writing/[slug]" />
         </div>
 
         <div className="ml-10 h-full w-[75%]">
           <div className={`${passenger.className}`}>
-            <h1>{convertDate(frontMatter.date)} • 24,384 views</h1>
-            <h1 className="text-5xl font-semibold italic">
+            <div className="flex items-center">
+              <h1>{convertDate(frontMatter.date)} • 24,384 views</h1>
+
+              <a href="/rss" target="_blank" className="ml-3">
+                <RSSIcon src="/writing/[slug]" />
+              </a>
+            </div>
+
+            <h1 className="mt-2 text-5xl font-semibold italic">
               {frontMatter.title}
             </h1>
           </div>

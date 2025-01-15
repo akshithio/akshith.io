@@ -44,13 +44,15 @@ export default function Navbar() {
           <h1>home</h1>
         </a>
         <a href="/writing">
-          <h1>writing</h1>
+          <h1>writing</h1> 
+          {/* i/o */}
         </a>
         <a href="/work">
           <h1>work</h1>
         </a>
         <a href="/reach-out">
           <h1>reach out!</h1>
+          {/* say hi! */}
         </a>
       </div>
 

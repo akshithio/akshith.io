@@ -10,7 +10,7 @@ export default function NotFoundPage() {
   return (
     <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-[#eee] text-[#111] dark:bg-[#111] dark:text-[#eee]">
       <div className="flex flex-col items-center justify-center">
-        <LogoIcon type="404" />
+        <LogoIcon src="/404" />
 
         <h1
           className={`${duplet.className} my-7 w-[370px] text-center text-2xl font-semibold`}

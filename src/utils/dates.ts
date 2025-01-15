@@ -1,4 +1,8 @@
 export function convertDate(date: string): string {
+  if (!date) {
+    throw new Error("Date is required");
+  }
+
   const months = [
     "January",
     "February",
@@ -14,7 +18,12 @@ export function convertDate(date: string): string {
     "December",
   ];
 
-  const [year, month, day] = date.split("-").map(Number);
+  const parts = date.split("-");
+  if (parts.length !== 3) {
+    throw new Error("Invalid date format");
+  }
+
+  const [year, month, day] = parts.map(Number);
 
   const suffix = (day: number): string => {
     if (day >= 11 && day <= 13) return `${day}th`;

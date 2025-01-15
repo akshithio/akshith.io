@@ -55,7 +55,7 @@ export default function HomePage() {
               <LocationStatus />
               <div className="mt-3 flex">
                 <div className="text-black dark:text-white">
-                  <LogoIcon type="root" />
+                  <LogoIcon src="root" />
                 </div>
 
                 <h1
