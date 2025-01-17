@@ -21,6 +21,8 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: frontMatter.title,
       description: frontMatter.description,
+      url: `https://akshith.io/writing/${params.slug}`,
+      siteName: "Akshith Garapati",
     },
   };
 }
@@ -30,7 +32,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div
-      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-[#eee] p-6 text-[#111] dark:bg-[#111] dark:text-[#eee]`}
+      className={`${duplet.className} text-aBlack dark:bg-aBlack bg-aWhite dark:text-aWhite min-h-screen w-screen overflow-x-hidden overflow-y-scroll p-6`}
     >
       <Navbar />
 

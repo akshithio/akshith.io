@@ -10,7 +10,19 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 
 export async function getPost(slug: string) {
-  const filePath = path.join(process.cwd(), "src/content", `${slug}.mdx`);
+  const contentDir = path.join(process.cwd(), "src/content");
+  const files = await fs.readdir(contentDir);
+
+  const matchingFile = files.find(
+    (filename) =>
+      filename.replace(/^.*?-(.*)$/, "$1").replace(".mdx", "") === slug,
+  );
+
+  if (!matchingFile) {
+    throw new Error(`Post not found for slug: ${slug}`);
+  }
+
+  const filePath = path.join(contentDir, matchingFile);
   const fileContent = await fs.readFile(filePath, "utf8");
 
   const { data: frontMatter, content } = matter(fileContent);

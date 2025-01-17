@@ -4,10 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import DesertFeature from "./DesertFeature";
 
-export default function Desert({
-  length,
-  title,
-}: DesertProps) {
+export default function Desert({ length, title }: DesertProps) {
   const { theme } = useTheme();
   const [systemTheme, setSystemTheme] = useState("light");
   const desert = useDesert(title, length);
@@ -37,7 +34,7 @@ export default function Desert({
 
   if (currentTheme === "dark") {
     return (
-      <div className="absolute right-5 origin-right scale-x-[-1] bg-[#111]">
+      <div className="bg-aBlack absolute right-5 origin-right scale-x-[-1]">
         {desert.dark.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;
@@ -76,7 +73,7 @@ export default function Desert({
     );
   } else if (currentTheme === "light") {
     return (
-      <div className="absolute right-5 origin-right scale-x-[-1] bg-[#eee]">
+      <div className="bg-aWhite absolute right-5 origin-right scale-x-[-1]">
         {desert.light.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;

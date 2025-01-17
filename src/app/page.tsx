@@ -7,9 +7,22 @@ import TwitterIcon from "@/icons/TwitterIcon";
 import { duplet, erika, passenger } from "@/utils/fonts";
 import Image from "next/image";
 
+export async function generateMetadata() {
+  return {
+    title: "Akshith Garapati",
+    description: "My Personal Site - Akshith Garapati",
+    openGraph: {
+      title: "Akshith Garapati",
+      description: "My Personal Site - Akshith Garapati",
+      url: `https://akshith.io/`,
+      siteName: "Akshith Garapati",
+    },
+  };
+}
+
 export default function HomePage() {
   return (
-    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-6 dark:bg-[#111]">
+    <div className="dark:bg-aBlack bg-aWhite h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
       <Navbar />
 
       <div className="absolute bottom-0 right-0 mb-2 mr-2 ">
@@ -51,22 +64,22 @@ export default function HomePage() {
       <div className="flex w-screen">
         <div>
           <div>
-            <div className="ml-[136px] mt-[108px]">
+            <div className="ml-34 mt-28">
               <LocationStatus />
               <div className="mt-3 flex">
-                <div className="text-black dark:text-white">
+                <div className="text-aBlack dark:text-aWhite">
                   <LogoIcon src="root" />
                 </div>
 
                 <h1
-                  className={`ml-3 ${passenger.className} text-2xl text-[#111] dark:text-[#eee]`}
+                  className={`ml-3 ${passenger.className} text-aBlack dark:text-aWhite text-2xl`}
                 >
                   Akshith Garapati
                 </h1>
               </div>
 
               <div
-                className={`${duplet.className} relative mt-[26px] w-[332px] text-base leading-6 text-[#111] dark:text-[#eee]`}
+                className={`${duplet.className} text-aBlack dark:text-aWhite relative mt-6 w-80 text-base leading-6`}
               >
                 <p>
                   I’m a comp sci (‘28) freshman{" "}
@@ -121,10 +134,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative ml-[15%] grid w-[40%] place-items-center">
+        <div className="relative ml-[12.5%] grid w-[40%] place-items-center">
           <h1 className="text-[200px]">🍃</h1>
           <h1
-            className={`${erika.className} absolute bottom-[20%] left-[15%] w-[145px] leading-6 text-[#111] dark:text-[#eee]`}
+            className={`${erika.className} text-aBlack dark:text-aWhite absolute bottom-[20%] left-[15%] w-[145px] leading-6`}
           >
             note: work in progress because i’m not really sure what to put here?
             got ideas?{" "}

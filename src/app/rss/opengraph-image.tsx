@@ -1,7 +1,4 @@
-import FolderIcon from "@/icons/FolderIcon";
 import LogoIcon from "@/icons/LogoIcon";
-import { convertDate } from "@/utils/dates";
-import { headers } from "next/headers";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -11,26 +8,14 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default async function Image({ params }: { params: { slug: string } }) {
-  const host = headers().get("host");
-  const protocol = host?.includes("localhost") ? "http" : "https";
-  const baseURL = `${protocol}://${host}`;
-
-  const post = (
-    await fetch(`${baseURL}/api/posts?searchString=${params.slug}`).then(
-      (res) => res.json(),
-    )
-  )[0];
-
-  if (post.length > 1) {
-    console.log(
-      "more than one posts detected with slug param, possibility of duplicate files",
-    );
-  }
-
+export default async function Image() {
   try {
     const dupletSemiBold = await fetch(
       new URL("/public/fonts/Duplet-Semibold.otf", import.meta.url),
+    ).then((res) => res.arrayBuffer());
+
+    const bitscript = await fetch(
+      new URL("/public/fonts/Bitscript-Regular.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const passengerRegular = await fetch(
@@ -89,17 +74,16 @@ export default async function Image({ params }: { params: { slug: string } }) {
               alignItems: "center",
             }}
           >
-            <FolderIcon />
             <h1
               style={{
-                fontFamily: "Duplet",
+                fontFamily: "ErikaHand",
                 marginLeft: "6px",
                 fontSize: "16px",
                 fontWeight: 600,
                 color: "#999",
               }}
             >
-              {post.category}
+              /rss
             </h1>
           </div>
 
@@ -121,24 +105,18 @@ export default async function Image({ params }: { params: { slug: string } }) {
                 fontSize: "36px",
               }}
             >
-              {post.title}
+              Akshith Garapati |{" "}
+              <span
+                style={{
+                  fontFamily: "Bitscript",
+                  marginLeft: "16px",
+                  fontSize: "24px",
+                }}
+              >
+                rss
+              </span>
             </h1>
           </div>
-
-          <h1
-            style={{
-              fontFamily: "ErikaHand",
-              fontSize: "16px",
-              fontWeight: 600,
-              color: "#999",
-              position: "absolute",
-              bottom: "120px",
-              left: "24px",
-              marginLeft: "48px",
-            }}
-          >
-            Written on {convertDate(post.date)}
-          </h1>
         </div>
       ),
       {
@@ -162,6 +140,13 @@ export default async function Image({ params }: { params: { slug: string } }) {
             style: "normal",
             weight: 400,
           },
+          {
+            name: "ErikaHand",
+            data: erikaRegular,
+            style: "normal",
+            weight: 400,
+          },
+          { name: "Bitscript", data: bitscript, style: "normal", weight: 400 },
         ],
       },
     );

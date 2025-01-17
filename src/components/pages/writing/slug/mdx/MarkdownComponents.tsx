@@ -9,37 +9,37 @@ import { passenger } from "@/utils/fonts";
 const MarkdownComponents = {
   h1: (props: any) => (
     <h1
-      className=" my-6 text-4xl font-semibold md:text-5xl dark:text-white"
+      className=" dark:text-aWhite my-6 text-4xl font-semibold md:text-5xl"
       {...props}
     />
   ),
   h2: (props: any) => (
     <h2
-      className=" my-5 text-3xl font-semibold md:text-4xl dark:text-white"
+      className=" dark:text-aWhite my-5 text-3xl font-semibold md:text-4xl"
       {...props}
     />
   ),
   h3: (props: any) => (
     <h3
-      className=" my-4 text-2xl font-semibold md:text-3xl dark:text-white"
+      className=" dark:text-aWhite my-4 text-2xl font-semibold md:text-3xl"
       {...props}
     />
   ),
   h4: (props: any) => (
     <h4
-      className=" my-3 text-xl font-semibold md:text-2xl dark:text-white"
+      className=" dark:text-aWhite my-3 text-xl font-semibold md:text-2xl"
       {...props}
     />
   ),
   h5: (props: any) => (
     <h5
-      className=" my-2 text-lg font-semibold md:text-xl dark:text-white"
+      className=" dark:text-aWhite my-2 text-lg font-semibold md:text-xl"
       {...props}
     />
   ),
   h6: (props: any) => (
     <h6
-      className=" my-2 text-base font-semibold md:text-lg dark:text-white"
+      className=" dark:text-aWhite my-2 text-base font-semibold md:text-lg"
       {...props}
     />
   ),
@@ -48,7 +48,7 @@ const MarkdownComponents = {
   p: (props: any) => (
     <p className=" my-4 leading-relaxed dark:text-gray-200" {...props} />
   ),
-  strong: (props: any) => <strong className=" dark:text-white" {...props} />,
+  strong: (props: any) => <strong className=" dark:text-aWhite" {...props} />,
   em: (props: any) => <em className=" italic dark:text-gray-200" {...props} />,
 
   // Lists
@@ -73,7 +73,7 @@ const MarkdownComponents = {
     >
       <div className="border-l-solid my-6 w-[95%] border-l-[3px] px-3 py-3 [border-image:linear-gradient(to_bottom,#FF0000,#EBB751,#A6EB6A)_1]">
         <div className="ml-3">
-          <h1 className="text-[#111]">{props.children}</h1>
+          <h1 className="text-aBlack">{props.children}</h1>
         </div>
       </div>
     </div>
@@ -155,7 +155,7 @@ const MarkdownComponents = {
   dl: (props: any) => (
     <dl className=" my-4 space-y-4 dark:text-gray-200" {...props} />
   ),
-  dt: (props: any) => <dt className=" dark:text-white" {...props} />,
+  dt: (props: any) => <dt className=" dark:text-aWhite" {...props} />,
   dd: (props: any) => <dd className=" ml-4 dark:text-gray-300" {...props} />,
 };
 
