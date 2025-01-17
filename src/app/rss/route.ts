@@ -11,18 +11,18 @@ interface Post {
   filename: string; // filename == post slug
 }
 
-export async function generateMetadata() {
-  return {
-    title: "Akshith Garapati | RSS",
-    description: "A link to subscribe to my RSS Feed - Akshith Garapati",
-    openGraph: {
-      title: "Akshith Garapati | RSS",
-      description: "A link to subscribe to my RSS Feed - Akshith Garapati",
-      url: `https://akshith.io/rss/`,
-      siteName: "Akshith Garapati",
-    },
-  };
-}
+// export async function generateMetadata() {
+//   return {
+//     title: "Akshith Garapati | RSS",
+//     description: "A link to subscribe to my RSS Feed - Akshith Garapati",
+//     openGraph: {
+//       title: "Akshith Garapati | RSS",
+//       description: "A link to subscribe to my RSS Feed - Akshith Garapati",
+//       url: `https://akshith.io/rss/`,
+//       siteName: "Akshith Garapati",
+//     },
+//   };
+// }
 
 async function getAllPosts(): Promise<Post[]> {
   const host = headers().get("host");
