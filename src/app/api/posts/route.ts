@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 
           return {
             ...frontmatter,
-            filename: filename.replace(".mdx", ""),
+            filename: filename.replace(/^.*?-(.*)$/, "$1").replace(".mdx", ""),
           };
         }),
     );

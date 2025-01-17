@@ -18,12 +18,12 @@ export default function InTextCitationComp(props: InTextCitationProps) {
       <div
         className={`${passenger.className} my-6 flex w-[95%] items-center justify-center border border-dotted border-black p-3 dark:border-white`}
       >
-        <div className="text-black dark:text-white">
+        <div className="text-aBlack dark:text-aWhite">
           {props.type === "book" && <BookIcon />}
         </div>
         <div className="ml-3">
           <h1>
-            <span className="text-[#111] dark:text-[#eee]">{props.name}</span> |{" "}
+            <span className="text-aBlack dark:text-aWhite">{props.name}</span> |{" "}
             <span className="text-[#888]">{props.authors}</span>
           </h1>
         </div>

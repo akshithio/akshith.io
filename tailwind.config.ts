@@ -9,7 +9,15 @@ export default {
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
+      spacing: {
+        '34': '8.5rem'
+      }
     },
+    colors: {
+      aWhite: "#eee",
+      aBlack: "#111",
+    },
+  
   },
   plugins: [],
 } satisfies Config;

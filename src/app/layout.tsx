@@ -5,7 +5,7 @@ import "prismjs/themes/prism-tomorrow.css";
 
 export const metadata = {
   title: "Akshith Garapati",
-  description: "Akshith Garapati's personal website",
+  description: "Akshith Garapati's Personal Website",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_BASE_URL || "https://akshith.io",
   ),

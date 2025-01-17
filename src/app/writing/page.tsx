@@ -5,13 +5,28 @@ import FilterIcon from "@/icons/FilterIcon";
 import RSSIcon from "@/icons/RSSIcon";
 import { duplet, erika, passenger } from "@/utils/fonts";
 
+export async function generateMetadata() {
+  return {
+    title: "Akshith Garapati | Writing",
+    description:
+      'A list of the "blog" posts that I write alongside the microblog I keep track of. Written and maintained by Akshith Garapati.',
+    openGraph: {
+      title: "Akshith Garapati | Writing",
+      description:
+        'A list of the "blog" posts that I write alongside the microblog I keep track of. Written and maintained by Akshith Garapati.',
+      url: `https://akshith.io/writing/`,
+      siteName: "Akshith Garapati",
+    },
+  };
+}
+
 export default function WritingPage() {
   return (
-    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-[#eee] p-6 dark:bg-[#111]">
+    <div className="dark:bg-aBlack bg-aWhite h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
       <Navbar />
       <div className="flex h-full w-full">
         <div className="scrollbar-hidden mt-[45px] h-[100%] w-[372px] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
-          <div className="w-[336px] text-[#111] dark:text-[#eee]">
+          <div className="text-aBlack dark:text-aWhite w-[336px]">
             <h1 className={`${passenger.className} text-2xl italic `}>
               the ✨ microblog ✨
             </h1>
@@ -32,7 +47,7 @@ export default function WritingPage() {
           <MicroblogContent />
         </div>
 
-        <div className="ml-[130px] mt-6 text-[#111] dark:text-[#eee]">
+        <div className="text-aBlack dark:text-aWhite ml-[65px] mt-6">
           <div className="relative mt-9 flex items-center">
             <div className="justify-start">
               <h1 className={`${passenger.className} text-2xl italic`}>

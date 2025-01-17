@@ -8,12 +8,12 @@ export default function NotFoundPage() {
   const { theme } = useTheme();
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center overflow-hidden bg-[#eee] text-[#111] dark:bg-[#111] dark:text-[#eee]">
+    <div className="text-aBlack dark:bg-aBlack bg-aWhite dark:text-aWhite flex h-screen w-screen items-center justify-center overflow-hidden">
       <div className="flex flex-col items-center justify-center">
         <LogoIcon src="/404" />
 
         <h1
-          className={`${duplet.className} my-7 w-[370px] text-center text-2xl font-semibold`}
+          className={`${duplet.className} my-7 w-96 text-center text-2xl font-semibold`}
         >
           we’ve been lookin around but <br /> can’t seem to find what you want.{" "}
           <br /> go back to{" "}

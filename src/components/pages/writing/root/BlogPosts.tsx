@@ -8,7 +8,7 @@ export default function BlogPosts() {
   const posts = usePosts();
 
   return (
-    <div className="mt-[38px]">
+    <div className="mt-9">
       {posts.map(({ title, filename, category }) => (
         <div key={filename}>
           <div className="mt-1 flex">
@@ -25,7 +25,7 @@ export default function BlogPosts() {
             </div>
 
             <h1
-              className={`${duplet.className} ml-1.5 mt-[-2px] text-base font-semibold text-[#999]`}
+              className={`${duplet.className} ml-1.5 mb-0.5 text-base font-semibold text-[#999]`}
             >
               {category}
             </h1>

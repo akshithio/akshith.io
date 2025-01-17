@@ -38,13 +38,13 @@ export default function Navbar() {
   return (
     <div className="w-full">
       <div
-        className={`${erika.className} flex gap-x-12 text-lg text-[#111] underline dark:text-[#eee]`}
+        className={`${erika.className} text-aBlack dark:text-aWhite flex gap-x-12 text-lg underline`}
       >
         <a href="/">
           <h1>home</h1>
         </a>
         <a href="/writing">
-          <h1>writing</h1> 
+          <h1>writing</h1>
           {/* i/o */}
         </a>
         <a href="/work">
