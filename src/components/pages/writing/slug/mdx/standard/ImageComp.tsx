@@ -1,16 +1,7 @@
+import { ImageCompProps } from "@/types/mdx";
 import Image from "next/image";
 
-interface ImageProps {
-  src: string;
-  width: number;
-  height: number;
-  alt: string;
-  num: number;
-  description: string;
-  creds?: string;
-}
-
-export default function ImageComp(props: ImageProps) {
+export default function ImageComp(props: ImageCompProps) {
   return (
     <div className="my-9 flex w-full flex-col items-center justify-center font-semibold">
       <div className="rounded-3xl">
@@ -24,7 +15,11 @@ export default function ImageComp(props: ImageProps) {
       <h1 className="mt-3">
         Image {props.num}: {props.description}{" "}
         {props.creds && (
-          <a className="text-[#00f]" href={props.creds} target="_blank">
+          <a
+            className="text-[#22f] dark:text-[#93C5FD]"
+            href={props.creds}
+            target="_blank"
+          >
             [creds]
           </a>
         )}

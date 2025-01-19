@@ -6,12 +6,6 @@ import { convertDate } from "@/utils/dates";
 import { duplet, passenger } from "@/utils/fonts";
 import { getPost } from "@/utils/getPost";
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 export async function generateMetadata({ params }) {
   const { frontMatter } = await getPost(params.slug);
 
@@ -27,12 +21,12 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }) {
   const { content, frontMatter } = await getPost(params.slug);
 
   return (
     <div
-      className={`${duplet.className} text-aBlack dark:bg-aBlack bg-aWhite dark:text-aWhite min-h-screen w-screen overflow-x-hidden overflow-y-scroll p-6`}
+      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-aWhite p-6 text-aBlack dark:bg-aBlack dark:text-aWhite`}
     >
       <Navbar />
 

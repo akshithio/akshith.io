@@ -1,5 +1,5 @@
 import { components } from "@/components/pages/writing/slug/mdx/MarkdownComponents";
-import { FrontMatter } from "@/types/blog";
+import { FrontMatter } from "@/types/writing";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";

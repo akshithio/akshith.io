@@ -1,9 +1,7 @@
+import { IconParams } from "@/types/icon";
+
 // Used on /writing to subscribe to RSS and
 // on /writing/slug to show the same option
-
-interface IconParams {
-  src: string;
-}
 
 export default function RSSIcon(props: IconParams) {
   if (props.src === "/writing/[slug]") {

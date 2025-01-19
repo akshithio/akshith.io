@@ -1,12 +1,7 @@
 "use client";
 
 import Prism from "prismjs";
-import React, { useEffect, useRef } from "react";
-
-interface CodeBlockProps {
-  children: React.ReactNode;
-  className?: string;
-}
+import { useEffect, useRef } from "react";
 
 const loadLanguages = async () => {
   // Define the languages you want to load
@@ -22,7 +17,7 @@ const loadLanguages = async () => {
   );
 };
 
-const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
+export default function CodeBlock({ children, className }) {
   const codeRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -44,6 +39,4 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
       {children}
     </code>
   );
-};
-
-export default CodeBlock;
+}
