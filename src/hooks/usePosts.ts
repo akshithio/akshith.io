@@ -1,12 +1,12 @@
 "use client";
 
-import { BlogPostMatter } from "@/types/blog";
+import { FrontMatter } from "@/types/writing";
 import { useEffect, useState } from "react";
 
 export const usePosts = () => {
-  const [posts, setPosts] = useState<BlogPostMatter[]>([]);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
+  const [posts, setPosts] = useState<FrontMatter[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/posts?searchString=all")
@@ -19,17 +19,18 @@ export const usePosts = () => {
       .then((postsData) => {
         // Sort posts by date
         const sortedPosts = postsData.sort(
-          (a: BlogPostMatter, b: BlogPostMatter) =>
+          (a: FrontMatter, b: FrontMatter) =>
             new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
         setPosts(sortedPosts);
-        // setIsLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
-        // setError(err instanceof Error ? err.message : "Failed to load posts");
-        // setIsLoading(false);
+        console.log(err);
+        setError(err instanceof Error ? err.message : "Failed to load posts");
+        setIsLoading(false);
       });
   }, []);
 
-  return posts;
+  return { posts, isLoading, error };
 };

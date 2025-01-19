@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
+import Tooltip from "@/components/layout/Tooltip";
 import BlogPosts from "@/components/pages/writing/root/BlogPosts";
 import MicroblogContent from "@/components/pages/writing/root/MicroblogContent";
 import FilterIcon from "@/icons/FilterIcon";
@@ -22,11 +23,11 @@ export async function generateMetadata() {
 
 export default function WritingPage() {
   return (
-    <div className="dark:bg-aBlack bg-aWhite h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
+    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
       <Navbar />
       <div className="flex h-full w-full">
         <div className="scrollbar-hidden mt-[45px] h-[100%] w-[372px] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
-          <div className="text-aBlack dark:text-aWhite w-[336px]">
+          <div className="w-[336px] text-aBlack dark:text-aWhite">
             <h1 className={`${passenger.className} text-2xl italic `}>
               the ✨ microblog ✨
             </h1>
@@ -47,7 +48,7 @@ export default function WritingPage() {
           <MicroblogContent />
         </div>
 
-        <div className="text-aBlack dark:text-aWhite ml-[65px] mt-6">
+        <div className="ml-[65px] mt-6 text-aBlack dark:text-aWhite">
           <div className="relative mt-9 flex items-center">
             <div className="justify-start">
               <h1 className={`${passenger.className} text-2xl italic`}>
@@ -56,13 +57,16 @@ export default function WritingPage() {
             </div>
 
             <div className="absolute right-0 flex items-center justify-end">
-              <a href="/rss" target="_blank">
-                <RSSIcon src="/writing" />
-              </a>
+              <Tooltip content="RSS Feed">
+                <a href="/rss" target="_blank">
+                  <RSSIcon src="/writing" />
+                </a>
+              </Tooltip>
 
               <div className="ml-4" />
-
-              <FilterIcon />
+              <Tooltip content="Filter Category">
+                <FilterIcon />
+              </Tooltip>
             </div>
           </div>
 

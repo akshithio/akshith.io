@@ -28,12 +28,13 @@ embedding algorithms.
 
 Alternatively, while a significant correlation score improvement is observed with a nearly
 1000-fold increase in dataset size <SideCitationComp>[@1]</SideCitationComp>, the gains are not linearly proportional but exhibit
-a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
+a more logarithmic trend. This suggests diminishing returns as dataset size grows <CitationSuperscriptComp>1</CitationSuperscriptComp>, indicating
 that fastText optimally utilises its available data, rather than GloVe disproportionately
 benefiting from larger dataset sizes.
 
 <InTextCitationComp
-  type="book"
+  type="paper"
+  link="https://arxiv.org/abs/1706.03762"
   name="Attention is all you need"
   authors="Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin"
 />
@@ -60,7 +61,7 @@ So that’s it my friends I am done let’s think aboiut this being some sort of
 
 ## $$ \sqrt{x^2} $$
 
-```js
+```tsx
 import ImageComp from "@/components/blog/standard/ImageComp";
 import InTextCitationComp from "@/components/blog/standard/InTextCitationComp";
 import SideCitationComp from "@/components/blog/standard/SideCitationComp";
@@ -89,3 +90,45 @@ const MarkdownComponents = {
   ),
 ```
 
+<BibliographyHolderComp>
+  <BibliographyItemComp id="1">
+    [1] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="2">
+    [2] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="3">
+    [3] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="4">
+    [4] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="5">
+    [5] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="6">
+    [6] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="7">
+    [7] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+  <BibliographyItemComp id="8">
+    [8] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
+    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html), December
+    13, 2023.
+  </BibliographyItemComp>
+</BibliographyHolderComp>

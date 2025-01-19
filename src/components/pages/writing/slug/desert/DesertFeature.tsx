@@ -14,7 +14,7 @@ const FEATURE_ICONS = {
 export function DesertFeature({
   special,
   blockHeight,
-}: Omit<DesertFeatureProps, "theme">) {
+}: DesertFeatureProps) {
   const style = {
     position: "absolute",
     left:

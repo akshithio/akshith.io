@@ -1,10 +1,8 @@
+import { IconParams } from "@/types/icon";
+
 // Used across the website in numerous places where the logo is needed
 // including but not limited to /root, /404, /writing/slug/opengraph-image,
 // /writing/slug and more.
-
-interface IconParams {
-  src: string;
-}
 
 export default function LogoIcon(props: IconParams) {
   if (props.src === "/[slug]/opengraph") {

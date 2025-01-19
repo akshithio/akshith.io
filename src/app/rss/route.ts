@@ -1,30 +1,9 @@
+import { FrontMatter } from "@/types/writing";
 import { Feed } from "feed";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
-interface Post {
-  title: string;
-  date: Date; // needs to be converted
-  category: string;
-  description: string;
-  excerpt: string;
-  filename: string; // filename == post slug
-}
-
-// export async function generateMetadata() {
-//   return {
-//     title: "Akshith Garapati | RSS",
-//     description: "A link to subscribe to my RSS Feed - Akshith Garapati",
-//     openGraph: {
-//       title: "Akshith Garapati | RSS",
-//       description: "A link to subscribe to my RSS Feed - Akshith Garapati",
-//       url: `https://akshith.io/rss/`,
-//       siteName: "Akshith Garapati",
-//     },
-//   };
-// }
-
-async function getAllPosts(): Promise<Post[]> {
+async function getAllPosts(): Promise<FrontMatter[]> {
   const host = headers().get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
@@ -34,11 +13,13 @@ async function getAllPosts(): Promise<Post[]> {
   );
 
   return posts
-    .map((post: Post) => ({
+    .map((post: FrontMatter) => ({
       ...post,
-      date: new Date(post.date),
     }))
-    .sort((a: Post, b: Post) => b.date.getTime() - a.date.getTime());
+    .sort(
+      (a: FrontMatter, b: FrontMatter) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
 }
 
 export async function GET() {
@@ -69,7 +50,7 @@ export async function GET() {
       link: `${baseURL}/writing/${post.filename}`,
       description: post.description || "",
       content: post.excerpt,
-      date: post.date,
+      date: new Date(post.date),
       image: `${baseURL}/writing/${post.filename}/opengraph-image`,
       enclosure: {
         url: `${baseURL}/writing/${post.filename}/opengraph-image`,
