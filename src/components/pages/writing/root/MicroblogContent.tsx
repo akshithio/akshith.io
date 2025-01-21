@@ -8,6 +8,7 @@ const LoadingState = () => (
     <div className="relative h-5 w-full">
       <div className="absolute right-2 h-3 w-32 animate-pulse rounded-sm bg-[#999]/20 dark:bg-[#999]/10" />
     </div>
+
     <div className="mt-1 rounded-3xl border-[1px] border-solid border-[#999]/20 px-4 py-1.5 dark:border-[#999]/10">
       <div className="h-12 w-full animate-pulse rounded-sm bg-[#999]/20 dark:bg-[#999]/10" />
     </div>
@@ -16,7 +17,7 @@ const LoadingState = () => (
 
 const ErrorState = () => (
   <div className="mt-12 flex h-[65%] w-[336px] flex-col items-center justify-center">
-    <div className="text-red mb-4 text-center">
+    <div className="mb-4 text-center">
       <h2
         className={`${duplet.className} text-xl font-semibold text-[#ef4444] dark:text-[#f87171]`}
       >

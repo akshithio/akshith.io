@@ -1,11 +1,11 @@
-import BibliographyHolderComp from "@/components/pages/writing/slug/mdx/standard/BibliographyHolderComp";
-import BibliographyItemComp from "@/components/pages/writing/slug/mdx/standard/BibliographyItemComp";
-import CitationSuperscriptComp from "@/components/pages/writing/slug/mdx/standard/CitationSuperscriptComp";
-import CodeBlock from "@/components/pages/writing/slug/mdx/standard/CodeBlockComp";
-import ImageComp from "@/components/pages/writing/slug/mdx/standard/ImageComp";
-import InTextCitationComp from "@/components/pages/writing/slug/mdx/standard/InTextCitationComp";
-import SideCitationComp from "@/components/pages/writing/slug/mdx/standard/SideCitationComp";
-import SideNoteComp from "@/components/pages/writing/slug/mdx/standard/SideNoteComp";
+import BibliographyHolderComp from "@/components/pages/writing/slug/mdx/BibliographyHolderComp";
+import BibliographyItemComp from "@/components/pages/writing/slug/mdx/BibliographyItemComp";
+import CitationSuperscriptComp from "@/components/pages/writing/slug/mdx/CitationSuperscriptComp";
+import CodeBlock from "@/components/pages/writing/slug/mdx/CodeBlockComp";
+import ImageComp from "@/components/pages/writing/slug/mdx/ImageComp";
+import InTextCitationComp from "@/components/pages/writing/slug/mdx/InTextCitationComp";
+import SideCitationComp from "@/components/pages/writing/slug/mdx/SideCitationComp";
+import SideNoteComp from "@/components/pages/writing/slug/mdx/SideNoteComp";
 
 import { passenger } from "@/utils/fonts";
 
@@ -81,25 +81,11 @@ const MarkdownComponents = {
       </div>
     </div>
   ),
-
-  // Code elements
-  code: ({ children, className, ...props }: any) => {
-    if (className) {
-      return (
-        <CodeBlock className={className} {...props}>
-          {children}
-        </CodeBlock>
-      );
-    }
-    return (
-      <code
-        className="bg-gray-100 rounded-md px-2 py-1 font-mono text-sm"
-        {...props}
-      >
-        {children}
-      </code>
-    );
-  },
+  code: ({ children, className, ...props }: any) => (
+    <CodeBlock className={className} {...props}>
+      {children}
+    </CodeBlock>
+  ),
   pre: (props: any) => (
     <pre
       className=" bg-gray-100 dark:bg-gray-800 dark:text-gray-200 my-4 overflow-x-auto rounded-lg p-4 text-sm"
