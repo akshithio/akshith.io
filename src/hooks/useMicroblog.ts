@@ -32,8 +32,7 @@ export const useMicroblogs = () => {
               new Date(b.time).getTime() - new Date(a.time).getTime(),
           );
 
-        const recentPosts = sortedPosts.slice(0, 15);
-        setMicroblogs(recentPosts);
+        setMicroblogs(sortedPosts);
         setIsLoading(false);
       })
       .catch((err) => {

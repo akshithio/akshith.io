@@ -145,8 +145,6 @@ export function useDesert(title: string, length: number) {
         return;
       }
 
-      console.log("Generating with seed:", seedRef.current);
-
       const lightBlocks = generateDesert(length, rngRef.current, "light");
       const darkBlocks = generateDesert(length, rngRef.current, "dark");
 

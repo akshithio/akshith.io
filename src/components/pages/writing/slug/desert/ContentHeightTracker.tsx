@@ -28,7 +28,6 @@ export default function ContentHeightTracker(props: {
 
         // Find the citation holder if it exists
         const citationHolder = element.querySelector("#citation-holder");
-        console.log(citationHolder);
 
         if (citationHolder) {
           // Get the distance from the top of the content to the top of the citation holder

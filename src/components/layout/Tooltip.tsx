@@ -1,7 +1,7 @@
 "use client";
 
 import { duplet } from "@/utils/fonts";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Tooltip({
   content,
@@ -11,13 +11,93 @@ export default function Tooltip({
   children: React.ReactNode;
 }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isOverlapped, setIsOverlapped] = useState(false);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const checkOverlap = () => {
+      if (!tooltipRef.current || !isVisible) return;
+
+      const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+      const checkPoints = [
+        [
+          tooltipRect.left + tooltipRect.width / 2,
+          tooltipRect.top + tooltipRect.height / 2,
+        ],
+        [tooltipRect.left, tooltipRect.top],
+        [tooltipRect.right, tooltipRect.top],
+        [tooltipRect.left, tooltipRect.bottom],
+        [tooltipRect.right, tooltipRect.bottom],
+      ] as [number, number][];
+
+      for (const [x, y] of checkPoints) {
+        // const adjustedX = x + window.scrollX;
+        // const adjustedY = y + window.scrollY;
+        // const elements = document.elementsFromPoint(adjustedX, adjustedY);
+
+        const elements = document.elementsFromPoint(x, y);
+
+        const hasHigherZIndexOverlap = elements.some((el, index) => {
+          // skip the first element as it would be the tooltip itself
+          if (index === 0 || el === tooltipRef.current) return false;
+
+          if (el instanceof HTMLElement) {
+            const elZIndex =
+              parseInt(window.getComputedStyle(el).zIndex, 10) || 0;
+            const tooltipZIndex =
+              parseInt(
+                window.getComputedStyle(tooltipRef.current!).zIndex,
+                10,
+              ) || 0;
+
+            return elZIndex > tooltipZIndex;
+          }
+          return false;
+        });
+
+        if (hasHigherZIndexOverlap) {
+          setIsOverlapped(true);
+          return;
+        }
+      }
+
+      setIsOverlapped(false);
+    };
+
+    const handleScroll = () => {
+      requestAnimationFrame(checkOverlap);
+    };
+
+    const handleResize = () => {
+      requestAnimationFrame(checkOverlap);
+    };
+
+    checkOverlap();
+
+    document.addEventListener("scroll", handleScroll, true);
+    window.addEventListener("resize", handleResize);
+
+    const observer = new MutationObserver(checkOverlap);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll, true);
+      window.removeEventListener("resize", handleResize);
+      observer.disconnect();
+    };
+  }, [isVisible]);
 
   return (
     <div
       className="relative"
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={(e) => {
-        // check if we're not moving to the tooltip
         const tooltipElement =
           e.currentTarget.querySelector('[role="tooltip"]');
         if (
@@ -25,23 +105,16 @@ export default function Tooltip({
           !tooltipElement.contains(e.relatedTarget as Node)
         ) {
           setIsVisible(false);
+          setIsOverlapped(false);
         }
       }}
     >
       {children}
       <div
+        ref={tooltipRef}
         role="tooltip"
-        onMouseEnter={() => setIsVisible(true)}
-        onMouseLeave={(e) => {
-          // hide only if not moving back to the element that caused the trigger
-          if (
-            !e.currentTarget.parentElement?.contains(e.relatedTarget as Node)
-          ) {
-            setIsVisible(false);
-          }
-        }}
         className={`${duplet.className} absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform whitespace-nowrap rounded-md bg-aBlack px-2 py-1 text-sm font-semibold text-aWhite transition-all duration-200 ease-out dark:bg-aWhite dark:text-aBlack ${
-          isVisible
+          isVisible && !isOverlapped
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-2 opacity-0"
         }`}
