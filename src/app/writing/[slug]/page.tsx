@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
-import ContentHeightTracker from "@/components/pages/writing/slug/desert/ContentHeightTracker";
+import ContentHeightTracker from "@/components/pages/writing/slug/other/ContentHeightTracker";
+import ViewCounter from "@/components/pages/writing/slug/other/ViewCounter";
 import LogoIcon from "@/icons/LogoIcon";
 import RSSIcon from "@/icons/RSSIcon";
 import { convertDate } from "@/utils/dates";
@@ -38,7 +39,10 @@ export default async function Page({ params }) {
         <div className="ml-10 h-full w-[75%]">
           <div className={`${passenger.className}`}>
             <div className="flex items-center">
-              <h1>{convertDate(frontMatter.date)} • 24,384 views</h1>
+              <h1>
+                {convertDate(frontMatter.date)} •{" "}
+                <ViewCounter slug={params.slug} />
+              </h1>
 
               <a href="/rss" target="_blank" className="ml-3">
                 <RSSIcon src="/writing/[slug]" />
