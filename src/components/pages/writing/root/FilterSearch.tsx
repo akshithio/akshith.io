@@ -1,8 +1,8 @@
 "use client";
 
-import { duplet } from "@/utils/fonts";
-import { useRef, useState, useEffect } from "react";
 import { usePosts } from "@/hooks/usePosts";
+import { duplet } from "@/utils/fonts";
+import { useEffect, useRef, useState } from "react";
 
 export default function FilterSearch({
   children,
@@ -20,7 +20,6 @@ export default function FilterSearch({
 
   useEffect(() => {
     if (!isLoading && posts.length > 0) {
-      // Get unique categories
       const categories = Array.from(
         new Set(posts.map((post) => post.category)),
       );
@@ -29,11 +28,10 @@ export default function FilterSearch({
       const categoryOptions = categories.map((category, index) => ({
         id: index + 1,
         label: category,
-        checked: true, // All categories are checked by default
+        checked: true,
       }));
       setOptions(categoryOptions);
 
-      // Notify parent component with all categories selected
       onCategoryChange(categories);
     }
   }, [posts, isLoading]);
@@ -44,12 +42,10 @@ export default function FilterSearch({
         option.id === id ? { ...option, checked: !option.checked } : option,
       );
 
-      // Update selected categories in parent component
       const selectedCategories = updatedOptions
         .filter((option) => option.checked)
         .map((option) => option.label);
 
-      // Notify parent about the category selection
       onCategoryChange(selectedCategories);
 
       return updatedOptions;

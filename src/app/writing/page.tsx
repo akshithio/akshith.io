@@ -1,4 +1,6 @@
 import WholePage from "@/components/pages/writing/root/WholePage";
+// this WholePage is put in a different component because generateMetadata cannot be used in a component
+// that uses useClient;
 
 export async function generateMetadata() {
   return {
