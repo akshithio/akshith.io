@@ -1,43 +1,47 @@
-import { NextRequest, NextResponse } from "next/server";
+import { adminDb } from "@/firebaseAdminConfig";
+import { z } from "zod";
 
-let lastLocation: { city: string; timezone: string } | null = null;
+const TimeDataSchema = z.object({
+  utc: z.string(),
+});
 
-export async function POST(req: NextRequest) {
+const LocationDataSchema = z.object({
+  country: z.string(),
+  region: z.string(),
+  timezone: z.string(),
+  city: z.string(),
+  time: TimeDataSchema,
+});
+
+const ApiResponseSchema = z.object({
+  data: z.array(LocationDataSchema),
+});
+
+export async function GET() {
   try {
-    const { city, timezone } = await req.json();
+    const snapshot = await adminDb.collection("location").get();
+    const rawData = snapshot.docs.map((doc) => ({
+      ...doc.data(),
+    }));
 
-    // Validate the input
-    if (!city || !timezone) {
-      return NextResponse.json(
-        { message: "City and timezone are required" },
-        { status: 400 },
+    const validationResult = ApiResponseSchema.safeParse({ data: rawData });
+
+    if (!validationResult.success) {
+      console.error("Data validation error:", validationResult.error);
+      return new Response(
+        JSON.stringify({
+          error: "Data validation failed",
+          details: validationResult.error.format(),
+        }),
+        { status: 422 },
       );
     }
 
-    // Save the location data
-    lastLocation = { city, timezone };
-
-    // Return the success response
-    return NextResponse.json(
-      { message: "Location saved successfully", city, timezone },
-      { status: 201 },
-    );
+    return new Response(JSON.stringify(validationResult.data), { status: 200 });
   } catch (error) {
-    console.error("Error in POST:", error);
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 },
-    );
-  }
-}
-
-export async function GET(req: NextRequest) {
-  if (lastLocation) {
-    return NextResponse.json(
-      { message: "Location retrieved successfully", ...lastLocation },
-      { status: 200 },
-    );
-  } else {
-    return NextResponse.json({ message: "No location found" }, { status: 404 });
+    console.error("Error fetching data:", error);
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+      status: 500,
+    });
   }
 }

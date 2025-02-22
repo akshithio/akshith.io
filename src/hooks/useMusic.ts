@@ -47,6 +47,7 @@ export const useMusic = () => {
               .split(",")
               .slice(0, 1);
           }
+          // TODO: feat in the name of the song like "LOVE FEAT.ZACARI - Kendrick Lamar, Zacari"
 
           setMusic(`${songName}${SPLITTING_STRING}${artist}`);
         } else {
