@@ -9,7 +9,7 @@ export default function MusicStatus() {
   return (
     <div>
       {music !== "not listening to anything" && (
-        <div className="absolute bottom-[-48px]">
+        <div className="absolute bottom-[-3rem]">
           <h1
             className={`${duplet.className} whitespace-nowrap text-base text-[#999] dark:text-[#999]`}
           >

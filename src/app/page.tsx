@@ -22,7 +22,7 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="dark:bg-aBlack bg-aWhite h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
+    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
       <Navbar />
 
       <div className="absolute bottom-0 right-0 mb-2 mr-2 ">
@@ -72,14 +72,14 @@ export default function HomePage() {
                 </div>
 
                 <h1
-                  className={`ml-3 ${passenger.className} text-aBlack dark:text-aWhite text-2xl`}
+                  className={`ml-3 ${passenger.className} text-2xl text-aBlack dark:text-aWhite`}
                 >
                   Akshith Garapati
                 </h1>
               </div>
 
               <div
-                className={`${duplet.className} text-aBlack dark:text-aWhite relative mt-6 w-80 text-base leading-6`}
+                className={`${duplet.className} relative mt-6 w-80 text-base leading-6 text-aBlack dark:text-aWhite`}
               >
                 <p>
                   I’m a comp sci (‘28) freshman{" "}
@@ -135,9 +135,9 @@ export default function HomePage() {
         </div>
 
         <div className="relative ml-[12.5%] grid w-[40%] place-items-center">
-          <h1 className="text-[200px]">🍃</h1>
+          <h1 className="text-[12.5rem]">🍃</h1>
           <h1
-            className={`${erika.className} text-aBlack dark:text-aWhite absolute bottom-[20%] left-[15%] w-[145px] leading-6`}
+            className={`${erika.className} absolute bottom-[20%] left-[15%] w-[9.063rem] leading-6 text-aBlack dark:text-aWhite`}
           >
             note: work in progress because i’m not really sure what to put here?
             got ideas?{" "}

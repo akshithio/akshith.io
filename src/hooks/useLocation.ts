@@ -1,30 +1,28 @@
 import { useEffect, useState } from "react";
 
 export const useLocation = () => {
-  const [cityData, setCityData] = useState<{ city?: string }>();
+  const [locationData, setLocationData] = useState<LocationData | undefined>();
 
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
-        const res = await fetch(
-          `https://akshith-io-git-dev-akshith-garapatis-projects.vercel.app/api`,
-          { cache: "no-store" },
-        );
-        const data = await res.json();
-        setCityData(data);
+        const res = await fetch("/api/location", { cache: "no-store" });
+        const responseData: ApiResponse = await res.json();
+
+        if (responseData.data && responseData.data.length > 0) {
+          setLocationData(responseData.data[0]);
+        }
       } catch (err) {
         console.error("Error fetching location data:", err);
       }
     };
 
-    // Initial fetch
     fetchLocationData();
 
-    // Update location every minute
     const locationInterval = setInterval(fetchLocationData, 60000);
 
     return () => clearInterval(locationInterval);
   }, []);
 
-  return cityData;
+  return locationData;
 };

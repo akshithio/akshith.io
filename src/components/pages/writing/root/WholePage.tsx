@@ -22,12 +22,12 @@ export default function WholePage() {
     <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
       <Navbar />
       <div className="flex h-full w-full">
-        <div className="scrollbar-hidden mt-[45px] h-[100%] w-[372px] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
-          <div className="w-[336px] text-aBlack dark:text-aWhite">
+        <div className="scrollbar-hidden mt-[2.813rem] h-[100%] w-[23.25rem] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
+          <div className="w-[21rem] text-aBlack dark:text-aWhite">
             <h1 className={`${passenger.className} text-2xl italic `}>
               the ✨ microblog ✨
             </h1>
-            <h1 className={`${erika.className} mt-1 w-[323px] text-sm`}>
+            <h1 className={`${erika.className} mt-1 w-[20.125rem] text-sm`}>
               these are meant to be notes / drafts tweets / shower thoughts /
               whatever else tbh. inspired from{" "}
               <a
@@ -44,7 +44,7 @@ export default function WholePage() {
           <MicroblogContent />
         </div>
 
-        <div className="ml-[65px] mt-6 text-aBlack dark:text-aWhite">
+        <div className="ml-[4.063rem] mt-6 text-aBlack dark:text-aWhite">
           <div className="relative mt-9 flex items-center">
             <div className="justify-start">
               <h1 className={`${passenger.className} text-2xl italic`}>
