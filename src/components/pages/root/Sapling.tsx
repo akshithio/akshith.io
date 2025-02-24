@@ -1,16 +1,21 @@
 "use client";
 
+import { erika } from "@/utils/fonts";
 import { useTheme } from "next-themes";
-import p5 from "p5";
+import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
 
-export default function Sapling() {
+const p5 = typeof window !== "undefined" ? require("p5") : null;
+
+function SaplingWindow() {
   const canvasRef = useRef<HTMLDivElement>(null);
-  const p5Ref = useRef<p5 | null>(null);
+  const p5Ref = useRef<any>(null);
   const { theme } = useTheme();
 
   useEffect(() => {
-    const sketch = (p: p5) => {
+    if (!p5) return; // Guard clause for server-side
+
+    const sketch = (p: any) => {
       let axiom = "-X";
       let sentence = axiom;
       let rules: { [key: string]: string } = {
@@ -73,17 +78,15 @@ export default function Sapling() {
         let stack: {
           len: number;
           angle: number;
-          matrix: p5.Matrix;
-          depth: number; // Add depth to the stack
+          matrix: any;
+          depth: number;
         }[] = [];
-        let currentDepth = 0; // Initialize current depth
+        let currentDepth = 0;
 
         for (let char of sentence) {
           if (char === "F") {
             let windAngle = p.noise(noisePos + len / 100) * 20;
-
-            // Adjust wind intensity based on depth
-            let windIntensity = p.map(currentDepth, 0, targetGenerations, 0, 1); //Map the depth to a 0-1 range.
+            let windIntensity = p.map(currentDepth, 0, targetGenerations, 0, 1);
             windAngle *= windIntensity;
 
             p.rotate(p.radians(windAngle));
@@ -99,9 +102,9 @@ export default function Sapling() {
               len: len,
               angle: angle,
               matrix: p.drawingContext.getTransform(),
-              depth: currentDepth, // Save the current depth
+              depth: currentDepth,
             });
-            currentDepth++; // Increase depth when branching
+            currentDepth++;
           } else if (char === "]") {
             if (stack.length > 0) {
               const state = stack.pop();
@@ -134,3 +137,16 @@ export default function Sapling() {
 
   return <div ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
 }
+
+const Sapling = dynamic(() => Promise.resolve(SaplingWindow), {
+  ssr: false,
+  loading: () => (
+    <div
+      className={`${erika.className} flex h-full w-full items-center justify-center`}
+    >
+      Planting...
+    </div>
+  ),
+});
+
+export default Sapling;
