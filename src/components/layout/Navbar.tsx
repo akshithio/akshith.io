@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <div className="w-full">
       <div
-        className={`${erika.className} text-aBlack dark:text-aWhite flex gap-x-12 text-lg underline`}
+        className={`${erika.className} flex gap-x-12 text-lg text-aBlack underline dark:text-aWhite`}
       >
         <a href="/">
           <h1>home</h1>
@@ -50,7 +50,7 @@ export default function Navbar() {
         <a href="/work">
           <h1>work</h1>
         </a>
-        <a href="/reach-out">
+        <a href="mailto:mail@akshith.io">
           <h1>reach out!</h1>
           {/* say hi! */}
         </a>
