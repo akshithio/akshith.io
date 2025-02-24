@@ -54,7 +54,7 @@ export default function MicroblogContent() {
   }
 
   return (
-    <div className="ml-1.5 mt-6 w-[21rem] text-aBlack dark:text-aWhite">
+    <div className="ml-2 mt-6 w-[21rem] text-aBlack dark:text-aWhite">
       {microblogs.map((microblog) => (
         <div key={microblog.id} className="mt-6">
           <div className="relative h-5 w-full">

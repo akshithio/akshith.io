@@ -10,31 +10,25 @@ export default function Desert({ length, title }: DesertProps) {
   const desert = useDesert(title, length);
 
   useEffect(() => {
-    // Detect the system theme once when the component mounts
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    // Set the system theme based on the media query
     setSystemTheme(mediaQuery.matches ? "dark" : "light");
 
-    // Listener for changes in system theme (for future use if needed)
     const handleThemeChange = (e) => {
       setSystemTheme(e.matches ? "dark" : "light");
     };
 
     mediaQuery.addEventListener("change", handleThemeChange);
 
-    // Cleanup on component unmount
     return () => {
       mediaQuery.removeEventListener("change", handleThemeChange);
     };
   }, []);
 
-  // Check if theme is set to system, then use the system theme detected
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   if (currentTheme === "dark") {
     return (
-      <div className="bg-aBlack absolute right-5 origin-right scale-x-[-1]">
+      <div className="absolute right-5 origin-right scale-x-[-1] bg-aBlack">
         {desert.dark.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;
@@ -73,7 +67,7 @@ export default function Desert({ length, title }: DesertProps) {
     );
   } else if (currentTheme === "light") {
     return (
-      <div className="bg-aWhite absolute right-5 origin-right scale-x-[-1]">
+      <div className="absolute right-5 origin-right scale-x-[-1] bg-aWhite">
         {desert.light.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;

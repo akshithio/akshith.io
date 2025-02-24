@@ -21,8 +21,32 @@ export default function WholePage() {
   return (
     <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
       <Navbar />
+      <div
+        className="absolute inset-0 z-0 dark:hidden"
+        style={{
+          backgroundImage: `
+      linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px)
+    `,
+          backgroundSize: "40px 40px",
+          backgroundPosition: "0 0",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        className="absolute inset-0 z-0 hidden dark:block"
+        style={{
+          backgroundImage: `
+      linear-gradient(to right, rgba(238, 238, 238, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(238, 238, 238, 0.05) 1px, transparent 1px)
+    `,
+          backgroundSize: "40px 40px",
+          backgroundPosition: "0 0",
+          pointerEvents: "none",
+        }}
+      />
       <div className="flex h-full w-full">
-        <div className="scrollbar-hidden mt-[2.813rem] h-[100%] w-[23.25rem] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
+        <div className="scrollbar-hidden mt-[2.813rem] h-[100%] w-[23.5rem] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
           <div className="w-[21rem] text-aBlack dark:text-aWhite">
             <h1 className={`${passenger.className} text-2xl italic `}>
               the ✨ microblog ✨
