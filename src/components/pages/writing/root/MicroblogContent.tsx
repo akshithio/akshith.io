@@ -54,24 +54,26 @@ export default function MicroblogContent() {
   }
 
   return (
-    <div className="ml-2 mt-6 w-[21rem] text-aBlack dark:text-aWhite">
-      {microblogs.map((microblog) => (
-        <div key={microblog.id} className="mt-6">
-          <div className="relative h-5 w-full">
-            <h1
-              className={`${duplet.className} absolute right-2 text-xs font-semibold text-[#999]`}
-            >
-              {microblog.formattedTime}, {microblog.formattedDate}
-            </h1>
-          </div>
+    <div className="ml-2 mb-[-8px] h-full w-[21rem] overflow-y-auto pt-6 text-aBlack dark:text-aWhite">
+      <div className="pb-6">
+        {microblogs.map((microblog) => (
+          <div key={microblog.id} className="mt-6">
+            <div className="relative h-5 w-full">
+              <h1
+                className={`${duplet.className} absolute right-2 text-xs font-semibold text-[#999]`}
+              >
+                {microblog.formattedTime}, {microblog.formattedDate}
+              </h1>
+            </div>
 
-          <div
-            className={`${erika.className} rounded-3xl border-[0.063rem] border-solid border-aBlack px-4 py-1.5 dark:border-aWhite`}
-          >
-            <h1>{microblog.content}</h1>
+            <div
+              className={`${erika.className} rounded-3xl border-[0.063rem] border-solid border-aBlack px-4 py-1.5 dark:border-aWhite`}
+            >
+              <h1>{microblog.content}</h1>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }

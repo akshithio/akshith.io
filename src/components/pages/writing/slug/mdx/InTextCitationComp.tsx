@@ -20,6 +20,7 @@ export default function InTextCitationComp(props: InTextCitationCompProps) {
             {props.type === "paper" && <PaperIcon />}
             {props.type === "video" && <VideoIcon />}
             {props.type === "link" && <LinkIcon />}
+            {/* TODO: LinkIcon */}
           </div>
 
           <div className="ml-3">

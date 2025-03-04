@@ -13,7 +13,7 @@ function SaplingWindow() {
   const { theme } = useTheme();
 
   useEffect(() => {
-    if (!p5) return; // Guard clause for server-side
+    if (!p5) return;
 
     const sketch = (p: any) => {
       let axiom = "-X";
@@ -29,6 +29,7 @@ function SaplingWindow() {
       const targetGenerations = 7;
 
       const getTreeColor = () => (theme === "dark" ? "#6B8E23" : "#228B23");
+      const getBackgroundColor = () => (theme === "dark" ? "#111" : "#eee");
 
       let windInc = 0.01;
       let noisePos = 1;
@@ -37,7 +38,7 @@ function SaplingWindow() {
         const canvasWidth = canvasRef.current?.offsetWidth || 0;
         const canvasHeight = canvasRef.current?.offsetHeight || 0;
         p.createCanvas(canvasWidth, canvasHeight);
-        p.background(0, 0, 0);
+        p.background(getBackgroundColor());
         p.stroke(getTreeColor());
         p.translate(p.width - 40, p.height);
         while (generation < targetGenerations) {
@@ -46,7 +47,8 @@ function SaplingWindow() {
       };
 
       p.draw = () => {
-        p.clear();
+        // Set background color right after clearing
+        p.background(getBackgroundColor());
         drawTree();
       };
 
@@ -142,7 +144,7 @@ const Sapling = dynamic(() => Promise.resolve(SaplingWindow), {
   ssr: false,
   loading: () => (
     <div
-      className={`${erika.className} flex h-full w-full items-center justify-center`}
+      className={`${erika.className} flex h-full w-full items-center justify-center bg-aWhite text-aBlack dark:bg-aBlack dark:text-aWhite`}
     >
       Planting...
     </div>
