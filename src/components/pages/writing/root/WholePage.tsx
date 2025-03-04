@@ -19,7 +19,7 @@ export default function WholePage() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
+    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 transition-all duration-500 ease-in-out dark:bg-aBlack">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"

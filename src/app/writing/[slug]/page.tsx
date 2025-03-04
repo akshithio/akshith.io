@@ -27,7 +27,7 @@ export default async function Page({ params }) {
 
   return (
     <div
-      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-aWhite p-6 text-aBlack dark:bg-aBlack dark:text-aWhite`}
+      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-aWhite p-6 text-aBlack transition-all duration-500 ease-in-out dark:bg-aBlack dark:text-aWhite`}
     >
       <Navbar />
 
