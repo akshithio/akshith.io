@@ -1,11 +1,10 @@
-import GithubActivity from "@/components/pages/work/GithubActivity";
-import PictureGrid from "@/components/pages/work/PictureGrid";
-import { duplet, passenger } from "@/utils/fonts";
+import Snake from "@/components/pages/work/cards/Snake";
+import { duplet, erika, passenger } from "@/utils/fonts";
 
 export default function CardZero() {
   return (
     <div className="relative ml-5 flex h-[400px] w-screen flex-grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-[20px] text-left">
-      <div className="w-[540px] flex-shrink-0">
+      <div className="w-[340px] flex-shrink-0">
         <h1
           className={`${passenger.className} mb-[5px] text-[30px] font-normal`}
         >
@@ -13,7 +12,7 @@ export default function CardZero() {
         </h1>
         <div className="relative inline-block">
           <h1 className={`${duplet.className} text-[16px] font-semibold`}>
-            Jan 2025 - May 2025
+            May '07 - Present
           </h1>
           <svg
             className="absolute bottom-[-2px] left-0 h-1 w-full"
@@ -29,41 +28,46 @@ export default function CardZero() {
           </svg>
         </div>
 
-        <h1
-          className={`${passenger.className} mt-[20px] text-[16px] font-normal`}
-        >
-          Apart from <span className="font-bold underline">18 credits</span> and
-          a biomedical engineering research opportunity at{" "}
-          <span className="font-bold italic text-[#CFB991]">Purdue</span>, I
-          joined the <span className="font-bold underline">Boilerexams</span>{" "}
-          front-end team, wrote 40,000 lines of go for{" "}
-          <span className="font-bold underline">my own web-scraper</span>, built
-          this website, and learnt to play squash!
+        <h1 className={`${passenger.className} mt-[20px] text-[12px]`}>
+          what does it even mean to <em>work?</em>
         </h1>
-        <h1
-          className={`${duplet.className} mb-[10px] mt-[20px] text-[16px] font-semibold text-[#999]`}
-        >
-          Github Activity
-        </h1>
-        <GithubActivity />
-        <h1
-          className={`${duplet.className} leading-2 mt-[20px] text-[16px] font-semibold text-[#999]`}
-        >
-          <span className={`${passenger.className} leading-8 underline`}>
-            456
-          </span>{" "}
-          Calendar Hours •{" "}
-          <span className={`${passenger.className} leading-8 underline`}>
-            6
-          </span>{" "}
-          Blogs Published •{" "}
-          <span className={`${passenger.className} leading-8 underline`}>
-            1200
-          </span>{" "}
-          Hours Coding
-        </h1>
+
+        <div className={`${passenger.className} mt-[10px]`}>
+          <div>
+            <div className="flex w-fit items-center justify-center">
+              <h1 className="text-[24px]">work</h1>
+              <span className="ml-[5px] mt-[5px] text-[12px]">/wərk/</span>
+            </div>
+
+            <h1 className=" text-[14px] font-semibold">
+              activity involving mental or physical effort done in order to
+              achieve a purpose or result.
+            </h1>
+          </div>
+
+          <h1 className="mt-[15px] text-[12px]">
+            therefore, i clearly haven't gained sentience enough to know of my
+            purpose. Perhaps, the purpose was{" "}
+            <span className="underline">
+              the friends we made along the way?
+            </span>{" "}
+            regardless, consider this page to be a documentation of my "along
+            the ways" as i try to put in some level of mental or physical
+            effort.
+          </h1>
+
+          <h1 className="mt-[15px] text-[12px]">
+            Scroll up to see my progression and click{" "}
+            <span className="underline">here</span> for the latest entry into
+            this self-induced performance report, or stay here and play some
+            snek!
+          </h1>
+
+        </div>
       </div>
-      <PictureGrid />
+      <div className="flex h-full w-full items-center justify-center">
+        <Snake />
+      </div>
     </div>
   );
 }

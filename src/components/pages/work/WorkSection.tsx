@@ -1,12 +1,13 @@
 "use client";
 
+import CardOne from "@/components/pages/work/cards/CardOne";
 import CardZero from "@/components/pages/work/cards/CardZero";
 import { erika } from "@/utils/fonts";
 import { useEffect, useState } from "react";
 
 export default function WorkSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 3;
+  const totalSlides = 2;
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -23,6 +24,18 @@ export default function WorkSection() {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+  };
+
+  // Function to render the appropriate card based on currentSlide
+  const renderCard = () => {
+    switch (currentSlide) {
+      case 0:
+        return <CardZero />;
+      case 1:
+        return <CardOne />;
+      default:
+        return <CardZero />;
+    }
   };
 
   return (
@@ -49,11 +62,10 @@ export default function WorkSection() {
               />
             ))}
         </div>
-        <CardZero />
+        {renderCard()}
       </div>
       <h1 className={`${erika.className} ml-[20px] mt-[10px] text-[14px]`}>
-        ||| If you're looking for projects i have hosted on this site, go{" "}
-        <span className="underline">here</span>
+        ||| the beginning?
       </h1>
     </div>
   );

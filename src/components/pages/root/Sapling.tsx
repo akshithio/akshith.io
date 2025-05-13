@@ -3,17 +3,36 @@
 import { erika } from "@/utils/fonts";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const p5 = typeof window !== "undefined" ? require("p5") : null;
 
 function SaplingWindow() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const p5Ref = useRef<any>(null);
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    if (!p5) return;
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!p5 || !resolvedTheme || !canvasRef.current || windowSize.width === 0) {
+      return;
+    }
+
+    const treeColor = resolvedTheme === "dark" ? "#6B8E23" : "#228B23";
+    const bgColor = resolvedTheme === "dark" ? "#111" : "#eee";
 
     const sketch = (p: any) => {
       let axiom = "-X";
@@ -28,33 +47,66 @@ function SaplingWindow() {
       let generation = 0;
       const targetGenerations = 7;
 
-      const getTreeColor = () => (theme === "dark" ? "#6B8E23" : "#228B23");
-      const getBackgroundColor = () => (theme === "dark" ? "#111" : "#eee");
-
       let windInc = 0.01;
       let noisePos = 1;
+      let initialTilt = 0;
 
       p.setup = () => {
         const canvasWidth = canvasRef.current?.offsetWidth || 0;
         const canvasHeight = canvasRef.current?.offsetHeight || 0;
+
         p.createCanvas(canvasWidth, canvasHeight);
-        p.background(getBackgroundColor());
-        p.stroke(getTreeColor());
-        p.translate(p.width - 40, p.height);
+        p.background(bgColor);
+        p.stroke(treeColor);
+
+        sentence = axiom;
+        len = 400;
+        generation = 0;
+
+        const minDimension = p.min(canvasWidth, canvasHeight);
+        const isLargeLandscape =
+          canvasWidth > 1200 && canvasWidth > canvasHeight;
+        const scaleFactor = isLargeLandscape ? 0.46 : 0.4;
+        len = minDimension * scaleFactor;
+        initialTilt = isLargeLandscape ? p.radians(-10) : 0;
+
         while (generation < targetGenerations) {
           generate();
         }
       };
 
       p.draw = () => {
-        // Set background color right after clearing
-        p.background(getBackgroundColor());
+        p.background(bgColor);
         drawTree();
+      };
+
+      p.windowResized = () => {
+        if (canvasRef.current) {
+          const canvasWidth = canvasRef.current.offsetWidth;
+          const canvasHeight = canvasRef.current.offsetHeight;
+          p.resizeCanvas(canvasWidth, canvasHeight);
+
+          sentence = axiom;
+
+          const minDimension = p.min(canvasWidth, canvasHeight);
+          const isLargeLandscape =
+            canvasWidth > 1200 && canvasWidth > canvasHeight;
+          const scaleFactor = isLargeLandscape ? 0.46 : 0.4;
+          len = minDimension * scaleFactor;
+          initialTilt = isLargeLandscape ? p.radians(-15) : 0;
+
+          generation = 0;
+
+          while (generation < targetGenerations) {
+            generate();
+          }
+        }
       };
 
       const generate = () => {
         len *= 0.5;
         let nextSentence = "";
+
         for (let char of sentence) {
           let found = false;
           for (let rule in rules) {
@@ -68,6 +120,7 @@ function SaplingWindow() {
             nextSentence += char;
           }
         }
+
         sentence = nextSentence;
         generation++;
       };
@@ -75,7 +128,11 @@ function SaplingWindow() {
       const drawTree = () => {
         p.resetMatrix();
         p.translate(p.width - 40, p.height);
-        p.stroke(getTreeColor());
+        p.stroke(treeColor);
+
+        if (initialTilt !== 0) {
+          p.rotate(initialTilt);
+        }
 
         let stack: {
           len: number;
@@ -83,6 +140,7 @@ function SaplingWindow() {
           matrix: any;
           depth: number;
         }[] = [];
+
         let currentDepth = 0;
 
         for (let char of sentence) {
@@ -125,9 +183,11 @@ function SaplingWindow() {
       };
     };
 
-    if (canvasRef.current) {
-      p5Ref.current = new p5(sketch, canvasRef.current);
+    if (p5Ref.current) {
+      p5Ref.current.remove();
     }
+
+    p5Ref.current = new p5(sketch, canvasRef.current);
 
     return () => {
       if (p5Ref.current) {
@@ -135,7 +195,7 @@ function SaplingWindow() {
         p5Ref.current = null;
       }
     };
-  }, [theme]);
+  }, [resolvedTheme, windowSize]);
 
   return <div ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
 }
