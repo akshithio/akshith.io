@@ -12,7 +12,7 @@ const BASE_ASCII_ART = String.raw`
          !.........||||                     ||||
          !.........||||                     ||||
          !.........||||                     ||||
-        \`.........||||                  ,||||
+        \`.........||||                   ,||||
           .;.......||||               _.-!!|||||
    .,uodWBBBBb.....||||       _.-!!|||||||||!:'
 !YBBBBBBBBBBBBBBb..!|||:..-!!|||||||!iof68BBBBBb....
@@ -104,7 +104,9 @@ const renderGameToAscii = (
       if (y >= 0 && y < GAME_HEIGHT) {
         for (let i = 0; i < text.length; i++) {
           if (textX + i >= 0 && textX + i < GAME_WIDTH) {
-            gameScreenGrid[y][textX + i] = text[i];
+            if (gameScreenGrid[y]) {
+              gameScreenGrid[y][textX + i] = text[i] ?? "";
+            }
           }
         }
       }
@@ -126,7 +128,9 @@ const renderGameToAscii = (
       if (y >= 0 && y < GAME_HEIGHT) {
         for (let i = 0; i < text.length; i++) {
           if (textX + i >= 0 && textX + i < GAME_WIDTH) {
-            gameScreenGrid[y][textX + i] = text[i];
+            if (gameScreenGrid[y]) {
+              gameScreenGrid[y][textX + i] = text[i] ?? "";
+            }
           }
         }
       }
@@ -142,7 +146,7 @@ const renderGameToAscii = (
       food.x >= 0 &&
       food.x < GAME_WIDTH
     ) {
-      gameScreenGrid[food.y][food.x] = FOOD_CHAR;
+      gameScreenGrid[food.y]![food.x] = FOOD_CHAR;
     }
     snake.forEach((segment) => {
       if (
@@ -151,7 +155,7 @@ const renderGameToAscii = (
         segment.x >= 0 &&
         segment.x < GAME_WIDTH
       ) {
-        gameScreenGrid[segment.y][segment.x] = SNAKE_CHAR;
+        gameScreenGrid[segment.y]![segment.x] = SNAKE_CHAR;
       }
     });
   }
@@ -160,12 +164,12 @@ const renderGameToAscii = (
     const lineIndexInAscii = SCREEN_START_LINE_INDEX + i;
     if (lineIndexInAscii < baseLines.length) {
       const line = baseLines[lineIndexInAscii];
-      if (line) {
+      if (line !== undefined) {
         const lineChars = line.split("");
         for (let j = 0; j < GAME_WIDTH; j++) {
           const colIndexInAscii = SCREEN_START_COL_INDEX + j;
           if (colIndexInAscii < lineChars.length) {
-            lineChars[colIndexInAscii] = gameScreenGrid[i][j];
+            lineChars[colIndexInAscii] = gameScreenGrid[i]?.[j] ?? "";
           }
         }
         baseLines[lineIndexInAscii] = lineChars.join("");
