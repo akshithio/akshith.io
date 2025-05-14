@@ -2,6 +2,7 @@
 
 import { usePosts } from "@/hooks/usePosts";
 import FolderIcon from "@/icons/FolderIcon";
+import PencilIcon from "@/icons/PencilIcon";
 import { duplet } from "@/utils/fonts";
 
 const LoadingState = () => (
@@ -67,7 +68,7 @@ export default function BlogPosts({
   });
 
   return (
-    <div className="mt-9">
+    <div className="mt-9 h-full">
       {filteredPosts.length === 0 ? (
         <div className="flex w-[50rem] items-center justify-center">
           <p className={`${duplet.className} font-semibold`}>
@@ -98,6 +99,18 @@ export default function BlogPosts({
             </div>
           </div>
         ))
+      )}
+
+      {filteredPosts.length <= 15 && (
+        <div
+          className={`-translate-y-1/2 flex absolute left-[65%] top-[45%] -translate-x-1/2  flex-col items-center justify-center text-center ${duplet.className} text-[24px] font-semibold`}
+        >
+          <PencilIcon />
+          <p className="mt-8">
+            i’m writing more stuff that <br />
+            should be out soon ʕ•́ᴥ•̀ʔ
+          </p>
+        </div>
       )}
     </div>
   );

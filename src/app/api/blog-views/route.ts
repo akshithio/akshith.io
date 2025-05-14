@@ -20,7 +20,7 @@ function hashIdentifier(identifier: string): string {
     .digest("hex");
 }
 
-function generateViewerId(headersList: Headers): string {
+async function generateViewerId(headersList): Promise<string> {
   // Network Information
   const forwarded = headersList.get("x-forwarded-for");
   const realIP = headersList.get("x-real-ip");
@@ -163,14 +163,14 @@ export async function GET(request: Request) {
     console.error("Error fetching view count:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST() {
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const referer = headersList.get("referer");
 
     if (!referer) {
@@ -184,7 +184,7 @@ export async function POST() {
       return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
     }
 
-    const viewerId = generateViewerId(headersList);
+    const viewerId = await generateViewerId(headersList);
     const hashedId = hashIdentifier(viewerId);
     const docRef = adminDb.collection("blog-views").doc(slug);
     let viewCount = 0;

@@ -96,7 +96,7 @@ export default function ContentHeightTracker(props: {
             />
           </div>
         )}
-        <div className="mb-10">{props.content}</div>
+        <div className="mb-10 font-semibold">{props.content}</div>
       </div>
     </div>
   );

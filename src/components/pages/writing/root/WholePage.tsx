@@ -95,6 +95,7 @@ export default function WholePage() {
           </div>
 
           <BlogPosts selectedCategories={selectedCategories} />
+        
         </div>
       </div>
     </div>

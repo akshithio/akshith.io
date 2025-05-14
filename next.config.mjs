@@ -8,6 +8,10 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  images: {
+    domains: ["v9qoelznu6.ufs.sh"],
+  },
+  transpilePackages: ["next-mdx-remote"],
 };
 
 const withMDX = createMDX({

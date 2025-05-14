@@ -3,6 +3,7 @@ import { FrontMatter } from "@/types/writing";
 import fs from "fs/promises";
 import matter from "gray-matter";
 import { compileMDX } from "next-mdx-remote/rsc";
+import { notFound } from "next/navigation";
 import path from "path";
 import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
@@ -19,7 +20,7 @@ export async function getPost(slug: string) {
   );
 
   if (!matchingFile) {
-    throw new Error(`Post not found for slug: ${slug}`);
+    notFound();
   }
 
   const filePath = path.join(contentDir, matchingFile);
