@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function ImageComp(props: ImageCompProps) {
   return (
     <div className="my-9 flex w-full flex-col items-center justify-center font-semibold">
-      <div className="rounded-3xl">
+      <div className="rounded-lg overflow-hidden">
         <Image
           src={props.src}
           width={props.width}

@@ -2,37 +2,39 @@
 title: "Hello, World!"
 date: "2025-05-10"
 category: "technical"
-description: "A run-down of my personal website, akshith.io, how I built this writing
+description:
+  "A run-down of my personal website, akshith.io, how I built this writing
   section and some of the other nitty-gritties I had to consider while building this
   website alongside what I hope to do in the future technically for this website"
 excerpt: "should be the first paragraph of the thing"
 ---
 
-Natural Language Processing (NLP) tasks rely on the ability for computers to understand
-human language and the true meanings associated with each word. Algorithms that are able
-to capture the nuance of these words via numeric representations are referred to as word
-embedding algorithms.
+Hello, World!
+
+Much of what you're seeing on your screen right now has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and commit button. In what follows, I outline some of what was used to build much of my website, focusing specifically on the writing section and demonstrating what has been built so far.
+
+I've relied primarily on `@mdxjs` alongside a collection of growing custom components, that I would like to quickly demonstrate down below.
+
+### Custom Components
+
+Since, these are all markdown files there is support for the standard `<h1>` through `<h6>` heading structure (like seen above), italics, bolding and more right out of the box.
 
 <ImageComp
-  src="/blog/image.png"
-  width={768}
-  height={362.5}
+  src="https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcoX1nVypR6swX3E0LJAGDU42gZ8Ti1hWtKQ9x"
+  width={800}
+  height={578.439964938}
   alt="test image"
-  creds="https://www.wikipedia.org/"
-  description="A diagram describing vectors and stuff"
+  creds="https://akshith.io"
+  description="Not much to see here except a messy Figma. Simple Image Component"
   num={1}
 />
 
 <SideNoteComp
   num={1}
-  description="This is technically true but there is an issue with something else because of some other issue so we just unfortunately have to deal with that. sort of? i don’t really know? "
+  description="I can ramble here about other things not related to what I'm actually talking about. Helpful because I can't stop talking!"
 />
 
-Alternatively, while a significant correlation score improvement is observed with a nearly
-1000-fold increase in dataset size <SideCitationComp>[@1]</SideCitationComp>, the gains are not linearly proportional but exhibit
-a more logarithmic trend. This suggests diminishing returns as dataset size grows <CitationSuperscriptComp>1</CitationSuperscriptComp>, indicating
-that fastText optimally utilises its available data, rather than GloVe disproportionately
-benefiting from larger dataset sizes.
+After the image there's this way for me to leave side-notes <SideCitationComp>[@1]</SideCitationComp>, in case I need to add additional detail that isn't directly relevant to what I'm talking about. I can also cite other more extensive sources like this <CitationSuperscriptComp>1</CitationSuperscriptComp> so that you can click on them and be taken to the bottom of this page with more details about why I said what I said. There are also ways for me to cite some interesting resources in-text like this really cool paper for example.
 
 <InTextCitationComp
   type="paper"
@@ -41,27 +43,16 @@ benefiting from larger dataset sizes.
   authors="Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin"
 />
 
-Alternatively, while a significant correlation score improvement is observed with a nearly
-1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit
-a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
-that fastText optimally utilizes its available data, rather than GloVe disproportionately
-benefiting from larger dataset sizes.
+Alternatively, if I'm feeling oddly philosophical or find myself in need of some expert "ethos" to make my argument stand out, I can choose to simply include a quote using the **>** character followed by what I want to say as shown below.
 
-> A wiseman once said something about doing something but idk what he said so he was probably a wiseman for saying it i’m not really sure. A wiseman once said something about doing something but idk what he said so he was probably. **~ Akshith Garapati**
+> A wiseman once said something about doing something but I don't know what he said. Also this sidebar glows for some reason and I like that it glows. **~ Akshith Garapati**
 
-Alternatively, while a significant correlation score improvement is observed with a nearly
-1000-fold increase in dataset size for GloVe.
+Or if I feel like laying out a series of simple bullet points i can do that too,
 
-- the gains are not linearly proportional but exhibit
-- a more logarithmic trend. This suggests diminishing returns as dataset size grows, indicating
+- this is **exhbit a**
+- this would be **exhibit b**
 
-Alternatively, while a significant correlation score improvement is observed with a nearly 1000-fold increase in dataset size for GloVe, the gains are not linearly proportional but exhibit.
-
-# Oops Heading Time
-
-So that’s it my friends I am done let’s think aboiut this being some sort of conclusion paragraph because i don’t know how this really work and all that stuff but yes very cool, i had very much fun making this and all that because yotu know stuff and all happens and stuff and cool stuff.
-
-## $$ \sqrt{x^2} $$
+There is support for LaTeX math, meaning this would be the pythagorean theorem: $a^2 + b^2 = c^2$, **\#quickmaths** and there is also support for syntax highlighting and neat code snippets like the one shown below:
 
 ```tsx
 import ImageComp from "@/components/blog/standard/ImageComp";
@@ -91,6 +82,8 @@ const MarkdownComponents = {
     <h6 className=" my-2 text-base md:text-lg dark:text-aWhite" {...props} />
   ),
 ```
+
+
 
 <BibliographyHolderComp>
   <BibliographyItemComp id="1">

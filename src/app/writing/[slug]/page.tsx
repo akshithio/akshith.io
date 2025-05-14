@@ -7,8 +7,8 @@ import { convertDate } from "@/utils/dates";
 import { duplet, passenger } from "@/utils/fonts";
 import { getPost } from "@/utils/getPost";
 
-export async function generateMetadata({ params }) {
-  const { frontMatter } = await getPost(params.slug);
+export async function generateMetadata({ params: { slug } }) {
+  const { frontMatter } = await getPost(slug);
 
   return {
     title: frontMatter.title,
@@ -16,14 +16,14 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: frontMatter.title,
       description: frontMatter.description,
-      url: `https://akshith.io/writing/${params.slug}`,
+      url: `https://akshith.io/writing/${slug}`,
       siteName: "Akshith Garapati",
     },
   };
 }
 
-export default async function Page({ params }) {
-  const { content, frontMatter } = await getPost(params.slug);
+export default async function Page({ params: { slug } }) {
+  const { content, frontMatter } = await getPost(slug);
 
   return (
     <div
@@ -40,8 +40,7 @@ export default async function Page({ params }) {
           <div className={`${passenger.className}`}>
             <div className="flex items-center">
               <h1>
-                {convertDate(frontMatter.date)} •{" "}
-                <ViewCounter slug={params.slug} />
+                {convertDate(frontMatter.date)} • <ViewCounter slug={slug} />
               </h1>
 
               <a href="/rss" target="_blank" className="ml-3">

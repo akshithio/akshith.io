@@ -68,8 +68,6 @@ const MarkdownComponents = {
     />
   ),
   li: (props: any) => <li className=" my-1 " {...props} />,
-
-  // Quotes and citations
   blockquote: (props: any) => (
     <div
       className={`${passenger.className} flex w-full items-center justify-center`}
@@ -81,25 +79,34 @@ const MarkdownComponents = {
       </div>
     </div>
   ),
-  code: ({ children, className, ...props }: any) => (
-    <CodeBlock className={className} {...props}>
-      {children}
-    </CodeBlock>
-  ),
+
+  code: ({ children, className, ...props }: any) => {
+    if (className) {
+      // This is a code block (```code```)
+      return (
+        <CodeBlock className={className} {...props}>
+          {children}
+        </CodeBlock>
+      );
+    } else {
+      // This is inline formatting (`@something`)
+      return (
+        <code
+          className="rounded bg-[#aaa] px-1 py-[2px] font-mono text-[12px]"
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    }
+  },
+
   pre: (props: any) => (
     <pre
       className=" bg-gray-100 dark:bg-gray-800 dark:text-gray-200 my-4 overflow-x-auto rounded-lg p-4 text-sm"
       {...props}
     />
   ),
-
-  // Math
-  math: (props: any) => (
-    <div className="my-4 overflow-x-auto">{props.children}</div>
-  ),
-  inlineMath: (props: any) => <span className="mx-1">{props.children}</span>,
-
-  // Table elements
   table: (props: any) => (
     <div className="my-4 overflow-x-auto">
       <table

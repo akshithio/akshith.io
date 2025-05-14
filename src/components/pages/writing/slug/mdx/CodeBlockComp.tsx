@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 const languageCache = new Set();
 
-const loadLanguage = async (language: string) => {
+const loadLanguage = async (language) => {
   if (languageCache.has(language)) {
     return;
   }
@@ -18,7 +18,7 @@ const loadLanguage = async (language: string) => {
       return;
     }
 
-    const languageMap: Record<string, string> = {
+    const languageMap = {
       tsx: "tsx",
       jsx: "jsx",
       js: "javascript",
@@ -53,23 +53,23 @@ const loadLanguage = async (language: string) => {
   }
 };
 
-export default function CodeBlock({
-  children,
-  className = "",
-  ...props
-}: {
-  children: string;
-  className?: string;
-  [key: string]: any;
-}) {
-  const codeRef = useRef<HTMLElement>(null);
+export default function CodeBlock({ children, className = "", ...props }) {
+  const codeRef = useRef(null);
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   const language = className?.replace(/^language-/, "") || "plaintext";
 
+  // Fix for hydration mismatch - only render client-specific content after hydration
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
     let mounted = true;
 
     const initPrism = async () => {
@@ -109,7 +109,7 @@ export default function CodeBlock({
     return () => {
       mounted = false;
     };
-  }, [language, children]);
+  }, [language, children, isClient]);
 
   const handleCopy = () => {
     if (codeRef.current) {
@@ -130,26 +130,33 @@ export default function CodeBlock({
     );
   }
 
+  // Use a static string for the className to ensure server/client match
+  const preClassName =
+    "group relative my-4 overflow-x-auto rounded-lg bg-[#6b7280] p-4 text-sm";
+
   return (
-    <pre className="group relative my-4 overflow-x-auto rounded-lg bg-[#6b7280] p-4 text-sm">
-      <button
-        onClick={handleCopy}
-        className="bg-gray-800 text-white hover:bg-gray-700 absolute right-2 top-2 hidden rounded px-2 py-1 text-xs focus:outline-none group-hover:block"
-      >
-        {copySuccess ? (
-          <div className="flex items-center justify-center">
-            <SuccessIcon /> <h1 className="ml-1">Copied!</h1>
-          </div>
-        ) : (
-          <div className="flex items-center justify-center">
-            <CopyIcon /> <h1 className="ml-1">Copy</h1>
-          </div>
-        )}
-      </button>
+    <pre className={preClassName} tabIndex={0} suppressHydrationWarning={true}>
+      {isClient && (
+        <button
+          onClick={handleCopy}
+          className="bg-gray-800 text-white hover:bg-gray-700 absolute right-2 top-2 hidden rounded px-2 py-1 text-xs focus:outline-none group-hover:block"
+        >
+          {copySuccess ? (
+            <div className="flex items-center justify-center">
+              <SuccessIcon /> <h1 className="ml-1">Copied!</h1>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <CopyIcon /> <h1 className="ml-1">Copy</h1>
+            </div>
+          )}
+        </button>
+      )}
       <code
         ref={codeRef}
         className={className || `language-${language}`}
         data-prism-loaded={isLanguageLoaded}
+        suppressHydrationWarning={true}
         {...props}
       >
         {children}
@@ -157,5 +164,3 @@ export default function CodeBlock({
     </pre>
   );
 }
-
-
