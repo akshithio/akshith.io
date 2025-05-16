@@ -9,14 +9,13 @@ import { getPost } from "@/utils/getPost";
 import { Metadata } from "next";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { frontMatter } = await getPost(params.slug);
 
   return {
@@ -31,7 +30,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(props: PageProps) {
+  const params = await props.params;
   const { content, frontMatter } = await getPost(params.slug);
 
   return (

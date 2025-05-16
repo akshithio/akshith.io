@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { headers } from "next/headers";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const host = headers().get("host");
+  const host = (await headers()).get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 
