@@ -9,7 +9,13 @@ const nextConfig = {
     mdxRs: true,
   },
   images: {
-    domains: ["v9qoelznu6.ufs.sh"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "v9qoelznu6.ufs.sh",
+        pathname: "**",
+      },
+    ],
   },
   transpilePackages: ["next-mdx-remote"],
 };

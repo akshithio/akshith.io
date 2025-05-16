@@ -8,7 +8,7 @@ export default function FrogIcon(props: { direction: "up" | "down" }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_2723_1527)">
+        <g clipPath="url(#clip0_2723_1527)">
           <path d="M12.5698 24V22.86H4.56732V24H12.5698Z" fill="#EEEEEE" />
           <path
             d="M4.56738 22.86V21.7125H3.42738V22.86H4.56738Z"
@@ -178,7 +178,7 @@ export default function FrogIcon(props: { direction: "up" | "down" }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g clip-path="url(#clip0_3024_257)">
+        <g clipPath="url(#clip0_3024_257)">
           <path
             d="M12.5698 1.43051e-05V1.14001L4.56732 1.14001V1.43051e-05L12.5698 1.43051e-05Z"
             fill="#EEEEEE"

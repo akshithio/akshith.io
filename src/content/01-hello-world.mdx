@@ -11,9 +11,11 @@ excerpt: "should be the first paragraph of the thing"
 
 Hello, World!
 
-Much of what you're seeing on your screen right now has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and commit button. In what follows, I outline some of what was used to build much of my website, focusing specifically on the writing section and demonstrating what has been built so far.
+Much of what you're seeing on your screen right now has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and commit button. In appearance, this page is definitely more maximalist when compared to the rest of the site, whether that be the non-centered alignment or the funky looking thing to the right if you're on a desktop (i'll explain).
 
-I've relied primarily on `@mdxjs` alongside a collection of growing custom components, that I would like to quickly demonstrate down below.
+I'm not sure if that is a. an attempt to stand out or b. just an urge to build something sophisticated. Either ways,
+
+In what follows, I outline some of what was used to build much of my website, focusing specifically on the writing section and demonstrating what has been built so far. I've relied primarily on `@mdxjs` alongside a collection of growing custom components, that I would like to quickly demonstrate down below.
 
 ### Custom Components
 
@@ -52,7 +54,7 @@ Or if I feel like laying out a series of simple bullet points i can do that too,
 - this is **exhbit a**
 - this would be **exhibit b**
 
-There is support for LaTeX math, meaning this would be the pythagorean theorem: $a^2 + b^2 = c^2$, **\#quickmaths** and there is also support for syntax highlighting and neat code snippets like the one shown below:
+There is support for LaTeX math, meaning this would be the pythagorean theorem: $a^2 + b^2 = c^2$, _\#quickmaths_ and there is also support for syntax highlighting and neat code snippets like the one shown below:
 
 ```tsx
 import ImageComp from "@/components/blog/standard/ImageComp";
@@ -82,8 +84,6 @@ const MarkdownComponents = {
     <h6 className=" my-2 text-base md:text-lg dark:text-aWhite" {...props} />
   ),
 ```
-
-
 
 <BibliographyHolderComp>
   <BibliographyItemComp id="1">

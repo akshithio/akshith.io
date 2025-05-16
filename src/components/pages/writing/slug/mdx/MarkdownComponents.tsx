@@ -92,7 +92,7 @@ const MarkdownComponents = {
       // This is inline formatting (`@something`)
       return (
         <code
-          className="rounded bg-[#aaa] px-1 py-[2px] font-mono text-[12px]"
+          className="rounded bg-[#999] px-1 py-[2px] font-mono text-[12px]"
           {...props}
         >
           {children}
