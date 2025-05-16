@@ -12,7 +12,7 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function Image({ params }: { params: { slug: string } }) {
-  const host = headers().get("host");
+  const host = (await headers()).get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 

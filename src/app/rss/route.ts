@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 async function getAllPosts(): Promise<FrontMatter[]> {
-  const host = headers().get("host");
+  const host = (await headers()).get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 
@@ -24,7 +24,7 @@ async function getAllPosts(): Promise<FrontMatter[]> {
 
 export async function GET() {
   const posts = await getAllPosts();
-  const host = headers().get("host");
+  const host = (await headers()).get("host");
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseURL = `${protocol}://${host}`;
 
