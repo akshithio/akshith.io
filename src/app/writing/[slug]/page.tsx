@@ -6,9 +6,18 @@ import RSSIcon from "@/icons/RSSIcon";
 import { convertDate } from "@/utils/dates";
 import { duplet, passenger } from "@/utils/fonts";
 import { getPost } from "@/utils/getPost";
+import { Metadata } from "next";
 
-export async function generateMetadata({ params: { slug } }) {
-  const { frontMatter } = await getPost(slug);
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { frontMatter } = await getPost(params.slug);
 
   return {
     title: frontMatter.title,
@@ -16,14 +25,14 @@ export async function generateMetadata({ params: { slug } }) {
     openGraph: {
       title: frontMatter.title,
       description: frontMatter.description,
-      url: `https://akshith.io/writing/${slug}`,
+      url: `https://akshith.io/writing/${params.slug}`,
       siteName: "Akshith Garapati",
     },
   };
 }
 
-export default async function Page({ params: { slug } }) {
-  const { content, frontMatter } = await getPost(slug);
+export default async function Page({ params }: PageProps) {
+  const { content, frontMatter } = await getPost(params.slug);
 
   return (
     <div
@@ -40,7 +49,8 @@ export default async function Page({ params: { slug } }) {
           <div className={`${passenger.className}`}>
             <div className="flex items-center">
               <h1>
-                {convertDate(frontMatter.date)} • <ViewCounter slug={slug} />
+                {convertDate(frontMatter.date)} •{" "}
+                <ViewCounter slug={params.slug} />
               </h1>
 
               <a href="/rss" target="_blank" className="ml-3">
@@ -58,4 +68,5 @@ export default async function Page({ params: { slug } }) {
     </div>
   );
 }
+
 export const dynamicParams = true;
