@@ -99,7 +99,7 @@ export default function FilterSearch({
               <button
                 key={option.id}
                 onClick={() => toggleOption(option.id)}
-                className={`flex items-center justify-center rounded-full px-2 py-[0.125rem] text-xs text-aWhite transition-all duration-200 ${
+                className={`flex items-center justify-center rounded-full px-2 py-0.5 text-xs text-a-white transition-all duration-200 ${
                   option.checked ? "  bg-[#444]" : " bg-[#999]"
                 }`}
               >
@@ -110,7 +110,7 @@ export default function FilterSearch({
         )}
 
         <div
-          className="absolute left-[92.5%] top-[0.125rem] h-3 w-3 -translate-x-1/2 -translate-y-[0.438rem] rotate-45 bg-[#ccc]"
+          className="absolute left-[92.5%] top-0.5 h-3 w-3 -translate-x-1/2 -translate-y-[0.438rem] rotate-45 bg-[#ccc]"
           aria-hidden="true"
         />
       </div>

@@ -10,7 +10,6 @@ import RSSIcon from "@/icons/RSSIcon";
 import { duplet, erika, passenger } from "@/utils/fonts";
 import { useState } from "react";
 
-
 export default function WholePage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -19,7 +18,7 @@ export default function WholePage() {
   };
 
   return (
-    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 transition-all duration-500 ease-in-out dark:bg-aBlack">
+    <div className="bg-a-white dark:bg-a-black h-screen w-screen overflow-x-hidden overflow-y-hidden p-6 transition-all duration-500 ease-in-out">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"
@@ -46,12 +45,12 @@ export default function WholePage() {
         }}
       />
       <div className="flex h-full w-full">
-        <div className="scrollbar-hidden mt-[2.813rem] h-[100%] w-[23.5rem] overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
-          <div className="w-[21rem] text-aBlack dark:text-aWhite">
-            <h1 className={`${passenger.className} text-2xl italic `}>
+        <div className="scrollbar-hidden mt-[2.813rem] h-full w-94 overflow-y-scroll border-r-2 border-dotted border-r-[#999] pr-9">
+          <div className="text-a-black dark:text-a-white w-84">
+            <h1 className={`${passenger.className} text-2xl italic`}>
               the ✨ microblog ✨
             </h1>
-            <h1 className={`${erika.className} mt-1 w-[20.125rem] text-sm`}>
+            <h1 className={`${erika.className} mt-1 w-80.5 text-sm`}>
               these are meant to be notes / drafts tweets / shower thoughts /
               whatever else tbh. inspired from{" "}
               <a
@@ -68,7 +67,7 @@ export default function WholePage() {
           <MicroblogContent />
         </div>
 
-        <div className="ml-[4.063rem] mt-6 text-aBlack dark:text-aWhite">
+        <div className="text-a-black dark:text-a-white mt-6 ml-[4.063rem]">
           <div className="relative mt-9 flex items-center">
             <div className="justify-start">
               <h1 className={`${passenger.className} text-2xl italic`}>
@@ -95,7 +94,6 @@ export default function WholePage() {
           </div>
 
           <BlogPosts selectedCategories={selectedCategories} />
-        
         </div>
       </div>
     </div>

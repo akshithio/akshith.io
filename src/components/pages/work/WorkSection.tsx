@@ -26,7 +26,6 @@ export default function WorkSection() {
     setCurrentSlide(index);
   };
 
-  // Function to render the appropriate card based on currentSlide
   const renderCard = () => {
     switch (currentSlide) {
       case 0:
@@ -38,11 +37,14 @@ export default function WorkSection() {
     }
   };
 
+  const slideSubtitles = {
+    0: "||| the beginning?",
+    1: "||| it snows in april down here",
+  };
+
   return (
     <div className="flex h-full flex-col justify-center">
-      <h1
-        className={`${erika.className} mb-[10px] ml-[20px] w-fit text-[14px]`}
-      >
+      <h1 className={`${erika.className} mb-[10px] ml-5 w-fit text-sm`}>
         x {currentSlide.toString().padStart(2, "0")}
       </h1>
       <div className="flex items-center transition-all duration-500 ease-in-out">
@@ -55,7 +57,7 @@ export default function WorkSection() {
                 onClick={() => goToSlide(totalSlides - index - 1)}
                 className={`h-[6px] w-[6px] rounded-full transition-all ${
                   currentSlide === totalSlides - index - 1
-                    ? "bg-aBlack dark:bg-aWhite"
+                    ? "bg-a-black dark:bg-a-white"
                     : "bg-[#999]"
                 }`}
                 aria-label={`Go to slide ${totalSlides - index}`}
@@ -64,8 +66,8 @@ export default function WorkSection() {
         </div>
         {renderCard()}
       </div>
-      <h1 className={`${erika.className} ml-[20px] mt-[10px] text-[14px]`}>
-        ||| the beginning?
+      <h1 className={`${erika.className} ml-[22px] mt-[10px] text-sm`}>
+        {slideSubtitles[currentSlide] ?? "||| the beginning?"}
       </h1>
     </div>
   );

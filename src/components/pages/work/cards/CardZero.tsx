@@ -1,10 +1,10 @@
-import Snake from "@/components/pages/work/cards/Snake";
-import { duplet, erika, passenger } from "@/utils/fonts";
+import Snake from "@/components/pages/work/card-components/Snake";
+import { duplet, passenger } from "@/utils/fonts";
 
 export default function CardZero() {
   return (
-    <div className="relative ml-5 flex h-[400px] w-screen flex-grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-[20px] text-left">
-      <div className="w-[340px] flex-shrink-0">
+    <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
+      <div className="w-[340px] shrink-0">
         <h1
           className={`${passenger.className} mb-[5px] text-[30px] font-normal`}
         >
@@ -28,7 +28,7 @@ export default function CardZero() {
           </svg>
         </div>
 
-        <h1 className={`${passenger.className} mt-[20px] text-[12px]`}>
+        <h1 className={`${passenger.className} mt-5 text-[12px]`}>
           what does it even mean to <em>work?</em>
         </h1>
 
@@ -62,7 +62,6 @@ export default function CardZero() {
             this self-induced performance report, or stay here and play some
             snek!
           </h1>
-
         </div>
       </div>
       <div className="flex h-full w-full items-center justify-center">

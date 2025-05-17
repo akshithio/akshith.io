@@ -1,3 +1,4 @@
+import { duplet } from "@/utils/fonts";
 import { useEffect, useState } from "react";
 
 interface GitHubActivityProps {
@@ -25,48 +26,34 @@ export default function GithubActivity({
 
       try {
         const response = await fetch(
-          `https://api.github.com/users/akshithio/events?per_page=100`,
-          {
-            headers: {
-              Accept: "application/vnd.github.v3+json",
-            },
-          },
+          `https://github-contributions-api.deno.dev/akshithio.json`,
         );
 
         if (!response.ok) {
           throw new Error(`GitHub API error: ${response.status}`);
         }
 
-        const events = await response.json();
-
+        const data = await response.json();
+        const allContributions = data.contributions.flat();
         const startDateTime = new Date(startDate).getTime();
         const endDateTime =
           new Date(endDate).getTime() + (24 * 60 * 60 * 1000 - 1);
 
-        const contributionsByDay = events.reduce(
-          (acc: Record<string, number>, event: any) => {
-            const isContributionEvent = [
-              "PushEvent",
-              "PullRequestEvent",
-              "IssuesEvent",
-              "CommitCommentEvent",
-              "CreateEvent",
-              "PullRequestReviewEvent",
-            ].includes(event.type);
-
-            if (isContributionEvent) {
-              const eventDate = new Date(event.created_at).getTime();
-              if (eventDate >= startDateTime && eventDate <= endDateTime) {
-                const dateStr = event.created_at.split("T")[0]; // YYYY-MM-DD format
-                if (dateStr) {
-                  acc[dateStr] = (acc[dateStr] || 0) + 1;
-                }
-              }
-            }
-
-            return acc;
+        const filteredContributions = allContributions.filter(
+          (contribution) => {
+            const contributionDate = new Date(contribution.date).getTime();
+            return (
+              contributionDate >= startDateTime &&
+              contributionDate <= endDateTime
+            );
           },
-          {},
+        );
+
+        const formattedContributions = filteredContributions.map(
+          (contribution) => ({
+            date: contribution.date,
+            count: contribution.contributionCount,
+          }),
         );
 
         const allDays: ContributionDay[] = [];
@@ -74,11 +61,20 @@ export default function GithubActivity({
         const lastDate = new Date(endDate);
 
         while (currentDate <= lastDate) {
-          const dateStr = currentDate.toISOString().split("T")[0];
-          allDays.push({
-            date: dateStr || "",
-            count: dateStr ? contributionsByDay[dateStr] || 0 : 0,
-          });
+          const dateStr = currentDate.toISOString().split("T")[0] || "";
+          const existingDay = formattedContributions.find(
+            (day) => day.date === dateStr,
+          );
+
+          if (existingDay) {
+            allDays.push(existingDay);
+          } else {
+            allDays.push({
+              date: dateStr,
+              count: 0,
+            });
+          }
+
           currentDate.setDate(currentDate.getDate() + 1);
         }
 
@@ -95,15 +91,35 @@ export default function GithubActivity({
 
     if (startDate && endDate && new Date(startDate) <= new Date(endDate)) {
       fetchGithubContributions();
+    } else {
+      console.log("error with dates");
     }
   }, [startDate, endDate]);
 
+  if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
+    return (
+      <div className="w-[90%] text-red-500">
+        Error: Start date cannot be after end date
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div
+        className={`flex h-20 w-[90%] items-center justify-center ${duplet.className}`}
+      >
+        Loading GitHub activity...
+      </div>
+    );
+  }
+
   const COLOR_LEVELS: readonly [string, string, string, string, string] = [
-    "#",
-    "#0e4429",
-    "#006d32",
-    "#26a641",
-    "#39d353",
+    "#D9D9D9",
+    "#93E7A2",
+    "#77E191",
+    "#5DD977",
+    "#3EBE5E",
   ];
 
   const getColorForCount = (count: number): string => {
@@ -114,32 +130,16 @@ export default function GithubActivity({
     return COLOR_LEVELS[4];
   };
 
-  if (startDate && endDate && new Date(startDate) > new Date(endDate)) {
-    return (
-      <div className="text-red-500 w-[90%]">
-        Error: Start date cannot be after end date
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="flex h-20 w-[90%] items-center justify-center">
-        Loading GitHub activity...
-      </div>
-    );
-  }
-
   if (error) {
     return (
-      <div className="text-red-500 w-[90%]">
+      <div className="w-[90%] text-red-500">
         Error loading GitHub activity: {error}
       </div>
     );
   }
 
   return (
-    <div className="grid w-[90%] grid-cols-24 grid-rows-6 gap-x-[1px] gap-y-1">
+    <div className="grid-rows-auto grid-cols-24 grid w-[90%] gap-x-1 gap-y-1">
       {contributions.map((day) => (
         <div
           key={day.date}

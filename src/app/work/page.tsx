@@ -18,7 +18,7 @@ export async function generateMetadata() {
 
 export default function WorkPage() {
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 text-aBlack dark:bg-aBlack dark:text-aWhite">
+    <div className="relative h-screen w-screen overflow-x-hidden overflow-y-hidden bg-a-white p-6 text-a-black dark:bg-a-black dark:text-a-white">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"

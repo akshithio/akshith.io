@@ -204,7 +204,7 @@ const Sapling = dynamic(() => Promise.resolve(SaplingWindow), {
   ssr: false,
   loading: () => (
     <div
-      className={`${erika.className} flex h-full w-full items-center justify-center bg-aWhite text-aBlack dark:bg-aBlack dark:text-aWhite`}
+      className={`${erika.className} flex h-full w-full items-center justify-center bg-a-white text-a-black dark:bg-a-black dark:text-a-white`}
     >
       Planting...
     </div>

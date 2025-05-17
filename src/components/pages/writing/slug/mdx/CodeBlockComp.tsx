@@ -139,7 +139,7 @@ export default function CodeBlock({ children, className = "", ...props }) {
       {isClient && (
         <button
           onClick={handleCopy}
-          className="bg-gray-800 text-white hover:bg-gray-700 absolute right-2 top-2 hidden rounded px-2 py-1 text-xs focus:outline-none group-hover:block"
+          className="bg-gray-800 text-white hover:bg-gray-700 absolute right-2 top-2 hidden rounded-sm px-2 py-1 text-xs focus:outline-hidden group-hover:block"
         >
           {copySuccess ? (
             <div className="flex items-center justify-center">

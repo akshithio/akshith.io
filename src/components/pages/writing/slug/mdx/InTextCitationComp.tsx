@@ -16,7 +16,7 @@ export default function InTextCitationComp(props: InTextCitationCompProps) {
         <div
           className={`${passenger.className} border-black dark:border-white my-6 flex w-[95%] items-center justify-center border border-dotted p-3`}
         >
-          <div className="text-aBlack dark:text-aWhite">
+          <div className="text-a-black dark:text-a-white">
             {props.type === "paper" && <PaperIcon />}
             {props.type === "video" && <VideoIcon />}
             {props.type === "link" && <LinkIcon />}
@@ -25,7 +25,7 @@ export default function InTextCitationComp(props: InTextCitationCompProps) {
 
           <div className="ml-3">
             <h1>
-              <span className="text-aBlack dark:text-aWhite">{props.name}</span>{" "}
+              <span className="text-a-black dark:text-a-white">{props.name}</span>{" "}
               | <span className="text-[#888]">{props.authors}</span>
             </h1>
           </div>
