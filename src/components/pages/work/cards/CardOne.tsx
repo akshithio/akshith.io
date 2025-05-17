@@ -1,11 +1,11 @@
-import GithubActivity from "@/components/pages/work/GithubActivity";
-import PictureGrid from "@/components/pages/work/PictureGrid";
+import GithubActivity from "@/components/pages/work/card-components/GithubActivity";
+import PictureGrid from "@/components/pages/work/card-components/PictureGrid";
 import { duplet, passenger } from "@/utils/fonts";
 
 export default function CardZero() {
   return (
-    <div className="relative ml-5 flex h-[400px] w-screen flex-grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-[20px] text-left">
-      <div className="w-[540px] flex-shrink-0">
+    <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-[20px] text-left">
+      <div className="w-[540px] shrink-0">
         <h1
           className={`${passenger.className} mb-[5px] text-[30px] font-normal`}
         >
@@ -30,40 +30,59 @@ export default function CardZero() {
         </div>
 
         <h1
-          className={`${passenger.className} mt-[20px] text-[16px] font-normal`}
+          className={`${passenger.className} text-md mt-5 text-[16px] font-normal`}
         >
-          Apart from <span className="font-bold underline">18 credits</span> and
-          a biomedical engineering research opportunity at{" "}
-          <span className="font-bold italic text-[#CFB991]">Purdue</span>, I
-          joined the <span className="font-bold underline">Boilerexams</span>{" "}
-          front-end team,
-          <br /> gave 2 research talks, built this website, and learnt to play
-          squash!
+          Apart from my first foray into lab research at{" "}
+          <span className="font-bold text-[#CFB991] italic">Purdue</span>, I
+          presented at 2 small-scale conferences, started helping out at the{" "}
+          <a className="font-bold underline">Boilerexams</a> team, spent way too
+          much time building this website, and also learnt to play a little bit
+          of squash!
         </h1>
         <h1
-          className={`${duplet.className} mb-[10px] mt-[20px] text-[16px] font-semibold text-[#999]`}
+          className={`${duplet.className} mt-5 mb-4 text-[16px] font-semibold text-[#999]`}
         >
           Github Activity
         </h1>
-        <GithubActivity startDate="2025-01-01" endDate="2025-04-01" />
-        <h1
-          className={`${duplet.className} leading-2 mt-[20px] text-[16px] font-semibold text-[#999]`}
-        >
-          <span className={`${passenger.className} leading-8 underline`}>
-            456
-          </span>{" "}
-          Calendar Hours •{" "}
-          <span className={`${passenger.className} leading-8 underline`}>
-            6
-          </span>{" "}
-          Blogs Published •{" "}
-          <span className={`${passenger.className} leading-8 underline`}>
-            1200
-          </span>{" "}
-          Hours Coding
-        </h1>
+        <GithubActivity startDate="2025-01-01" endDate="2025-04-06" />
       </div>
-      <PictureGrid />
+      <PictureGrid
+        columns={[
+          {
+            items: [
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcKPF4yAxRrUGc6qx095LYuNawl2iMhCTJZAWO",
+                alt: "Image 1",
+              },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcfNn6gOu6WOAGaQXNuS0BvnmHJY4UKxz32kgT",
+                alt: "Image 2",
+              },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcdR9TnyGhfW25cMOnKGBmZL9tiyYuk1SvCxRF",
+                alt: "Image 2",
+              },
+            ],
+            direction: "normal",
+            duration: 45,
+          },
+          {
+            items: [
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGc6vpY81IlfqaOQzsIrDumBZhbFYETke1cwPJK",
+                alt: "Image 3",
+              },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGczk4fRSkN6DAPpcgqysIV1RhSumwMUznxLNb0",
+                alt: "Image 4",
+              },
+            ],
+            direction: "reverse",
+            duration: 80,
+          },
+        ]}
+        gap={4}
+      />
     </div>
   );
 }

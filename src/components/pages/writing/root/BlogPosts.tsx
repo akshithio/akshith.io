@@ -7,18 +7,18 @@ import { duplet } from "@/utils/fonts";
 
 const LoadingState = () => (
   <div className="mb-6 flex w-full items-center justify-between">
-    <div className="relative w-[50rem]">
-      <div className="h-6 w-[37.5rem] animate-pulse rounded-sm bg-[#999]/20 dark:bg-[#999]/10" />
+    <div className="relative w-200">
+      <div className="h-6 w-150 animate-pulse rounded-xs bg-[#999]/20 dark:bg-[#999]/10" />
       <div className="absolute right-0 top-0">
-        <div className="mr-[0.125rem] h-6 w-6 animate-pulse rounded-sm bg-[#999]/20 dark:bg-[#999]/10" />
+        <div className="mr-0.5 h-6 w-6 animate-pulse rounded-xs bg-[#999]/20 dark:bg-[#999]/10" />
       </div>
     </div>
-    <div className="ml-1.5 h-6 w-20 animate-pulse rounded-sm bg-[#999]/20 dark:bg-[#999]/10" />
+    <div className="ml-1.5 h-6 w-20 animate-pulse rounded-xs bg-[#999]/20 dark:bg-[#999]/10" />
   </div>
 );
 
 const ErrorState = () => (
-  <div className="mt-12 flex h-[40%] w-[50rem] flex-col items-center justify-center">
+  <div className="mt-12 flex h-[40%] w-200 flex-col items-center justify-center">
     <div className="text-red mb-4 text-center">
       <h2
         className={`${duplet.className} text-xl font-semibold text-[#ef4444] dark:text-[#f87171]`}
@@ -70,7 +70,7 @@ export default function BlogPosts({
   return (
     <div className="mt-9 h-full">
       {filteredPosts.length === 0 ? (
-        <div className="flex w-[50rem] items-center justify-center">
+        <div className="flex w-200 items-center justify-center">
           <p className={`${duplet.className} font-semibold`}>
             No blog posts available for the selected categories.
           </p>
@@ -79,7 +79,7 @@ export default function BlogPosts({
         filteredPosts.map(({ title, filename, category }) => (
           <div key={filename}>
             <div className="mt-1 flex">
-              <div className="relative mt-1 w-[50rem]">
+              <div className="relative mt-1 w-200">
                 <a
                   href={`/writing/${filename}`}
                   className={`${duplet.className} text-base font-semibold`}

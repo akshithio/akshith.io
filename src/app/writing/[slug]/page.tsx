@@ -36,7 +36,7 @@ export default async function Page(props: PageProps) {
 
   return (
     <div
-      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-aWhite p-6 text-aBlack transition-all duration-500 ease-in-out dark:bg-aBlack dark:text-aWhite`}
+      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-a-white p-6 text-a-black transition-all duration-500 ease-in-out dark:bg-a-black dark:text-a-white`}
     >
       <Navbar />
 

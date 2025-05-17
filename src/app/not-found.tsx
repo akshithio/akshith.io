@@ -8,7 +8,7 @@ export default function NotFoundPage() {
   const { theme } = useTheme();
 
   return (
-    <div className="text-aBlack dark:bg-aBlack bg-aWhite dark:text-aWhite flex h-screen w-screen items-center justify-center overflow-hidden">
+    <div className="text-a-black dark:bg-a-black bg-a-white dark:text-a-white flex h-screen w-screen items-center justify-center overflow-hidden">
       <div className="flex flex-col items-center justify-center">
         <LogoIcon src="/404" />
 

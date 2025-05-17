@@ -22,7 +22,7 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="h-screen w-screen overflow-x-hidden overflow-y-hidden bg-aWhite p-6 dark:bg-aBlack">
+    <div className="bg-a-white dark:bg-a-black h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"
@@ -73,46 +73,40 @@ export default function HomePage() {
           </div>
         </a>
       </div>
-      <div className="flex h-full w-screen flex-grow ">
+      <div className="flex h-full w-screen grow ">
         <div className="ml-34 mt-28 h-fit w-fit">
           <LocationStatus />
           <div className="mt-3 flex">
-            <div className="text-aBlack dark:text-aWhite">
+            <div className="text-a-black dark:text-a-white">
               <LogoIcon src="root" />
             </div>
 
             <h1
-              className={`ml-3 ${passenger.className} text-2xl text-aBlack dark:text-aWhite`}
+              className={`ml-3 ${passenger.className} text-a-black dark:text-a-white text-2xl`}
             >
               Akshith Garapati
             </h1>
           </div>
 
           <div
-            className={`${duplet.className} relative mt-6 w-80 text-base leading-6 text-aBlack dark:text-aWhite`}
+            className={`${duplet.className} text-a-black dark:text-a-white relative mt-6 w-80 text-base leading-6`}
           >
             <p>
-              I’m a comp sci (‘28) freshman{" "}
-              <span className="font-semibold">@purdue</span> that’s currently
-              tryna understand{" "}
-              <span className="italic">why people work the way they do</span>.
+              I study computer science{" "}
+              <span className="font-semibold">@purdue</span> and spend my time
+              primarily tinkering with web systems and machine intelligence
+              models.
             </p>
 
             <br />
 
             <p>
-              If you’ve ever even written down a simple todo list or are the
-              kind of person that has 30 zapier integrations to hold your life
-              together, <span className="underline">i want to talk to you</span>
+              I use this website to write as a way to teach myself, experiment
+              with new pieces of web tech, train my design muscles and{" "}
+              <a href="/writing" className="underline">
+                overcome the twitter character limit
+              </a>
               .
-            </p>
-
-            <br />
-
-            <p>
-              I use this place to write in an effort to teach myself, experiment
-              with new pieces of web tech, train my design muscles or overcome
-              the twitter character limit.
             </p>
 
             <br />
@@ -120,7 +114,7 @@ export default function HomePage() {
             <p>
               I've previously built organizational systems for teams{" "}
               <span className="font-semibold">@dimension</span>, goofed around
-              with some crazy smart ppl{" "}
+              with some crazy smart people{" "}
               <span className="font-semibold">@tks</span> and got my hs to agree
               to hosting an irl hackathon on campus with ~85 ppl participating
               over the weekend.
@@ -129,11 +123,20 @@ export default function HomePage() {
             <br />
 
             <p>
-              I get my hands dirty quite often with projects that’ve included
-              building a gen-z focused newsletter, a crypto UPI-like payment
-              system, a socialized traveling web app, a linktree replacement
-              amongst many other random chronicles in between.
+              I’m spending this summer building web archival systems{" "}
+              <span className="font-semibold">@internetarchive</span>. I also
+              help maintain Purdue’s unofficial version of Khan Academy with
+              ~8.4 million submissions and counting, called{" "}
+              <span className="italic">Boilerexams</span>.
             </p>
+
+            <br />
+
+            <p>
+              I’m currently interested in & thinking about interpretability
+              research, performant systems & hip-hop.
+            </p>
+
             <MusicStatus />
           </div>
         </div>

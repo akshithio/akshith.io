@@ -28,7 +28,7 @@ export default function Desert({ length, title }: DesertProps) {
 
   if (currentTheme === "dark") {
     return (
-      <div className="absolute right-5 origin-right scale-x-[-1] bg-aBlack">
+      <div className="absolute right-5 origin-right scale-x-[-1] bg-a-black">
         {desert.dark.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;
@@ -67,7 +67,7 @@ export default function Desert({ length, title }: DesertProps) {
     );
   } else if (currentTheme === "light") {
     return (
-      <div className="absolute right-5 origin-right scale-x-[-1] bg-aWhite">
+      <div className="absolute right-5 origin-right scale-x-[-1] bg-a-white">
         {desert.light.map((desertBlock) => {
           if (desertBlock.type !== "sand" && desertBlock.type !== "water") {
             return null;

@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <div className="w-full">
       <div
-        className={`${erika.className} flex gap-x-12 text-lg text-aBlack underline dark:text-aWhite`}
+        className={`${erika.className} flex gap-x-12 text-lg text-a-black underline dark:text-a-white`}
       >
         <a href="/">
           <h1>home</h1>

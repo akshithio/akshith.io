@@ -113,7 +113,7 @@ export default function Tooltip({
       <div
         ref={tooltipRef}
         role="tooltip"
-        className={`${duplet.className} absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform whitespace-nowrap rounded-md bg-aBlack px-2 py-1 text-sm font-semibold text-aWhite transition-all duration-200 ease-out dark:bg-aWhite dark:text-aBlack ${
+        className={`${duplet.className} absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform whitespace-nowrap rounded-md bg-a-black px-2 py-1 text-sm font-semibold text-a-white transition-all duration-200 ease-out dark:bg-a-white dark:text-a-black ${
           isVisible && !isOverlapped
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-2 opacity-0"
@@ -124,7 +124,7 @@ export default function Tooltip({
           className="absolute left-1/2 top-0 h-2 w-full -translate-x-1/2 -translate-y-2"
           aria-hidden="true"
         >
-          <div className="border-transparent absolute bottom-0 left-1/2 h-0 w-0 -translate-x-1/2 border-b-4 border-l-4 border-r-4 border-b-aBlack dark:border-b-aWhite" />
+          <div className="border-transparent absolute bottom-0 left-1/2 h-0 w-0 -translate-x-1/2 border-b-4 border-l-4 border-r-4 border-b-a-black dark:border-b-a-white" />
         </div>
       </div>
     </div>
