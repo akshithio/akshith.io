@@ -1,78 +1,99 @@
 "use client";
 
 import { useMicroblogs } from "@/hooks/useMicroblog";
-import { duplet, erika } from "@/utils/fonts";
+import { duplet, erika, passenger } from "@/utils/fonts";
 
 const LoadingState = () => (
-  <div className="mt-6">
+  <div className="mt-4 sm:mt-6">
     <div className="relative h-5 w-full">
-      <div className="absolute right-2 h-3 w-32 animate-pulse rounded-xs bg-[#999]/20 dark:bg-[#999]/10" />
+      <div className="absolute right-2 h-3 w-24 animate-pulse rounded-xs bg-[#999]/20 sm:w-32 dark:bg-[#999]/10" />
     </div>
 
-    <div className="mt-1 rounded-3xl border-[0.063rem] border-solid border-[#999]/20 px-4 py-1.5 dark:border-[#999]/10">
+    <div className="mt-1 rounded-3xl border-[0.063rem] border-solid border-[#999]/20 px-3 py-1.5 sm:px-4 dark:border-[#999]/10">
       <div className="h-12 w-full animate-pulse rounded-xs bg-[#999]/20 dark:bg-[#999]/10" />
     </div>
   </div>
 );
 
 const ErrorState = () => (
-  <div className="mt-12 flex h-[65%] w-84 flex-col items-center justify-center">
+  <div className="mt-8 flex h-[65%] w-full flex-col items-center justify-center px-4 sm:mt-12">
     <div className="mb-4 text-center">
       <h2
-        className={`${duplet.className} text-xl font-semibold text-[#ef4444] dark:text-[#f87171]`}
+        className={`${duplet.className} text-lg font-semibold text-[#ef4444] sm:text-xl dark:text-[#f87171]`}
       >
         Unable to load microblogs
       </h2>
-      <p className={`${duplet.className} mt-2 text-sm text-[#999]`}>
+      <p className={`${duplet.className} mt-2 text-xs text-[#999] sm:text-sm`}>
         There was an error loading the microblogs. Please try again later.
       </p>
     </div>
     <button
       onClick={() => window.location.reload()}
-      className={`${duplet.className} mt-2 rounded-md bg-[#999]/10 px-4 py-1 text-sm font-semibold transition-colors hover:bg-[#999]/20`}
+      className={`${duplet.className} mt-2 rounded-md bg-[#999]/10 px-4 py-1 text-xs font-semibold transition-colors hover:bg-[#999]/20 sm:text-sm`}
     >
       Retry
     </button>
   </div>
 );
 
-export default function MicroblogContent() {
+export default function Microblog() {
   const { microblogs, isLoading, error } = useMicroblogs();
 
-  if (isLoading) {
-    return (
-      <div className="ml-1.5 mt-6 w-84 text-a-black dark:text-a-white">
-        {[...Array(7)].map((_, index) => (
-          <LoadingState key={index} />
-        ))}
-      </div>
-    );
-  }
-
-  if (error) {
-    return <ErrorState />;
-  }
-
   return (
-    <div className="ml-2 mb-[-8px] h-full w-84 overflow-y-auto pt-6 text-a-black dark:text-a-white">
-      <div className="pb-6">
-        {microblogs.map((microblog) => (
-          <div key={microblog.id} className="mt-6">
-            <div className="relative h-5 w-full">
-              <h1
-                className={`${duplet.className} absolute right-2 text-xs font-semibold text-[#999]`}
-              >
-                {microblog.formattedTime}, {microblog.formattedDate}
-              </h1>
-            </div>
-
-            <div
-              className={`${erika.className} rounded-3xl border-[0.063rem] border-solid border-a-black px-4 py-1.5 dark:border-a-white`}
+    <div className="sm:h-full border-r-0 border-b-2 border-dotted border-r-[#999] sm:border-r-2 sm:border-b-0">
+      <div className="md:scrollbar-hidden mt-4 overflow-y-auto px-3 sm:mt-[2.813rem] sm:pr-9 sm:pl-0">
+        <div className="text-a-black dark:text-a-white">
+          <h1 className={`${passenger.className} text-lg italic md:text-2xl`}>
+            the ✨ microblog ✨
+          </h1>
+          <h1
+            className={`${erika.className} mt-1 max-w-full text-xs sm:text-sm`}
+          >
+            these are meant to be notes / drafts tweets / shower thoughts /
+            whatever else tbh. inspired from{" "}
+            <a
+              href="https://udara.io/microblog"
+              target="_blank"
+              aria-label="Link to Udara Jay's personal website"
+              className={`${duplet.className} font-semibold underline`}
             >
-              <h1>{microblog.content}</h1>
+              udara.io
+            </a>
+          </h1>
+        </div>
+        {isLoading ? (
+          <div className="text-a-black dark:text-a-white">
+            {[...Array(7)].map((_, index) => (
+              <LoadingState key={index} />
+            ))}
+          </div>
+        ) : error ? (
+          <ErrorState />
+        ) : (
+          <div className="text-a-black dark:text-a-white h-full overflow-y-auto pt-4 sm:pt-6">
+            <div className="pb-4 sm:pb-6">
+              {microblogs.map((microblog) => (
+                <div key={microblog.id} className="mt-4 sm:mt-6">
+                  <div className="relative h-5 w-full">
+                    <h1
+                      className={`${duplet.className} absolute right-2 text-[0.65rem] font-semibold text-[#999] sm:text-xs`}
+                    >
+                      {microblog.formattedTime}, {microblog.formattedDate}
+                    </h1>
+                  </div>
+
+                  <div
+                    className={`${erika.className} border-a-black dark:border-a-white rounded-3xl border-[0.063rem] border-solid px-3 py-1.5 sm:px-4`}
+                  >
+                    <h1 className="text-sm break-words sm:text-base">
+                      {microblog.content}
+                    </h1>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

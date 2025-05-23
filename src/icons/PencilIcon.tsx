@@ -1,6 +1,7 @@
 export default function PencilIcon() {
   return (
     <svg
+      className={`h-12 w-10 sm:h-20 sm:w-16 md:h-[3.1828125rem] md:w-[2.625rem] lg:h-[84.875px] lg:w-[70px]`}
       width="70"
       height="84.875"
       viewBox="0 0 80 97"

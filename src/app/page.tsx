@@ -1,10 +1,10 @@
 import Navbar from "@/components/layout/Navbar";
 import LocationStatus from "@/components/pages/root/LocationStatus";
 import MusicStatus from "@/components/pages/root/MusicStatus";
-import Sapling from "@/components/pages/root/Sapling";
 import GithubIcon from "@/icons/GithubIcon";
 import LogoIcon from "@/icons/LogoIcon";
 import TwitterIcon from "@/icons/TwitterIcon";
+import Sapling from "@/components/pages/root/Sapling";
 import { duplet, passenger } from "@/utils/fonts";
 
 export async function generateMetadata() {
@@ -22,7 +22,7 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="bg-a-white dark:bg-a-black h-screen w-screen overflow-x-hidden overflow-y-hidden p-6">
+    <div className="bg-a-white dark:bg-a-black h-screen w-screen overflow-x-hidden phone-l:overflow-y-hidden p-6">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"
@@ -48,11 +48,6 @@ export default function HomePage() {
           pointerEvents: "none",
         }}
       />
-      {/* <div className="absolute bottom-0 right-0 mb-2 mr-2 ">
-        <h1 className={`${duplet.className} text-base text-[#999]`}>
-          (🤖) akshith’s calendar tells me he’s up to no good
-        </h1>
-      </div> */}
       <div className="absolute bottom-2 left-2 flex items-center justify-center gap-x-3">
         <a
           href="https://github.com/akshithio"
@@ -73,23 +68,24 @@ export default function HomePage() {
           </div>
         </a>
       </div>
-      <div className="flex h-full w-screen grow ">
-        <div className="ml-34 mt-28 h-fit w-fit">
+
+      <div className="tablet:justify-start tablet:items-stretch flex h-full w-screen grow items-center justify-center">
+        <div className="phone-l:pr-[16.6%] phone-l:pb-[10%] tablet:py-[6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop:py-[6%] laptop-l:px-[9.6%] laptop-l:py-[6%] desktop:py-[6%] desktop:px-[10%] desktop-xl:px-[14.7%] desktop-xl:py-[8%] text-a-black dark:text-a-white pr-[12.5%] pb-[25%]">
           <LocationStatus />
           <div className="mt-3 flex">
-            <div className="text-a-black dark:text-a-white">
+            <div>
               <LogoIcon src="root" />
             </div>
 
             <h1
-              className={`ml-3 ${passenger.className} text-a-black dark:text-a-white text-2xl`}
+              className={`ml-3 ${passenger.className} desktop:text-3xl phone-l:text-2xl text-xl`}
             >
               Akshith Garapati
             </h1>
           </div>
 
           <div
-            className={`${duplet.className} text-a-black dark:text-a-white relative mt-6 w-80 text-base leading-6`}
+            className={`${duplet.className} desktop:text-xl desktop-xl:text-2xl desktop:w-100 desktop-xl:w-112 desktop:leading-8 desktop-xl:leading-9 desktop-xl:mt-9 relative mt-6 phone-l:w-80 w-65 phone-l:text-base text-sm phone-l:leading-6`}
           >
             <p>
               I study computer science{" "}

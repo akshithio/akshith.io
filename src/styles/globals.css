@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -9,9 +9,17 @@
 
   --grid-template-columns-24: repeat(24, minmax(0, 1fr));
 
-  --font-sans:
-    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --breakpoint-phone-s: 20rem;
+  --breakpoint-phone-m: 23.4375rem;
+  --breakpoint-phone-l: 26.5625rem;
+  --breakpoint-tablet: 48rem;
+  --breakpoint-laptop: 64rem;
+  --breakpoint-laptop-l: 90rem;
+  --breakpoint-desktop: 120rem;
+  --breakpoint-desktop-xl: 160rem;
 }
 
 /*
