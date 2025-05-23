@@ -66,7 +66,7 @@ function SaplingWindow() {
         const minDimension = p.min(canvasWidth, canvasHeight);
         const isLargeLandscape =
           canvasWidth > 1200 && canvasWidth > canvasHeight;
-        const scaleFactor = isLargeLandscape ? 0.46 : 0.4;
+        const scaleFactor = isLargeLandscape ? 0.4 : 0.46;
         len = minDimension * scaleFactor;
         initialTilt = isLargeLandscape ? p.radians(-10) : 0;
 
@@ -197,14 +197,20 @@ function SaplingWindow() {
     };
   }, [resolvedTheme, windowSize]);
 
-  return <div ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
+  return (
+    <div
+      ref={canvasRef}
+      className="laptop:block hidden"
+      style={{ width: "100%", height: "100vh" }}
+    />
+  );
 }
 
 const Sapling = dynamic(() => Promise.resolve(SaplingWindow), {
   ssr: false,
   loading: () => (
     <div
-      className={`${erika.className} flex h-full w-full items-center justify-center bg-a-white text-a-black dark:bg-a-black dark:text-a-white`}
+      className={`${erika.className} bg-a-white text-a-black dark:bg-a-black dark:text-a-white flex h-full w-full items-center justify-center`}
     >
       Planting...
     </div>

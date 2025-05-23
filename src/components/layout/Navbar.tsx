@@ -38,44 +38,42 @@ export default function Navbar() {
   return (
     <div className="w-full">
       <div
-        className={`${erika.className} flex gap-x-12 text-lg text-a-black underline dark:text-a-white`}
+        className={`${erika.className} text-a-black dark:text-a-white desktop:text-2xl phone-l:gap-x-6 tablet:gap-x-12 phone-l:text-lg flex items-center justify-between text-sm underline`}
       >
-        <a href="/">
-          <h1>home</h1>
-        </a>
-        <a href="/writing">
-          <h1>writing</h1>
-          {/* i/o */}
-        </a>
-        <a href="/work">
-          <h1>work</h1>
-        </a>
-        <a href="mailto:mail@akshith.io">
-          <h1>reach out!</h1>
-          {/* say hi! */}
-        </a>
-      </div>
+        <div className="flex gap-x-5 phone-l:gap-x-6 tablet:gap-x-12">
+          <a href="/">
+            <h1>home</h1>
+          </a>
+          <a href="/writing">
+            <h1>writing</h1>
+          </a>
+          <a href="/work">
+            <h1>work</h1>
+          </a>
+          <a href="mailto:mail@akshith.io">
+            <h1>reach out!</h1>
+          </a>
+        </div>
 
-      <div className="">
-        {currentTheme === "dark" && (
-          <button
-            className="absolute right-2 top-2 p-3"
-            aria-label="Switch to light mode"
-            onClick={() => setTheme("light")}
-          >
-            <SunIcon />
-          </button>
-        )}
-
-        {currentTheme === "light" && (
-          <button
-            className="absolute right-2 top-2 p-3"
-            aria-label="Switch to dark mode"
-            onClick={() => setTheme("dark")}
-          >
-            <MoonIcon />
-          </button>
-        )}
+        <div>
+          {currentTheme === "dark" ? (
+            <button
+              className="p-2"
+              aria-label="Switch to light mode"
+              onClick={() => setTheme("light")}
+            >
+              <SunIcon />
+            </button>
+          ) : (
+            <button
+              className="p-2"
+              aria-label="Switch to dark mode"
+              onClick={() => setTheme("dark")}
+            >
+              <MoonIcon />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

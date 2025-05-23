@@ -90,7 +90,7 @@ export default function LocationStatus() {
     <div className="mb-5">
       {cityData?.city && localTime && (
         <h1
-          className={`${duplet.className} text-base text-[#999] dark:text-[#999]`}
+          className={`${duplet.className} phone-l:text-base desktop:text-xl desktop-xl:text-2xl text-sm text-[#999]`}
         >
           {isLoading ? "🔄" : weatherEmoji} i'm in {cityData.city.toLowerCase()}{" "}
           and it's {localTime}

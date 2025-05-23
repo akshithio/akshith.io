@@ -9,6 +9,7 @@ interface GitHubActivityProps {
 interface ContributionDay {
   date: string;
   count: number;
+  id: string;
 }
 
 export default function GithubActivity({
@@ -53,26 +54,34 @@ export default function GithubActivity({
           (contribution) => ({
             date: contribution.date,
             count: contribution.contributionCount,
+            id: `${contribution.date}-${Math.random().toString(36).substring(2, 9)}`,
           }),
         );
 
         const allDays: ContributionDay[] = [];
         const currentDate = new Date(startDate);
         const lastDate = new Date(endDate);
+        const processedDates = new Set<string>();
 
         while (currentDate <= lastDate) {
           const dateStr = currentDate.toISOString().split("T")[0] || "";
-          const existingDay = formattedContributions.find(
-            (day) => day.date === dateStr,
-          );
 
-          if (existingDay) {
-            allDays.push(existingDay);
-          } else {
-            allDays.push({
-              date: dateStr,
-              count: 0,
-            });
+          if (!processedDates.has(dateStr)) {
+            processedDates.add(dateStr);
+
+            const existingDay = formattedContributions.find(
+              (day) => day.date === dateStr,
+            );
+
+            if (existingDay) {
+              allDays.push(existingDay);
+            } else {
+              allDays.push({
+                date: dateStr,
+                count: 0,
+                id: `${dateStr}-${Math.random().toString(36).substring(2, 9)}`,
+              });
+            }
           }
 
           currentDate.setDate(currentDate.getDate() + 1);
@@ -139,10 +148,10 @@ export default function GithubActivity({
   }
 
   return (
-    <div className="grid-rows-auto grid-cols-24 grid w-[90%] gap-x-1 gap-y-1">
+    <div className="grid-rows-auto grid w-[90%] grid-cols-24 gap-x-1 gap-y-1">
       {contributions.map((day) => (
         <div
-          key={day.date}
+          key={day.id}
           className="h-[14px] w-[14px] rounded-md"
           style={{ backgroundColor: getColorForCount(day.count) }}
           title={`${day.date}: ${day.count} contributions`}

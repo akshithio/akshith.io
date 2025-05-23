@@ -11,7 +11,7 @@ export default function MusicStatus() {
       {music !== "not listening to anything" && (
         <div className="absolute -bottom-12">
           <h1
-            className={`${duplet.className} whitespace-nowrap text-base text-[#999] dark:text-[#999]`}
+            className={`${duplet.className} desktop:text-xl desktop-xl:text-2xl phone-l:text-base text-sm whitespace-nowrap text-[#999]`}
           >
             listening to {music.substring(0, music.indexOf(SPLITTING_STRING))}
             {"  "}•{"  "}
