@@ -1,7 +1,10 @@
 import Snake from "@/components/pages/work/card-components/Snake";
 import { duplet, passenger } from "@/utils/fonts";
 
-export default function CardZero() {
+export default function CardZero({ goToSlide, totalSlides }) {
+  const handleLatestEntryClick = () => {
+    goToSlide(totalSlides - 1);
+  };
   return (
     <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
       <div className="w-[340px] shrink-0">
@@ -36,10 +39,10 @@ export default function CardZero() {
           <div>
             <div className="flex w-fit items-center justify-center">
               <h1 className="text-[24px]">work</h1>
-              <span className="ml-[5px] mt-[5px] text-[12px]">/wərk/</span>
+              <span className="mt-[5px] ml-[5px] text-[12px]">/wərk/</span>
             </div>
 
-            <h1 className=" text-[14px] font-semibold">
+            <h1 className="text-[14px] font-semibold">
               activity involving mental or physical effort done in order to
               achieve a purpose or result.
             </h1>
@@ -58,9 +61,14 @@ export default function CardZero() {
 
           <h1 className="mt-[15px] text-[12px]">
             Scroll up to see my progression and click{" "}
-            <span className="underline">here</span> for the latest entry into
-            this self-induced performance report, or stay here and play some
-            snek!
+            <button
+              onClick={handleLatestEntryClick}
+              className="cursor-pointer underline"
+            >
+              here
+            </button>{" "}
+            for the latest entry into this self-induced performance report, or
+            stay here and play some snek!
           </h1>
         </div>
       </div>

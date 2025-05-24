@@ -1,23 +1,26 @@
 ---
 title: "Hello, World!"
 date: "2025-05-10"
-category: "technical"
-description:
-  "A run-down of my personal website, akshith.io, how I built this writing
-  section and some of the other nitty-gritties I had to consider while building this
+category: "web tech"
+description: "A run-down of my website, akshith.io, how I built this writing
+  section and some of the other nitty-gritty I had to consider while building this
   website alongside what I hope to do in the future technically for this website"
-excerpt: "should be the first paragraph of the thing"
+excerpt: "Hello, World! Much of what you see on your screen has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and the commit button. In appearance, this page is definitely more maximalist when compared to the rest of the site, whether that be the non-centred alignment or the funky-looking thing to the right if you're on desktop (I'll explain)."
 ---
 
 Hello, World!
 
-Much of what you're seeing on your screen right now has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and commit button. In appearance, this page is definitely more maximalist when compared to the rest of the site, whether that be the non-centered alignment or the funky looking thing to the right if you're on a desktop (i'll explain).
+Much of what you see on your screen has been built from _semi-scratch_ to be as modular, convenient and dynamic as possible. This should allow me to hopefully write more often and reduce the friction between that first draft and the commit button. In appearance, this page is definitely more maximalist when compared to the rest of the site, whether that be the non-centred alignment or the funky-looking thing to the right if you're on desktop (I'll explain).
 
-I'm not sure if that is a. an attempt to stand out or b. just an urge to build something sophisticated. Either ways,
+I'm not sure if that is a. an attempt to stand out or b. just an urge to build something slightly more sophisticated. Either way, there is always the possibility that that will change.
 
-In what follows, I outline some of what was used to build much of my website, focusing specifically on the writing section and demonstrating what has been built so far. I've relied primarily on `@mdxjs` alongside a collection of growing custom components, that I would like to quickly demonstrate down below.
+The website itself is built primarily using Typescript, NextJS, TailwindCSS and Firebase Admin (so access is only on the server side). I also have a really small custom CLI tool that right now has two commands: one to update the location that you see on the entry-point route and another to add microblog entries visible on the `/writing` route.
 
-### Custom Components
+All of the code is open source, so you can find the entire repository for the website [here](https://github.com/akshithio/akshith.io) and that CLI tool [here](https://github.com/akshithio/adot).
+
+In what follows, I outline some of what was used to build much of my website, focusing specifically on the writing section. I've relied primarily on `@mdxjs` alongside a collection of growing custom components, that I would like to quickly demonstrate down below.
+
+### Blog Components
 
 Since, these are all markdown files there is support for the standard `<h1>` through `<h6>` heading structure (like seen above), italics, bolding and more right out of the box.
 
@@ -25,18 +28,18 @@ Since, these are all markdown files there is support for the standard `<h1>` thr
   src="https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcoX1nVypR6swX3E0LJAGDU42gZ8Ti1hWtKQ9x"
   width={800}
   height={578.439964938}
-  alt="test image"
+  alt="The image demonstrates a Figma file for the designs of this website. It is used simply as a placeholder image to demonstrate the component"
   creds="https://akshith.io"
-  description="Not much to see here except a messy Figma. Simple Image Component"
+  description="Not much to see here except a messy Figma file. Simple Image Component"
   num={1}
 />
 
 <SideNoteComp
   num={1}
-  description="I can ramble here about other things not related to what I'm actually talking about. Helpful because I can't stop talking!"
+  description="I can ramble here about other things not related to what I'm talking about. Helpful because I can't stop talking!"
 />
 
-After the image there's this way for me to leave side-notes <SideCitationComp>[@1]</SideCitationComp>, in case I need to add additional detail that isn't directly relevant to what I'm talking about. I can also cite other more extensive sources like this <CitationSuperscriptComp>1</CitationSuperscriptComp> so that you can click on them and be taken to the bottom of this page with more details about why I said what I said. There are also ways for me to cite some interesting resources in-text like this really cool paper for example.
+After the image, there's this way for me to leave side-notes <SideCitationComp>[@1]</SideCitationComp>, in case I need to add additional detail that isn't directly relevant to what I'm talking about. I can also cite other more extensive sources like this <CitationSuperscriptComp>1</CitationSuperscriptComp> so that you can click on them and be taken to the bottom of this page with more details about why I said what I said. There are also ways for me to cite some interesting resources in-text like this cool paper for example.
 
 <InTextCitationComp
   type="paper"
@@ -47,14 +50,14 @@ After the image there's this way for me to leave side-notes <SideCitationComp>[@
 
 Alternatively, if I'm feeling oddly philosophical or find myself in need of some expert "ethos" to make my argument stand out, I can choose to simply include a quote using the **>** character followed by what I want to say as shown below.
 
-> A wiseman once said something about doing something but I don't know what he said. Also this sidebar glows for some reason and I like that it glows. **~ Akshith Garapati**
+> A wise man once said something about doing something but I don't know what he said. Also, I really like the gradient on this sidebar for some reason. **~ Akshith Garapati**
 
-Or if I feel like laying out a series of simple bullet points i can do that too,
+Or if I feel like laying out a series of simple bullet points I can do that too,
 
-- this is **exhbit a**
+- this is **exhibit a**
 - this would be **exhibit b**
 
-There is support for LaTeX math, meaning this would be the pythagorean theorem: $a^2 + b^2 = c^2$, _\#quickmaths_ and there is also support for syntax highlighting and neat code snippets like the one shown below:
+There is support for LaTeX math, meaning this would be the Pythagorean theorem: $a^2 + b^2 = c^2$, _\#quickmaths_ and there is also support for syntax highlighting and neat code snippets like the one shown below:
 
 ```tsx
 import ImageComp from "@/components/blog/standard/ImageComp";
@@ -66,64 +69,41 @@ import { passenger } from "./fonts";
 
 const MarkdownComponents = {
   h1: (props: any) => (
-    <h1 className=" my-6 text-4xl md:text-5xl dark:text-a-white" {...props} />
-  ),
+ <h1 className=" my-6 text-4xl md:text-5xl dark:text-a-white" {...props} />
+ ),
   h2: (props: any) => (
-    <h2 className=" my-5 text-3xl md:text-4xl dark:text-a-white" {...props} />
-  ),
+ <h2 className=" my-5 text-3xl md:text-4xl dark:text-a-white" {...props} />
+ ),
   h3: (props: any) => (
-    <h3 className=" my-4 text-2xl md:text-3xl dark:text-a-white" {...props} />
-  ),
+ <h3 className=" my-4 text-2xl md:text-3xl dark:text-a-white" {...props} />
+ ),
   h4: (props: any) => (
-    <h4 className=" my-3 text-xl md:text-2xl dark:text-a-white" {...props} />
-  ),
+ <h4 className=" my-3 text-xl md:text-2xl dark:text-a-white" {...props} />
+ ),
   h5: (props: any) => (
-    <h5 className=" my-2 text-lg md:text-xl dark:text-a-white" {...props} />
-  ),
+ <h5 className=" my-2 text-lg md:text-xl dark:text-a-white" {...props} />
+ ),
   h6: (props: any) => (
-    <h6 className=" my-2 text-base md:text-lg dark:text-a-white" {...props} />
-  ),
+ <h6 className=" my-2 text-base md:text-lg dark:text-a-white" {...props} />
+ )
 ```
+
+That code snippet above is from my `MarkdownComponents.tsx` file which lists a much larger range of the custom components for the blogging section that I've already displayed. Lastly, for some reason, I did decide to add some attempt towards world generation towards the right end of the screen with this desert-like environment (shouldn't be visible on mobile).
+
+To briefly summarize, a height tracker component is passed the all of the content retrieved using `compileMDX()` alongside the title of the blog post. The height tracker then calculates the total height in `px` along which the desert can be painted (limited to the content area), done using the `requestAnimationFrame()` [function](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) and debouncing over 100ms to prevent excessive calculations, when there are changes in viewport height.
+
+Deserts are then generated using the title of the blog as the key to creating a hash (using the FNV hash function) and a set of pre-defined probabilities for each of the components. Two different deserts are generated to account for the different components in light mode and dark mode (toggle on the upper right-hand corner to see a different desert!).
+
+I'll likely be monitoring performance and trying to make improvements to make sure this isn't impeding loading times for the actual page. Also, this is all recalled from _frankly_ vague memory because the code for this was written 5 months ago so I apologize. If anyone is actually reading this and is interested in a better explanation, please let me know! The code is available regardless so you can just have a look for yourself!
+
+### To conclude...
+
+Anyways, that is pretty much it. I hope you had fun reading whatever that was. I'll try to actually use this section of my website that I spent so much time on and actually write something that has been well-thought-out. If you're experiencing bugs or have any other feedback, please please let me know 🙏 Have a great rest of your day!
 
 <BibliographyHolderComp>
   <BibliographyItemComp id="1">
-    [1] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="2">
-    [2] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="3">
-    [3] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="4">
-    [4] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="5">
-    [5] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="6">
-    [6] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="7">
-    [7] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
-  </BibliographyItemComp>
-  <BibliographyItemComp id="8">
-    [8] Blum, Dani. [<u>“Are Flax Seeds All That?” _New York Times_</u>
-    ](https://www.nytimes.com/2023/12/13/well/eat/flax-seeds-benefits.html),
-    December 13, 2023.
+    [1] Garapati, Akshith. [
+    <u>“Random Citation Source Article woah” _Akshith Garapati_</u>
+    ](https://akshith.io), May 23, 2025.
   </BibliographyItemComp>
 </BibliographyHolderComp>

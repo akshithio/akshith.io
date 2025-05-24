@@ -10,9 +10,9 @@ export default function SuccessIcon() {
       <path
         d="M2 6.00685L6.00685 10.0137L14 2"
         stroke="white"
-        stroke-width="3.0825"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3.0825"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

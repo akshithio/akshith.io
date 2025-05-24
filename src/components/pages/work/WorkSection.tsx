@@ -1,5 +1,4 @@
 "use client";
-
 import CardOne from "@/components/pages/work/cards/CardOne";
 import CardZero from "@/components/pages/work/cards/CardZero";
 import { erika } from "@/utils/fonts";
@@ -29,11 +28,11 @@ export default function WorkSection() {
   const renderCard = () => {
     switch (currentSlide) {
       case 0:
-        return <CardZero />;
+        return <CardZero goToSlide={goToSlide} totalSlides={totalSlides} />;
       case 1:
         return <CardOne />;
       default:
-        return <CardZero />;
+        return <CardZero goToSlide={goToSlide} totalSlides={totalSlides} />;
     }
   };
 
@@ -44,7 +43,7 @@ export default function WorkSection() {
 
   return (
     <div className="flex h-full flex-col justify-center">
-      <h1 className={`${erika.className} mb-[10px] ml-5 w-fit text-sm`}>
+      <h1 className={`${erika.className} mb-[0.625rem] ml-5 w-fit text-sm`}>
         x {currentSlide.toString().padStart(2, "0")}
       </h1>
       <div className="flex items-center transition-all duration-500 ease-in-out">
@@ -55,7 +54,7 @@ export default function WorkSection() {
               <button
                 key={totalSlides - index - 1}
                 onClick={() => goToSlide(totalSlides - index - 1)}
-                className={`h-[6px] w-[6px] rounded-full transition-all ${
+                className={`h-[0.375rem] w-[0.375rem] rounded-full transition-all cursor-pointer ${
                   currentSlide === totalSlides - index - 1
                     ? "bg-a-black dark:bg-a-white"
                     : "bg-[#999]"
@@ -66,7 +65,7 @@ export default function WorkSection() {
         </div>
         {renderCard()}
       </div>
-      <h1 className={`${erika.className} ml-[22px] mt-[10px] text-sm`}>
+      <h1 className={`${erika.className} mt-[0.625rem] ml-[1.375rem] desktop-xl:ml-6 text-sm desktop-xl:text-lg`}>
         {slideSubtitles[currentSlide] ?? "||| the beginning?"}
       </h1>
     </div>

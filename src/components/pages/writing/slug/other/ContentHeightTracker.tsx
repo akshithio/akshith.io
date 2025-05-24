@@ -76,9 +76,11 @@ export default function ContentHeightTracker(props: {
   }, [props.content]);
 
   return (
-    <div className="">
+    <div>
       {contentHeight !== null && contentHeight > 0 && (
-        <Desert length={contentHeight} title={props.title} />
+        <div className="hidden sm:block">
+          <Desert length={contentHeight} title={props.title} />
+        </div>
       )}
 
       <div className="relative mt-5" ref={contentRef}>
@@ -96,7 +98,7 @@ export default function ContentHeightTracker(props: {
             />
           </div>
         )}
-        <div className="mb-10 font-semibold">{props.content}</div>
+        <div className="mb-10">{props.content}</div>
       </div>
     </div>
   );

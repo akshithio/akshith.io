@@ -31,10 +31,10 @@ export default function WholePage() {
         }}
       />
       <div className="flex h-full w-full flex-col sm:flex-row">
-        <div className="h-1/4 w-full sm:h-full sm:w-1/4">
+        <div className="order-2 h-1/3 w-full sm:order-1 sm:h-full sm:w-1/4">
           <MicroblogContent />
         </div>
-        <div className="h-3/4 w-full sm:h-full sm:w-3/4 sm:mt-0 mt-4">
+        <div className="order-1 mt-4 h-2/3 w-full sm:order-2 sm:mt-0 sm:h-full sm:w-3/4">
           <BlogPosts />
         </div>
       </div>
