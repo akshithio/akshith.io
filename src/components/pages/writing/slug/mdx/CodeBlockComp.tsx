@@ -58,18 +58,10 @@ export default function CodeBlock({ children, className = "", ...props }) {
   const [isLanguageLoaded, setIsLanguageLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
   const language = className?.replace(/^language-/, "") || "plaintext";
 
-  // Fix for hydration mismatch - only render client-specific content after hydration
   useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isClient) return;
-
     let mounted = true;
 
     const initPrism = async () => {
@@ -109,7 +101,7 @@ export default function CodeBlock({ children, className = "", ...props }) {
     return () => {
       mounted = false;
     };
-  }, [language, children, isClient]);
+  }, [language, children]);
 
   const handleCopy = () => {
     if (codeRef.current) {
@@ -122,7 +114,7 @@ export default function CodeBlock({ children, className = "", ...props }) {
 
   if (error) {
     return (
-      <pre className="rounded-lg bg-[#fef2f2] p-4 dark:bg-[#7f1d1d]">
+      <pre className="max-h-[40vh] overflow-auto rounded-lg bg-[#fef2f2] p-4 dark:bg-[#7f1d1d]">
         <code className="text-[#dc2626] dark:text-[#f87171]">
           Error: {error}
         </code>
@@ -130,28 +122,26 @@ export default function CodeBlock({ children, className = "", ...props }) {
     );
   }
 
-  // Use a static string for the className to ensure server/client match
-  const preClassName =
-    "group relative my-4 overflow-x-auto rounded-lg bg-[#6b7280] p-4 text-sm";
-
   return (
-    <pre className={preClassName} tabIndex={0} suppressHydrationWarning={true}>
-      {isClient && (
-        <button
-          onClick={handleCopy}
-          className="bg-gray-800 text-white hover:bg-gray-700 absolute right-2 top-2 hidden rounded-sm px-2 py-1 text-xs focus:outline-hidden group-hover:block"
-        >
-          {copySuccess ? (
-            <div className="flex items-center justify-center">
-              <SuccessIcon /> <h1 className="ml-1">Copied!</h1>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center">
-              <CopyIcon /> <h1 className="ml-1">Copy</h1>
-            </div>
-          )}
-        </button>
-      )}
+    <pre
+      className="group scrollbar-thin relative my-4 max-h-[40vh] overflow-auto rounded-lg bg-[#6b7280] p-4 text-sm"
+      tabIndex={0}
+      suppressHydrationWarning={true}
+    >
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 z-10 hidden rounded-sm bg-gray-800 px-2 py-1 text-xs text-white group-hover:block hover:bg-gray-700 focus:outline-hidden"
+      >
+        {copySuccess ? (
+          <div className="flex items-center justify-center">
+            <SuccessIcon /> <h1 className="ml-1">Copied!</h1>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center">
+            <CopyIcon /> <h1 className="ml-1">Copy</h1>
+          </div>
+        )}
+      </button>
       <code
         ref={codeRef}
         className={className || `language-${language}`}

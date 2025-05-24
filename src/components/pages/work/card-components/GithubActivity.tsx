@@ -152,7 +152,7 @@ export default function GithubActivity({
       {contributions.map((day) => (
         <div
           key={day.id}
-          className="h-[14px] w-[14px] rounded-md"
+          className="h-[0.875rem] w-[0.875rem] rounded-md"
           style={{ backgroundColor: getColorForCount(day.count) }}
           title={`${day.date}: ${day.count} contributions`}
         />

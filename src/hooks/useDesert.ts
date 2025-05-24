@@ -121,7 +121,6 @@ export function useDesert(title: string, length: number) {
     dark: DesertElement[];
   }>({ light: [], dark: [] });
 
-  // Use refs to maintain stable references
   const seedRef = useRef<number | null>(null);
   const rngRef = useRef<(() => number) | null>(null);
 

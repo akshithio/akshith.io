@@ -2,32 +2,55 @@
 
 import { erika } from "@/utils/fonts";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-
-const p5 = typeof window !== "undefined" ? require("p5") : null;
 
 function SaplingWindow() {
   const canvasRef = useRef<HTMLDivElement>(null);
   const p5Ref = useRef<any>(null);
   const { resolvedTheme } = useTheme();
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [p5, setP5] = useState<any>(null);
 
+  // Check if we should load based on screen size
   useEffect(() => {
-    const handleResize = () => {
+    const checkScreenSize = () => {
+      const isLaptopOrLarger = window.innerWidth >= 1024; // Tailwind's laptop breakpoint
+      setShouldLoad(isLaptopOrLarger);
+
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  // Only load p5 if we should show the component
   useEffect(() => {
-    if (!p5 || !resolvedTheme || !canvasRef.current || windowSize.width === 0) {
+    if (shouldLoad && !p5) {
+      import("p5").then((p5Module) => {
+        // p5.js can export in different ways, try both
+        const P5Constructor = p5Module.default || p5Module;
+        // Ensure it's a constructor function
+        if (typeof P5Constructor === "function") {
+          setP5(() => P5Constructor);
+        }
+      });
+    }
+  }, [shouldLoad, p5]);
+
+  useEffect(() => {
+    if (
+      !p5 ||
+      !resolvedTheme ||
+      !canvasRef.current ||
+      windowSize.width === 0 ||
+      !shouldLoad
+    ) {
       return;
     }
 
@@ -66,7 +89,7 @@ function SaplingWindow() {
         const minDimension = p.min(canvasWidth, canvasHeight);
         const isLargeLandscape =
           canvasWidth > 1200 && canvasWidth > canvasHeight;
-        const scaleFactor = isLargeLandscape ? 0.4 : 0.46;
+        const scaleFactor = isLargeLandscape ? 0.46 : 0.46;
         len = minDimension * scaleFactor;
         initialTilt = isLargeLandscape ? p.radians(-10) : 0;
 
@@ -195,7 +218,12 @@ function SaplingWindow() {
         p5Ref.current = null;
       }
     };
-  }, [resolvedTheme, windowSize]);
+  }, [resolvedTheme, windowSize, p5, shouldLoad]);
+
+  // Don't render anything on mobile
+  if (!shouldLoad) {
+    return null;
+  }
 
   return (
     <div
@@ -206,15 +234,4 @@ function SaplingWindow() {
   );
 }
 
-const Sapling = dynamic(() => Promise.resolve(SaplingWindow), {
-  ssr: false,
-  loading: () => (
-    <div
-      className={`${erika.className} bg-a-white text-a-black dark:bg-a-black dark:text-a-white flex h-full w-full items-center justify-center`}
-    >
-      Planting...
-    </div>
-  ),
-});
-
-export default Sapling;
+export default SaplingWindow;

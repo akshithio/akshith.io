@@ -4,15 +4,13 @@ import { duplet, passenger } from "@/utils/fonts";
 
 export default function CardZero() {
   return (
-    <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-[20px] text-left">
-      <div className="w-[540px] shrink-0">
-        <h1
-          className={`${passenger.className} mb-[5px] text-[30px] font-normal`}
-        >
+    <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
+      <div className="w-[540px] shrink-0 mr-4">
+        <h1 className={`${passenger.className} mb-[5px] text-3xl font-normal`}>
           Akshith Garapati
         </h1>
         <div className="relative inline-block">
-          <h1 className={`${duplet.className} text-[16px] font-semibold`}>
+          <h1 className={`${duplet.className} text-base font-semibold`}>
             Jan 2025 - April 2025
           </h1>
           <svg
@@ -30,7 +28,7 @@ export default function CardZero() {
         </div>
 
         <h1
-          className={`${passenger.className} text-md mt-5 text-[16px] font-normal`}
+          className={`${passenger.className} mt-5 text-base font-normal`}
         >
           Apart from my first foray into lab research at{" "}
           <span className="font-bold text-[#CFB991] italic">Purdue</span>, I
@@ -40,11 +38,17 @@ export default function CardZero() {
           of squash!
         </h1>
         <h1
-          className={`${duplet.className} mt-5 mb-4 text-[16px] font-semibold text-[#999]`}
+          className={`${duplet.className} mt-5 mb-4 text-base font-semibold text-[#999]`}
         >
           Github Activity
         </h1>
         <GithubActivity startDate="2025-01-01" endDate="2025-04-06" />
+        <h1
+          className={`${passenger.className} mt-8 text-base font-normal italic`}
+        >
+          unfortunately, not all photos you see to the right may have been taken
+          in the specific timeframe,
+        </h1>
       </div>
       <PictureGrid
         columns={[

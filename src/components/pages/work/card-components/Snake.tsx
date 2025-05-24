@@ -317,7 +317,7 @@ const Snake: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <pre className="whitespace-pre p-5 font-mono text-[8px] leading-none">
+      <pre className="p-5 font-mono text-[0.5rem] desktop-xl:text- leading-none whitespace-pre">
         {asciiToDisplay}
       </pre>
     </div>

@@ -40,38 +40,43 @@ export default function Microblog() {
   const { microblogs, isLoading, error } = useMicroblogs();
 
   return (
-    <div className="sm:h-full border-r-0 border-b-2 border-dotted border-r-[#999] sm:border-r-2 sm:border-b-0">
-      <div className="md:scrollbar-hidden mt-4 overflow-y-auto px-3 sm:mt-[2.813rem] sm:pr-9 sm:pl-0">
-        <div className="text-a-black dark:text-a-white">
-          <h1 className={`${passenger.className} text-lg italic md:text-2xl`}>
-            the ✨ microblog ✨
-          </h1>
-          <h1
-            className={`${erika.className} mt-1 max-w-full text-xs sm:text-sm`}
-          >
-            these are meant to be notes / drafts tweets / shower thoughts /
-            whatever else tbh. inspired from{" "}
-            <a
-              href="https://udara.io/microblog"
-              target="_blank"
-              aria-label="Link to Udara Jay's personal website"
-              className={`${duplet.className} font-semibold underline`}
-            >
-              udara.io
-            </a>
-          </h1>
-        </div>
-        {isLoading ? (
+    <div className=" h-full border-r-0 border-t-2 border-dotted border-r-[#999] sm:border-r-2 sm:border-t-0">
+      <div className="flex h-full flex-col">
+        {/* Header - Fixed at top */}
+        <div className="mt-4 flex-shrink-0 px-3 sm:mt-[2.813rem] sm:pr-9 sm:pl-0">
           <div className="text-a-black dark:text-a-white">
-            {[...Array(7)].map((_, index) => (
-              <LoadingState key={index} />
-            ))}
+            <h1 className={`${passenger.className} text-lg italic md:text-2xl`}>
+              the ✨ microblog ✨
+            </h1>
+            <h1
+              className={`${erika.className} mt-1 max-w-full text-xs sm:text-sm`}
+            >
+              these are meant to be notes / drafts tweets / shower thoughts /
+              whatever else tbh. inspired from{" "}
+              <a
+                href="https://udara.io/microblog"
+                target="_blank"
+                aria-label="Link to Udara Jay's personal website"
+                className={`${duplet.className} font-semibold underline`}
+              >
+                udara.io
+              </a>
+            </h1>
           </div>
-        ) : error ? (
-          <ErrorState />
-        ) : (
-          <div className="text-a-black dark:text-a-white h-full overflow-y-auto pt-4 sm:pt-6">
-            <div className="pb-4 sm:pb-6">
+        </div>
+
+        {/* Scrollable content area */}
+        <div className="md:scrollbar-hidden flex-1 overflow-y-auto px-3 sm:pr-9 sm:pl-0">
+          {isLoading ? (
+            <div className="text-a-black dark:text-a-white">
+              {[...Array(7)].map((_, index) => (
+                <LoadingState key={index} />
+              ))}
+            </div>
+          ) : error ? (
+            <ErrorState />
+          ) : (
+            <div className="text-a-black dark:text-a-white pt-4 pb-4 sm:pt-6 sm:pb-6">
               {microblogs.map((microblog) => (
                 <div key={microblog.id} className="mt-4 sm:mt-6">
                   <div className="relative h-5 w-full">
@@ -92,8 +97,8 @@ export default function Microblog() {
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
