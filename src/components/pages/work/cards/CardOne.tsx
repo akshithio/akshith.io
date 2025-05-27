@@ -2,10 +2,10 @@ import GithubActivity from "@/components/pages/work/card-components/GithubActivi
 import PictureGrid from "@/components/pages/work/card-components/PictureGrid";
 import { duplet, passenger } from "@/utils/fonts";
 
-export default function CardZero() {
+export default function CardOne() {
   return (
-    <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
-      <div className="w-[540px] shrink-0 mr-4">
+    <div className="scrollbar-thin relative ml-5 flex h-[400px] w-screen grow overflow-x-auto overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
+      <div className="mr-4 w-[540px] shrink-0">
         <h1 className={`${passenger.className} mb-[5px] text-3xl font-normal`}>
           Akshith Garapati
         </h1>
@@ -27,9 +27,7 @@ export default function CardZero() {
           </svg>
         </div>
 
-        <h1
-          className={`${passenger.className} mt-5 text-base font-normal`}
-        >
+        <h1 className={`${passenger.className} mt-5 text-base font-normal`}>
           Apart from my first foray into lab research at{" "}
           <span className="font-bold text-[#CFB991] italic">Purdue</span>, I
           presented at 2 small-scale conferences, started helping out at the{" "}
@@ -43,11 +41,11 @@ export default function CardZero() {
           Github Activity
         </h1>
         <GithubActivity startDate="2025-01-01" endDate="2025-04-06" />
-        <h1
-          className={`${passenger.className} mt-8 text-base font-normal italic`}
-        >
-          unfortunately, not all photos you see to the right may have been taken
-          in the specific timeframe,
+        <h1 className={`${passenger.className} mt-8 text-sm`}>
+          p.s. random photo collection to the right, all of which may not be
+          from specified time period. i apologize 😔 i'll try to actually
+          showcase my "work" next time on. i just wanted to build a working
+          carousel :)
         </h1>
       </div>
       <PictureGrid
@@ -68,7 +66,7 @@ export default function CardZero() {
               },
             ],
             direction: "normal",
-            duration: 45,
+            duration: 80,
           },
           {
             items: [
@@ -80,8 +78,30 @@ export default function CardZero() {
                 url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGczk4fRSkN6DAPpcgqysIV1RhSumwMUznxLNb0",
                 alt: "Image 4",
               },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcGY6aXg3dncbW6EDjHzNX1450JFgaoqBCfskl",
+                alt: "Image 5",
+              },
             ],
             direction: "reverse",
+            duration: 80,
+          },
+          {
+            items: [
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcgMYeNU1AHVUONXchJjeZktMRn9Iwzpsi4rWa",
+                alt: "Image 6",
+              },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcwqOc4GzQHv75zFArpcEl1jDnbCZegKONk2P6",
+                alt: "Image 8",
+              },
+              {
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcKSq2KfpxRrUGc6qx095LYuNawl2iMhCTJZAW",
+                alt: "Image 9",
+              },
+            ],
+            direction: "normal",
             duration: 80,
           },
         ]}

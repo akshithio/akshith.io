@@ -57,7 +57,9 @@ export default function PictureGrid({
   return (
     <div
       className={`grid h-full w-full gap-${gap} ${className}`}
-      style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
+      style={{
+        gridTemplateColumns: `repeat(${columns.length}, minmax(120px, 1fr))`,
+      }}
     >
       {columns.map((column, colIndex) => (
         <div

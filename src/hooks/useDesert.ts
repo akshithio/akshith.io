@@ -124,7 +124,7 @@ export function useDesert(title: string, length: number) {
   const seedRef = useRef<number | null>(null);
   const rngRef = useRef<(() => number) | null>(null);
 
-  // Memoize the generation function
+  // memoize the generation function
   const generateDesertWithSeed = useCallback(
     (title: string, length: number) => {
       if (!length) {
@@ -132,7 +132,6 @@ export function useDesert(title: string, length: number) {
         return;
       }
 
-      // Only create new seed and RNG if title changes
       const newSeed = hash(title);
       if (seedRef.current !== newSeed) {
         seedRef.current = newSeed;

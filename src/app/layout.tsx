@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import "katex/dist/katex.min.css";
 import { ThemeProvider } from "next-themes";
 import "prismjs/themes/prism-tomorrow.css";
@@ -18,12 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className="overflow-x-clip">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-clip">
         <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

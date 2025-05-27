@@ -1,6 +1,5 @@
 "use client";
 
-import { erika } from "@/utils/fonts";
 import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 
@@ -12,14 +11,14 @@ function SaplingWindow() {
   const [shouldLoad, setShouldLoad] = useState(false);
   const [p5, setP5] = useState<any>(null);
 
-  // Check if we should load based on screen size
   useEffect(() => {
     const checkScreenSize = () => {
-      const isLaptopOrLarger = window.innerWidth >= 1024; // Tailwind's laptop breakpoint
-      setShouldLoad(isLaptopOrLarger);
+      const width = window.innerWidth;
+      const shouldShow = width > 768;
+      setShouldLoad(shouldShow);
 
       setWindowSize({
-        width: window.innerWidth,
+        width: width,
         height: window.innerHeight,
       });
     };
@@ -29,13 +28,10 @@ function SaplingWindow() {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  // Only load p5 if we should show the component
   useEffect(() => {
     if (shouldLoad && !p5) {
       import("p5").then((p5Module) => {
-        // p5.js can export in different ways, try both
-        const P5Constructor = p5Module.default || p5Module;
-        // Ensure it's a constructor function
+        const P5Constructor = p5Module.default;
         if (typeof P5Constructor === "function") {
           setP5(() => P5Constructor);
         }
@@ -74,6 +70,15 @@ function SaplingWindow() {
       let noisePos = 1;
       let initialTilt = 0;
 
+      const getScaleFactor = (viewportWidth: number) => {
+        if (viewportWidth >= 768 && viewportWidth <= 1024) {
+          return 1.3;
+        } else if (viewportWidth > 1024) {
+          return 0.46;
+        }
+        return 0.46;
+      };
+
       p.setup = () => {
         const canvasWidth = canvasRef.current?.offsetWidth || 0;
         const canvasHeight = canvasRef.current?.offsetHeight || 0;
@@ -87,11 +92,11 @@ function SaplingWindow() {
         generation = 0;
 
         const minDimension = p.min(canvasWidth, canvasHeight);
-        const isLargeLandscape =
-          canvasWidth > 1200 && canvasWidth > canvasHeight;
-        const scaleFactor = isLargeLandscape ? 0.46 : 0.46;
+        const scaleFactor = getScaleFactor(windowSize.width);
         len = minDimension * scaleFactor;
-        initialTilt = isLargeLandscape ? p.radians(-10) : 0;
+
+        initialTilt =
+          canvasWidth > 1200 && canvasWidth > canvasHeight ? p.radians(-10) : 0;
 
         while (generation < targetGenerations) {
           generate();
@@ -112,11 +117,25 @@ function SaplingWindow() {
           sentence = axiom;
 
           const minDimension = p.min(canvasWidth, canvasHeight);
-          const isLargeLandscape =
-            canvasWidth > 1200 && canvasWidth > canvasHeight;
-          const scaleFactor = isLargeLandscape ? 0.46 : 0.4;
+          const scaleFactor = getScaleFactor(windowSize.width);
           len = minDimension * scaleFactor;
-          initialTilt = isLargeLandscape ? p.radians(-15) : 0;
+
+          // Debug logging for resize
+          console.log(
+            "Resize - Viewport width:",
+            windowSize.width,
+            "Canvas width:",
+            canvasWidth,
+            "Scale factor:",
+            scaleFactor,
+            "Final len:",
+            len,
+          );
+
+          initialTilt =
+            canvasWidth > 1200 && canvasWidth > canvasHeight
+              ? p.radians(-15)
+              : 0;
 
           generation = 0;
 
@@ -150,7 +169,11 @@ function SaplingWindow() {
 
       const drawTree = () => {
         p.resetMatrix();
-        p.translate(p.width - 40, p.height);
+        const scaleFactor = getScaleFactor(windowSize.width);
+        const shouldShiftRight = scaleFactor === 1.3;
+        const xOffset = shouldShiftRight ? -100 : 40;
+
+        p.translate(p.width - xOffset, p.height);
         p.stroke(treeColor);
 
         if (initialTilt !== 0) {
@@ -220,18 +243,11 @@ function SaplingWindow() {
     };
   }, [resolvedTheme, windowSize, p5, shouldLoad]);
 
-  // Don't render anything on mobile
   if (!shouldLoad) {
     return null;
   }
 
-  return (
-    <div
-      ref={canvasRef}
-      className="laptop:block hidden"
-      style={{ width: "100%", height: "100vh" }}
-    />
-  );
+  return <div ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
 }
 
 export default SaplingWindow;

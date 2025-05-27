@@ -17,7 +17,6 @@ export const usePosts = () => {
         return response.json();
       })
       .then((postsData) => {
-        // Sort posts by date
         const sortedPosts = postsData.sort(
           (a: FrontMatter, b: FrontMatter) =>
             new Date(b.date).getTime() - new Date(a.date).getTime(),

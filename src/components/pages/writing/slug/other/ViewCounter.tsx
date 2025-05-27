@@ -14,13 +14,12 @@ export default function ViewCounter({
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    // Initial fetch to get the current view count without incrementing
     const fetchViews = async () => {
       try {
         const response = await fetch(
           `/api/blog-views?slug=${encodeURIComponent(slug)}`,
           {
-            method: "GET", // Using GET instead of POST to not increment the counter
+            method: "GET",
           },
         );
         const data = await response.json();
@@ -36,7 +35,6 @@ export default function ViewCounter({
 
     fetchViews();
 
-    // Increment view count only once after 5 seconds
     const timer = setTimeout(async () => {
       try {
         const response = await fetch(
@@ -60,7 +58,6 @@ export default function ViewCounter({
     return () => clearTimeout(timer);
   }, [slug]);
 
-  // Don't show anything until we have loaded the initial view count
   if (!hasLoaded) {
     return null;
   }
