@@ -16,13 +16,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: `${baseURL}`, // Base URL
+      url: `${baseURL}`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
       priority: 1,
     },
     {
-      url: `${baseURL}/writing`, // Static page
+      url: `${baseURL}/writing`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.8,

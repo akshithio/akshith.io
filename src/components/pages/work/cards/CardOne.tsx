@@ -6,7 +6,7 @@ export default function CardOne() {
   return (
     <div className="scrollbar-thin relative ml-5 flex h-[400px] w-screen grow overflow-x-auto overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
       <div className="mr-4 w-[540px] shrink-0">
-        <h1 className={`${passenger.className} mb-[5px] text-3xl font-normal`}>
+        <h1 className={`${passenger.className} mb-1.5 text-3xl font-normal`}>
           Akshith Garapati
         </h1>
         <div className="relative inline-block">
@@ -31,9 +31,16 @@ export default function CardOne() {
           Apart from my first foray into lab research at{" "}
           <span className="font-bold text-[#CFB991] italic">Purdue</span>, I
           presented at 2 small-scale conferences, started helping out at the{" "}
-          <a className="font-bold underline">Boilerexams</a> team, spent way too
-          much time building this website, and also learnt to play a little bit
-          of squash!
+          <a
+            className="font-bold underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://boilerexams.com"
+          >
+            Boilerexams
+          </a>{" "}
+          team, spent way too much time building this website, and also learnt
+          to play a little bit of squash!
         </h1>
         <h1
           className={`${duplet.className} mt-5 mb-4 text-base font-semibold text-[#999]`}
@@ -53,56 +60,56 @@ export default function CardOne() {
           {
             items: [
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcKPF4yAxRrUGc6qx095LYuNawl2iMhCTJZAWO",
-                alt: "Image 1",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcYfzaV3djN9eV1Ww7x3yziUSQAvR0CJraGbcj",
+                alt: "Doraemon, the blue robotic cat character from the popular Japanese manga and anime series, shown with his characteristic white face, red nose, and mischievous winking expression. He's wearing his signature red collar with a bell and appears to be in an indoor setting.",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcfNn6gOu6WOAGaQXNuS0BvnmHJY4UKxz32kgT",
-                alt: "Image 2",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcrvvxxnXBQOJob845Dy2VfT1lmPisHSWXaqKI",
+                alt: "A street-level view in Chicago's downtown Loop district, showing the famous elevated train (the \"L\") running along the right side of the image. Tall urban buildings line both sides of the street, creating the characteristic canyon effect of downtown Chicago's financial district, with the iconic public transit system that gives the Loop its name.",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcdR9TnyGhfW25cMOnKGBmZL9tiyYuk1SvCxRF",
-                alt: "Image 2",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcYaYlp5jN9eV1Ww7x3yziUSQAvR0CJraGbcj6",
+                alt: "A winter evening scene near a shopping center or institutional building. Snow covers the ground and a street lamp glows warmly against the twilight sky with orange and purple hues. Bare trees and a long, low building are visible in the background, with cars parked nearby.",
               },
             ],
             direction: "normal",
-            duration: 80,
+            duration: 90,
           },
           {
             items: [
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGc6vpY81IlfqaOQzsIrDumBZhbFYETke1cwPJK",
-                alt: "Image 3",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcUv4r9IOcBLkv3XEW0aTbgOD6ed1lUz9JuHK2",
+                alt: "A residential street scene showing a blooming cherry tree with pink blossoms in the center, surrounded by modest two-story houses. A concrete walkway runs through the scene with well-maintained grass areas, capturing the scene during spring bloom season.",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGczk4fRSkN6DAPpcgqysIV1RhSumwMUznxLNb0",
-                alt: "Image 4",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcHEY4lhKWRjbwpEzBYqaOnMh7QJAXr3tDy08T",
+                alt: "Interior view of a dorm room, showing a couch, the top-half of a self-made cricket bat, luggage including a red suitcase, and various personal belongings scattered around the room",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcGY6aXg3dncbW6EDjHzNX1450JFgaoqBCfskl",
-                alt: "Image 5",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcIE7eVUgXATYNesg58FmjpZnS9aC3IEJMxU6W",
+                alt: "Urban skyline showing a mix of architectural styles - red brick historic buildings in the foreground and a tall modern glass skyscraper in the background under an overcast sky",
               },
             ],
             direction: "reverse",
-            duration: 80,
+            duration: 90,
           },
           {
             items: [
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcgMYeNU1AHVUONXchJjeZktMRn9Iwzpsi4rWa",
-                alt: "Image 6",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcNDHKEWbolga2nLfUTtyqKWD0vkPBZJpHO87X",
+                alt: "A green park or field with trees lining the background under a blue sky with white clouds, with the Purude bell tower visible among the trees",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcwqOc4GzQHv75zFArpcEl1jDnbCZegKONk2P6",
-                alt: "Image 8",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcxtFFUqhON3ic8YBfplJ6U1vnDsWeIhbTwkKX",
+                alt: "A cheeseless cheese pizza cut into slices in an open cardboard delivery box, with hands visible reaching for it and a small container of what appears to be garlic sauce nearby",
               },
               {
-                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGcKSq2KfpxRrUGc6qx095LYuNawl2iMhCTJZAW",
-                alt: "Image 9",
+                url: "https://v9qoelznu6.ufs.sh/f/KqS0F7xRrUGc6A6Fg2IlfqaOQzsIrDumBZhbFYETke1cwPJK",
+                alt: "Cookbooks stacked on store shelves, with a dark green cookbook titled 'From Crook to Cook' featuring a photo of Snoop Dog in white clothing prominently displayed in the center",
               },
             ],
             direction: "normal",
-            duration: 80,
+            duration: 90,
           },
         ]}
         gap={4}
