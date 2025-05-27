@@ -1,8 +1,8 @@
+import CactusIcon from "@/icons/CactusIcon";
+import FrogIcon from "@/icons/FrogIcon";
+import StarIcon from "@/icons/StarIcon";
+import TurtleIcon from "@/icons/TurtleIcon";
 import { DesertFeatureProps } from "@/types/desert";
-import CactusIcon from "./icons/CactusIcon";
-import FrogIcon from "./icons/FrogIcon";
-import StarIcon from "./icons/StarIcon";
-import TurtleIcon from "./icons/TurtleIcon";
 
 const FEATURE_ICONS = {
   cactus: CactusIcon,
@@ -11,10 +11,7 @@ const FEATURE_ICONS = {
   frog: (props: { direction: "up" | "down" }) => <FrogIcon {...props} />,
 } as const;
 
-export function DesertFeature({
-  special,
-  blockHeight,
-}: DesertFeatureProps) {
+export function DesertFeature({ special, blockHeight }: DesertFeatureProps) {
   const style = {
     position: "absolute",
     left:

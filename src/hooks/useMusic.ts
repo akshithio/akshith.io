@@ -29,14 +29,12 @@ export const useMusic = () => {
     };
   }, []);
 
-  // improved data fetching with debouncing and retry logic
   useEffect(() => {
     const fetchMusicData = async (retryCount = 0) => {
       const now = Date.now();
       const maxRetries = 3;
-      const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 10000); // Exponential backoff, max 10s
+      const retryDelay = Math.min(1000 * Math.pow(2, retryCount), 10000);
 
-      // Only fetch if more than 2 seconds have passed since last fetch and we're online
       if (now - lastFetchTime < 2000 || !isOnline) return;
 
       try {
@@ -58,7 +56,6 @@ export const useMusic = () => {
 
         clearTimeout(timeoutId);
 
-        // Check if response is ok
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -98,11 +95,9 @@ export const useMusic = () => {
           err,
         );
 
-        // Only retry if we haven't exceeded max retries and we're still online
         if (retryCount < maxRetries && isOnline) {
           console.log(`Retrying in ${retryDelay}ms...`);
 
-          // Clear any existing retry timeout
           if (retryTimeoutRef.current) {
             clearTimeout(retryTimeoutRef.current);
           }
@@ -116,13 +111,9 @@ export const useMusic = () => {
       }
     };
 
-    // Initial fetch
     fetchMusicData();
-
-    // Set up interval for periodic updates with shorter interval
     intervalRef.current = setInterval(() => fetchMusicData(), 3000);
 
-    // Cleanup interval and timeout on component unmount or when dependencies change
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -133,7 +124,6 @@ export const useMusic = () => {
     };
   }, [lastFetchTime, isOnline]);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (retryTimeoutRef.current) {

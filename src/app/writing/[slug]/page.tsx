@@ -36,11 +36,11 @@ export default async function Page(props: PageProps) {
 
   return (
     <div
-      className={`${duplet.className} min-h-screen w-screen overflow-x-hidden overflow-y-scroll bg-a-white p-6 text-a-black transition-all duration-500 ease-in-out dark:bg-a-black dark:text-a-white`}
+      className={`${duplet.className} bg-a-white text-a-black dark:bg-a-black dark:text-a-white tablet:overflow-x-clip min-h-screen w-screen overflow-y-scroll p-6 transition-all duration-500 ease-in-out`}
     >
       <Navbar />
 
-      <div className="ml-5 mt-10 flex h-full w-[90%]">
+      <div className="mt-10 ml-5 flex h-full w-[90%]">
         <div className="mt-10">
           <LogoIcon src="/writing/[slug]" />
         </div>
@@ -58,7 +58,7 @@ export default async function Page(props: PageProps) {
               </a>
             </div>
 
-            <h1 className="mt-2 text-5xl font-semibold italic">
+            <h1 className="tablet:text-5xl mt-2 text-4xl font-semibold italic">
               {frontMatter.title}
             </h1>
           </div>

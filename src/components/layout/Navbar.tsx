@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <div className="w-full">
       <div
-        className={`${erika.className} text-a-black dark:text-a-white desktop:text-2xl phone-l:gap-x-6 tablet:gap-x-12 phone-l:text-lg flex items-center justify-between text-sm underline`}
+        className={`${erika.className} laptop:mt-0 mt-4 text-a-black dark:text-a-white desktop:text-2xl phone-l:gap-x-6 tablet:gap-x-12 phone-l:text-lg flex items-center justify-between text-sm underline`}
       >
         <div className="flex gap-x-5 phone-l:gap-x-6 tablet:gap-x-12">
           <a href="/">

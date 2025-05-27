@@ -18,7 +18,6 @@ export const useMicroblogs = () => {
       .then((postsData) => {
         const sortedPosts = postsData.data
           .map((post: Microblog) => {
-            // Format the date based on how recent it is
             const { formattedDate, formattedTime } = formatTime(post.time);
 
             return {

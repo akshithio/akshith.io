@@ -22,7 +22,7 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="bg-a-white dark:bg-a-black overflow-y-auto phone-l:overflow-y-hidden h-screen w-screen overflow-x-hidden p-6">
+    <div className="bg-a-white dark:bg-a-black phone-l:overflow-y-hidden h-screen w-screen overflow-x-hidden overflow-y-auto p-6">
       <Navbar />
       <div
         className="absolute inset-0 z-0 dark:hidden"
@@ -69,71 +69,109 @@ export default function HomePage() {
         </a>
       </div>
 
-      <div className="tablet:justify-start tablet:items-stretch flex h-full w-screen grow items-center justify-center">
-        <div className="phone-l:pr-[16.6%] phone-l:pb-[10%] tablet:py-[6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop:py-[6%] laptop-l:px-[9.6%] laptop-l:py-[6%] desktop:py-[6%] desktop:px-[10%] desktop-xl:px-[14.7%] desktop-xl:py-[8%] text-a-black dark:text-a-white pr-[12.5%] pb-[5%]">
-          <LocationStatus />
-          <div className="mt-1 flex">
-            <div>
-              <LogoIcon src="root" />
+      <div className="laptop-l:items-stretch flex h-full w-screen grow items-center">
+        <div className="phone-l:pr-[16.6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop-l:px-[9.6%] desktop:px-[10%] desktop-xl:px-[14.7%] text-a-black dark:text-a-white flex min-h-full items-center pr-[12.5%]">
+          <div>
+            <LocationStatus />
+            <div className="mt-1 flex">
+              <div>
+                <LogoIcon src="root" />
+              </div>
+
+              <h1
+                className={`ml-3 ${passenger.className} desktop:text-3xl phone-l:text-2xl text-xl`}
+              >
+                Akshith Garapati
+              </h1>
             </div>
 
-            <h1
-              className={`ml-3 ${passenger.className} desktop:text-3xl phone-l:text-2xl text-xl`}
+            <div
+              className={`${duplet.className} desktop:text-xl desktop-xl:text-2xl desktop:w-100 desktop-xl:w-112 desktop:leading-8 desktop-xl:leading-9 desktop-xl:mt-9 phone-l:w-80 phone-l:text-base phone-l:leading-6 phone-s:w-full phone-s:max-w-[calc(100vw-3rem)] relative mt-6 w-65 text-sm`}
             >
-              Akshith Garapati
-            </h1>
-          </div>
+              <p>
+                I study computer science{" "}
+                <a
+                  className="font-semibold"
+                  href="https://purdue.edu"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @purdue
+                </a>{" "}
+                and spend my time primarily tinkering with web systems and
+                machine intelligence models.
+              </p>
 
-          <div
-            className={`${duplet.className} desktop:text-xl desktop-xl:text-2xl desktop:w-100 desktop-xl:w-112 desktop:leading-8 desktop-xl:leading-9 desktop-xl:mt-9 phone-l:w-80 phone-l:text-base phone-l:leading-6 phone-s:w-full phone-s:max-w-[calc(100vw-3rem)] relative mt-6 w-65 text-sm`}
-          >
-            <p>
-              I study computer science{" "}
-              <span className="font-semibold">@purdue</span> and spend my time
-              primarily tinkering with web systems and machine intelligence
-              models.
-            </p>
+              <br />
 
-            <br />
+              <p>
+                I use this website to write as a way to teach myself, experiment
+                with new pieces of web tech, train my design muscles and{" "}
+                <a href="/writing" className="underline">
+                  overcome the twitter character limit
+                </a>
+                .
+              </p>
 
-            <p>
-              I use this website to write as a way to teach myself, experiment
-              with new pieces of web tech, train my design muscles and{" "}
-              <a href="/writing" className="underline">
-                overcome the twitter character limit
-              </a>
-              .
-            </p>
+              <br />
 
-            <br />
+              <p>
+                I've previously built organizational systems for teams{" "}
+                <a
+                  className="font-semibold"
+                  href="https://dimension.dev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @dimension
+                </a>
+                , goofed around with some crazy smart people{" "}
+                <a
+                  className="font-semibold"
+                  href="https://tks.world"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @tks
+                </a>{" "}
+                and got my hs to agree to hosting an irl hackathon on campus
+                with ~85 ppl participating over the weekend.
+              </p>
 
-            <p>
-              I've previously built organizational systems for teams{" "}
-              <span className="font-semibold">@dimension</span>, goofed around
-              with some crazy smart people{" "}
-              <span className="font-semibold">@tks</span> and got my hs to agree
-              to hosting an irl hackathon on campus with ~85 ppl participating
-              over the weekend.
-            </p>
+              <br />
 
-            <br />
+              <p>
+                I'm spending this summer building web archival systems{" "}
+                <a
+                  className="font-semibold"
+                  href="https://web.archive.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @internetarchive
+                </a>
+                . I also help maintain Purdue's unofficial version of Khan
+                Academy with ~8.4 million submissions and counting, called{" "}
+                <a
+                  className="italic"
+                  href="https://boilerexams.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Boilerexams
+                </a>
+                .
+              </p>
 
-            <p>
-              I'm spending this summer building web archival systems{" "}
-              <span className="font-semibold">@internetarchive</span>. I also
-              help maintain Purdue's unofficial version of Khan Academy with
-              ~8.4 million submissions and counting, called{" "}
-              <span className="italic">Boilerexams</span>.
-            </p>
+              <br />
 
-            <br />
+              <p>
+                I'm currently interested in & thinking about interpretability
+                research, performant systems & hip-hop.
+              </p>
 
-            <p>
-              I'm currently interested in & thinking about interpretability
-              research, performant systems & hip-hop.
-            </p>
-
-            <MusicStatus />
+              <MusicStatus />
+            </div>
           </div>
         </div>
         <Sapling />
