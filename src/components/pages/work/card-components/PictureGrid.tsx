@@ -28,12 +28,23 @@ export default function PictureGrid({
 
   useEffect(() => {
     columnRefsArray.forEach((columnRef, index) => {
-      const contentRef = contentRefsArray[index];
+      const contentElement = contentRefsArray[index]?.current;
+      const columnConfig = columns[index];
 
-      if (contentRef?.current) {
-        const items = contentRef.current.querySelectorAll(".scroll-item");
-        if (items.length > 0) {
-          const totalHeight = Array.from(items).reduce(
+      if (contentElement && columnConfig) {
+        const existingClones = contentElement.querySelectorAll(
+          ".picture-grid-clone",
+        );
+        existingClones.forEach((clone) => clone.remove());
+
+        const originalItemElements = Array.from(contentElement.children).filter(
+          (child) =>
+            child.classList.contains("scroll-item") &&
+            !child.classList.contains("picture-grid-clone"),
+        ) as HTMLElement[];
+
+        if (originalItemElements.length > 0) {
+          const totalHeight = originalItemElements.reduce(
             (total, item) => total + item.clientHeight + gap,
             0,
           );
@@ -45,14 +56,22 @@ export default function PictureGrid({
             );
           }
 
-          items.forEach((item) => {
-            const clone = item.cloneNode(true) as HTMLElement;
-            contentRef?.current?.appendChild(clone);
+          originalItemElements.forEach((itemNode) => {
+            const clone = itemNode.cloneNode(true) as HTMLElement;
+            clone.classList.add("picture-grid-clone");
+            clone
+              .querySelectorAll("[id]")
+              .forEach((elWithId) => elWithId.removeAttribute("id"));
+            contentElement.appendChild(clone);
           });
+        } else {
+          if (columnRef.current) {
+            columnRef.current.style.setProperty("--scroll-distance", "0px");
+          }
         }
       }
     });
-  }, [columnRefsArray, contentRefsArray, columns, gap]);
+  }, [columns, gap, columnRefsArray, contentRefsArray]);
 
   return (
     <div

@@ -9,12 +9,12 @@ export default function CardZero({ goToSlide, totalSlides }) {
     <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
       <div className="w-[340px] shrink-0">
         <h1
-          className={`${passenger.className} mb-[5px] text-[30px] font-normal`}
+          className={`${passenger.className} mb-1.5 text-[30px] font-normal`}
         >
           Akshith Garapati
         </h1>
         <div className="relative inline-block">
-          <h1 className={`${duplet.className} text-[16px] font-semibold`}>
+          <h1 className={`${duplet.className} text-base font-semibold`}>
             May '07 - Present
           </h1>
           <svg
@@ -35,20 +35,20 @@ export default function CardZero({ goToSlide, totalSlides }) {
           what does it even mean to <em>work?</em>
         </h1>
 
-        <div className={`${passenger.className} mt-[10px]`}>
+        <div className={`${passenger.className} mt-2.5`}>
           <div>
             <div className="flex w-fit items-center justify-center">
-              <h1 className="text-[24px]">work</h1>
-              <span className="mt-[5px] ml-[5px] text-[12px]">/wərk/</span>
+              <h1 className="text-2xl">work</h1>
+              <span className="mt-1.5 ml-1.5 text-[12px]">/wərk/</span>
             </div>
 
-            <h1 className="text-[14px] font-semibold">
+            <h1 className="text-sm font-semibold">
               activity involving mental or physical effort done in order to
               achieve a purpose or result.
             </h1>
           </div>
 
-          <h1 className="mt-[15px] text-[12px]">
+          <h1 className="mt-4 text-[12px]">
             therefore, i clearly haven't gained sentience enough to know of my
             purpose. Perhaps, the purpose was{" "}
             <span className="underline">
@@ -59,7 +59,7 @@ export default function CardZero({ goToSlide, totalSlides }) {
             effort.
           </h1>
 
-          <h1 className="mt-[15px] text-[12px]">
+          <h1 className="mt-4 text-[12px]">
             Scroll up to see my progression and click{" "}
             <button
               onClick={handleLatestEntryClick}
