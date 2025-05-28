@@ -68,13 +68,13 @@ export default function BlogPosts() {
 
         <div className="absolute right-0 flex items-center justify-end">
           <Tooltip content="RSS Feed">
-            <a href="/rss" target="_blank">
+            <a href="/rss" target="_blank" aria-label="RSS Feed">
               <RSSIcon src="/writing" />
             </a>
           </Tooltip>
 
           <div className="ml-2 sm:ml-4" />
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center" >
             <FilterSearch onCategoryChange={handleCategoryChange}>
               <Tooltip content="Filter Category">
                 <FilterIcon />
@@ -111,7 +111,7 @@ export default function BlogPosts() {
                   <div className="absolute top-0 right-0 flex items-center justify-center">
                     <FolderIcon />
                     <h1
-                      className={`${duplet.className} mt-1 ml-1 mb-0.5 text-sm font-semibold text-[#999] sm:text-base`}
+                      className={`${duplet.className} mt-1 mb-0.5 ml-1 text-sm font-semibold text-[#999] sm:text-base`}
                     >
                       {category}
                     </h1>

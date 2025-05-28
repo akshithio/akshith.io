@@ -54,7 +54,7 @@ export default function WorkSection() {
               <button
                 key={totalSlides - index - 1}
                 onClick={() => goToSlide(totalSlides - index - 1)}
-                className={`h-[0.375rem] w-[0.375rem] rounded-full transition-all cursor-pointer ${
+                className={`h-[0.4rem] w-[0.4rem] rounded-full transition-all cursor-pointer ${
                   currentSlide === totalSlides - index - 1
                     ? "bg-a-black dark:bg-a-white"
                     : "bg-[#999]"

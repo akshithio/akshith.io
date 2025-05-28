@@ -8,7 +8,7 @@ export default function CardZero({ goToSlide, totalSlides }) {
   return (
     <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
       <div className="w-[340px] shrink-0">
-        <h1 className={`${passenger.className} mb-1.5 text-[30px] font-normal`}>
+        <h1 className={`${passenger.className} mb-1.5 text-3xl font-normal`}>
           Akshith Garapati
         </h1>
         <div className="relative inline-block">

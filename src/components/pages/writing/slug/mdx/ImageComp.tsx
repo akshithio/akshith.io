@@ -102,7 +102,7 @@ export default function ImageComp(props: ImageCompProps) {
                 Image {props.num}: {props.description}{" "}
                 {props.creds && (
                   <a
-                    className="text-[#93C5FD] transition-colors duration-200 hover:text-blue-200 hover:underline"
+                    className="text-[#93C5FD] underline"
                     href={props.creds}
                     target="_blank"
                     rel="noopener noreferrer"

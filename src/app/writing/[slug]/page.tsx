@@ -53,7 +53,7 @@ export default async function Page(props: PageProps) {
                 <ViewCounter slug={params.slug} />
               </h1>
 
-              <a href="/rss" target="_blank" className="ml-3">
+              <a href="/rss" target="_blank" className="ml-3" aria-label="RSS Feed">
                 <RSSIcon src="/writing/[slug]" />
               </a>
             </div>

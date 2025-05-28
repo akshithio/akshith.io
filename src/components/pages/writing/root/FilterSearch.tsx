@@ -74,15 +74,15 @@ export default function FilterSearch({
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-transparent rounded-full p-2"
+        className="rounded-full bg-transparent p-2"
         aria-expanded={isOpen}
         aria-haspopup="true"
+        aria-label="Filter Categories"
       >
         {children}
       </button>
 
       <div
-        role="menu"
         className={`${
           duplet.className
         } absolute right-0 z-20 mt-2 w-56 transform rounded-md bg-[#ccc] p-2 text-sm font-semibold shadow-lg transition-all duration-200 ease-out ${
@@ -99,8 +99,8 @@ export default function FilterSearch({
               <button
                 key={option.id}
                 onClick={() => toggleOption(option.id)}
-                className={`flex items-center justify-center rounded-full px-2 py-0.5 text-xs text-a-white transition-all duration-200 ${
-                  option.checked ? "  bg-[#444]" : " bg-[#999]"
+                className={`text-a-white flex items-center justify-center rounded-full px-2 py-0.5 text-xs transition-all duration-200 ${
+                  option.checked ? "bg-[#444]" : "bg-[#999]"
                 }`}
               >
                 {option.label}
@@ -110,7 +110,7 @@ export default function FilterSearch({
         )}
 
         <div
-          className="absolute left-[92.5%] top-0.5 h-3 w-3 -translate-x-1/2 -translate-y-[0.438rem] rotate-45 bg-[#ccc]"
+          className="absolute top-0.5 left-[92.5%] h-3 w-3 -translate-x-1/2 -translate-y-[0.438rem] rotate-45 bg-[#ccc]"
           aria-hidden="true"
         />
       </div>
