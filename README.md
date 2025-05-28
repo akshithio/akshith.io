@@ -1,35 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# akshith.io
 
-## Getting Started
+🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Built with Next, Tailwind & Typescript.
 
-First, run the development server:
-a
+---
 
-```bash
-npm run dev
-# or
-yarn dev
+`akshith.io` is my personal website. Much of the work on the website was spent primarily on the writing section of the website which relies on the `.mdx` files available in the `content` folder. If necessary, this system alongside the set of custom components can be succesfully adapted for alternative projects. Other aspects of the website remain primarily visual, with little external utility outside of this project.
+
+![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio describing his work with web systems and AI, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
+
+This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. The project structure is as follows:
+
+```
+src/
+├── app/                   # Next.js app directory
+│   ├── writing/           # Writing section routes
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── layout/            # Layout components (Navbar, Tooltip, etc.)
+│   └── pages/             # Page-specific components
+├── content/               # MDX content for blog posts
+├── icons/                 # SVG icons
+└── utils/                 # Utility functions and fonts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Contributing
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Feel free to submit issues and enhancement requests! If you want to contribute:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### License
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the [MIT License](LICENSE).  
+All blog content is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).  
+You are free to share and adapt the content, provided proper attribution is given.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<br />
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+&nbsp;<img src="./akshithio/light-logo.png#gh-dark-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /><img src="./akshithio/dark-logo.png#gh-light-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /> that's where the username comes from! - akshithio - may 2025
