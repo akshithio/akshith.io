@@ -8,9 +8,7 @@ export default function CardZero({ goToSlide, totalSlides }) {
   return (
     <div className="relative ml-5 flex h-[400px] w-screen grow overflow-y-hidden border-l-4 border-[#D9D9D9] pl-5 text-left">
       <div className="w-[340px] shrink-0">
-        <h1
-          className={`${passenger.className} mb-1.5 text-[30px] font-normal`}
-        >
+        <h1 className={`${passenger.className} mb-1.5 text-[30px] font-normal`}>
           Akshith Garapati
         </h1>
         <div className="relative inline-block">
@@ -51,9 +49,14 @@ export default function CardZero({ goToSlide, totalSlides }) {
           <h1 className="mt-4 text-[12px]">
             therefore, i clearly haven't gained sentience enough to know of my
             purpose. Perhaps, the purpose was{" "}
-            <span className="underline">
+            <a
+              className="italic"
+              href="https://tvtropes.org/pmwiki/pmwiki.php/Main/WorthlessTreasureTwist"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               the friends we made along the way?
-            </span>{" "}
+            </a>{" "}
             regardless, consider this page to be a documentation of my "along
             the ways" as i try to put in some level of mental or physical
             effort.
