@@ -1,29 +1,47 @@
-# Create T3 App
+# akshith.io
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Built with Next, Tailwind & Typescript.
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+`akshith.io` is my personal website. Much of the work on the website was spent primarily on the writing section of the website which relies on the `.mdx` files available in the `content` folder. If necessary, this system alongside the set of custom components can be succesfully adapted for alternative projects. Other aspects of the website remain primarily visual, with little external utility outside of this project.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio describing his work with web systems and AI, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+<br />
 
-## Learn More
+This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. The project structure is as follows:
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+```
+src/
+├── app/                   # Next.js app directory
+│   ├── writing/           # Writing section routes
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── layout/            # Layout components (Navbar, Tooltip, etc.)
+│   └── pages/             # Page-specific components
+├── content/               # MDX content for blog posts
+├── icons/                 # SVG icons
+└── utils/                 # Utility functions and fonts
+```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+### Contributing
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+Feel free to submit issues and enhancement requests! If you want to contribute:
 
-## How do I deploy this?
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### License
+
+
+This project is licensed under the [MIT License](LICENSE).  
+All blog content is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).  
+You are free to share and adapt the content, provided proper attribution is given.
+
+<br />
+
+&nbsp;<img src="./akshithio/light-logo.png#gh-dark-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /><img src="./akshithio/dark-logo.png#gh-light-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /> that's where the username comes from! - akshithio - may 2025
