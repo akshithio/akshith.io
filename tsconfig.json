@@ -42,6 +42,6 @@
     "next.config.mjs",
     "src/mdx/post.mdx",
     "src/types/*.d.ts"
-  ],
+, "download-fonts.mjs"  ],
   "exclude": ["node_modules"]
 }

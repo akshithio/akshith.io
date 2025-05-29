@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prebuild": "node download-fonts.mjs",
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.16.0",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.0.3",

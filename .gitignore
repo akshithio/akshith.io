@@ -51,5 +51,6 @@ jspm_packages
 **/.DS_Store
 
 # Fonts
-*.otf
-**/*.otf
+*.woff2
+**/*.woff2
+gcp-sa-key.json

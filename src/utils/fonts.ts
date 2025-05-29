@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 export const erika = localFont({
   src: [
     {
-      path: "../../public/fonts/ErikaHand-Regular.otf",
+      path: "../../public/fonts/ErikaHand-Regular.woff2",
       weight: "400",
       style: "regular",
     },
@@ -15,7 +15,7 @@ export const erika = localFont({
 export const bitscript = localFont({
   src: [
     {
-      path: "../../public/fonts/Bitscript-Regular.otf",
+      path: "../../public/fonts/Bitscript-Regular.woff2",
       weight: "400",
       style: "regular",
     },
@@ -27,72 +27,72 @@ export const bitscript = localFont({
 export const duplet = localFont({
   src: [
     {
-      path: "../../public/fonts/Duplet-Bold.otf",
+      path: "../../public/fonts/Duplet-Bold.woff2",
       weight: "700",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-BoldItalic.otf",
+      path: "../../public/fonts/Duplet-BoldItalic.woff2",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Extrabold.otf",
+      path: "../../public/fonts/Duplet-Extrabold.woff2",
       weight: "800",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-ExtraboldItalic.otf",
+      path: "../../public/fonts/Duplet-ExtraboldItalic.woff2",
       weight: "800",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Extralight.otf",
+      path: "../../public/fonts/Duplet-Extralight.woff2",
       weight: "200",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-ExtralightItalic.otf",
+      path: "../../public/fonts/Duplet-ExtralightItalic.woff2",
       weight: "200",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Regular.otf",
+      path: "../../public/fonts/Duplet-Regular.woff2",
       weight: "400",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-Italic.otf",
+      path: "../../public/fonts/Duplet-Italic.woff2",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Light.otf",
+      path: "../../public/fonts/Duplet-Light.woff2",
       weight: "300",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-LightItalic.otf",
+      path: "../../public/fonts/Duplet-LightItalic.woff2",
       weight: "300",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Semibold.otf",
+      path: "../../public/fonts/Duplet-Semibold.woff2",
       weight: "600",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-SemiboldItalic.otf",
+      path: "../../public/fonts/Duplet-SemiboldItalic.woff2",
       weight: "600",
       style: "italic",
     },
     {
-      path: "../../public/fonts/Duplet-Thin.otf",
+      path: "../../public/fonts/Duplet-Thin.woff2",
       weight: "100",
       style: "regular",
     },
     {
-      path: "../../public/fonts/Duplet-ThinItalic.otf",
+      path: "../../public/fonts/Duplet-ThinItalic.woff2",
       weight: "100",
       style: "italic",
     },
@@ -104,72 +104,72 @@ export const duplet = localFont({
 export const passenger = localFont({
   src: [
     {
-      path: "../../public/fonts/PassengerSerif-Bold.otf",
+      path: "../../public/fonts/PassengerSerif-Bold.woff2",
       weight: "700",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-BoldItalic.otf",
+      path: "../../public/fonts/PassengerSerif-BoldItalic.woff2",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Extrabold.otf",
+      path: "../../public/fonts/PassengerSerif-Extrabold.woff2",
       weight: "800",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-ExtraboldItalic.otf",
+      path: "../../public/fonts/PassengerSerif-ExtraboldItalic.woff2",
       weight: "800",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Extralight.otf",
+      path: "../../public/fonts/PassengerSerif-Extralight.woff2",
       weight: "200",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-ExtralightItalic.otf",
+      path: "../../public/fonts/PassengerSerif-ExtralightItalic.woff2",
       weight: "200",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Regular.otf",
+      path: "../../public/fonts/PassengerSerif-Regular.woff2",
       weight: "400",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerifItalic.otf",
+      path: "../../public/fonts/PassengerSerifItalic.woff2",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Light.otf",
+      path: "../../public/fonts/PassengerSerif-Light.woff2",
       weight: "300",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-LightItalic.otf",
+      path: "../../public/fonts/PassengerSerif-LightItalic.woff2",
       weight: "300",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Semibold.otf",
+      path: "../../public/fonts/PassengerSerif-Semibold.woff2",
       weight: "600",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-SemiboldItalic.otf",
+      path: "../../public/fonts/PassengerSerif-SemiboldItalic.woff2",
       weight: "600",
       style: "italic",
     },
     {
-      path: "../../public/fonts/PassengerSerif-Medium.otf",
+      path: "../../public/fonts/PassengerSerif-Medium.woff2",
       weight: "500",
       style: "regular",
     },
     {
-      path: "../../public/fonts/PassengerSerif-MediumItalic.otf",
+      path: "../../public/fonts/PassengerSerif-MediumItalic.woff2",
       weight: "500",
       style: "italic",
     },
@@ -186,12 +186,12 @@ export async function loadFontsForOG() {
         {
           weight: "400",
           style: "regular",
-          path: "../../public/fonts/Duplet-Regular.otf",
+          path: "../../public/fonts/Duplet-Regular.woff2",
         },
         {
           weight: "600",
           style: "regular",
-          path: "../../public/fonts/Duplet-Semibold.otf",
+          path: "../../public/fonts/Duplet-Semibold.woff2",
         },
       ],
     },
@@ -201,12 +201,12 @@ export async function loadFontsForOG() {
         {
           weight: "400",
           style: "regular",
-          path: "../../public/fonts/PassengerSerif-Regular.otf",
+          path: "../../public/fonts/PassengerSerif-Regular.woff2",
         },
         {
           weight: "600",
           style: "regular",
-          path: "../../public/fonts/PassengerSerif-Semibold.otf",
+          path: "../../public/fonts/PassengerSerif-Semibold.woff2",
         },
       ],
     },
@@ -216,7 +216,7 @@ export async function loadFontsForOG() {
         {
           weight: "400",
           style: "regular",
-          path: "../../public/fonts/ErikaHand-Regular.otf",
+          path: "../../public/fonts/ErikaHand-Regular.woff2",
         },
       ],
     },
