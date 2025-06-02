@@ -1,6 +1,6 @@
 # akshith.io
 
-🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Built with Next, Tailwind & Typescript.
+🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Additionally you will need to create a `public/fonts` directory and fill that in with the fonts of your choosing, which may require replacing imports across many pages and editing `utils/fonts.ts`. Built with Next, Tailwind & Typescript.
 
 ---
 

@@ -22,10 +22,10 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="bg-a-white dark:bg-a-black phone-l:overflow-y-hidden h-screen w-screen overflow-x-hidden overflow-y-auto p-6">
+    <div className="bg-a-white dark:bg-a-black phone-l:overflow-y-hidden relative h-screen w-screen overflow-x-hidden overflow-y-auto p-6">
       <Navbar />
       <div
-        className="absolute inset-0 z-0 dark:hidden"
+        className="fixed inset-0 z-0 h-full w-full"
         style={{
           backgroundImage: `
       linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
@@ -37,7 +37,7 @@ export default function HomePage() {
         }}
       />
       <div
-        className="absolute inset-0 z-0 hidden dark:block"
+        className="fixed inset-0 z-0 hidden h-full w-full dark:block"
         style={{
           backgroundImage: `
       linear-gradient(to right, rgba(238, 238, 238, 0.05) 1px, transparent 1px),
@@ -48,26 +48,6 @@ export default function HomePage() {
           pointerEvents: "none",
         }}
       />
-      <div className="absolute bottom-2 left-2 flex items-center justify-center gap-x-3">
-        <a
-          href="https://github.com/akshithio"
-          target="_blank"
-          aria-label="Link to akshithio on Github"
-        >
-          {" "}
-          <GithubIcon />
-        </a>
-
-        <a
-          href="https://x.com/akshithio"
-          target="_blank"
-          aria-label="Link to akshithio on X (formerly Twitter)"
-        >
-          <div className="mt-0.5">
-            <TwitterIcon />
-          </div>
-        </a>
-      </div>
 
       <div className="laptop-l:items-stretch flex h-full w-screen grow items-center">
         <div className="phone-l:pr-[16.6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop-l:px-[9.6%] desktop:px-[10%] desktop-xl:px-[14.7%] text-a-black dark:text-a-white flex min-h-full items-center pr-[12.5%]">
@@ -175,6 +155,26 @@ export default function HomePage() {
           </div>
         </div>
         <Sapling />
+      </div>
+      
+      <div className="phone-l:absolute phone-l:bottom-2 phone-l:left-2 relative z-10 mt-6 ml-2 flex items-center justify-start gap-x-3">
+        <a
+          href="https://github.com/akshithio"
+          target="_blank"
+          aria-label="Link to akshithio on Github"
+        >
+          <GithubIcon />
+        </a>
+
+        <a
+          href="https://x.com/akshithio"
+          target="_blank"
+          aria-label="Link to akshithio on X (formerly Twitter)"
+        >
+          <div className="mt-0.5">
+            <TwitterIcon />
+          </div>
+        </a>
       </div>
     </div>
   );
