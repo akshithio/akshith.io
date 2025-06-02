@@ -21,8 +21,10 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en" className="overflow-x-clip">
       <head>
+        {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
+      {/* <ReactScan /> */}
       <body className="overflow-x-clip">
         <ThemeProvider attribute="class">{children}</ThemeProvider>
         <Analytics />

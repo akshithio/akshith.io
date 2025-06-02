@@ -1,253 +1,247 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 function SaplingWindow() {
-  const canvasRef = useRef<HTMLDivElement>(null);
-  const p5Ref = useRef<any>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number>();
   const { resolvedTheme } = useTheme();
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [p5, setP5] = useState<any>(null);
 
-  useEffect(() => {
-    const checkScreenSize = () => {
-      const width = window.innerWidth;
-      const shouldShow = width > 768;
-      setShouldLoad(shouldShow);
+  const treeDataRef = useRef<{
+    sentence: string;
+    baseLen: number;
+    initialTilt: number;
+    xOffset: number;
+    angle: number;
+  }>();
 
-      setWindowSize({
-        width: width,
-        height: window.innerHeight,
-      });
-    };
+  const noiseRef = useRef(0);
 
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
+  const checkScreenSize = useCallback(() => {
+    const width = window.innerWidth;
+    const shouldShow = width > 768;
+    setShouldLoad(shouldShow);
+
+    setWindowSize({
+      width: width,
+      height: window.innerHeight,
+    });
   }, []);
 
   useEffect(() => {
-    if (shouldLoad && !p5) {
-      import("p5").then((p5Module) => {
-        const P5Constructor = p5Module.default;
-        if (typeof P5Constructor === "function") {
-          setP5(() => P5Constructor);
-        }
-      });
-    }
-  }, [shouldLoad, p5]);
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, [checkScreenSize]);
 
-  useEffect(() => {
-    if (
-      !p5 ||
-      !resolvedTheme ||
-      !canvasRef.current ||
-      windowSize.width === 0 ||
-      !shouldLoad
-    ) {
-      return;
+  const noise = useCallback((x: number) => {
+    return Math.sin(x) * 0.5 + 0.5;
+  }, []);
+
+  const generateTree = useCallback(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const canvasWidth = rect.width;
+    const canvasHeight = rect.height;
+
+    const axiom = "-X";
+    let sentence = axiom;
+    const rules: { [key: string]: string } = {
+      X: "F+[[X]-X]-F[-FX]+X",
+      F: "FF",
+    };
+
+    let len = 400;
+    const angle = (Math.PI / 180) * 25;
+    let generation = 0;
+    const targetGenerations = 7;
+
+    const minDimension = Math.min(canvasWidth, canvasHeight);
+    const scaleFactor = 0.46;
+    len = minDimension * scaleFactor;
+
+    const initialTilt =
+      canvasWidth > 1200 && canvasWidth > canvasHeight
+        ? (-15 * Math.PI) / 180
+        : 0;
+
+    const shouldShiftRight =
+      windowSize.width >= 1024 && windowSize.width <= 1500;
+    const xOffset = shouldShiftRight ? 400 : 600;
+
+    while (generation < targetGenerations) {
+      len *= 0.5;
+      let nextSentence = "";
+      for (let i = 0; i < sentence.length; i++) {
+        const char = sentence[i];
+        nextSentence += rules[char as string] || char;
+      }
+      sentence = nextSentence;
+      generation++;
     }
+
+    treeDataRef.current = {
+      sentence,
+      baseLen: len,
+      initialTilt,
+      xOffset,
+      angle,
+    };
+  }, [windowSize]);
+
+  const animate = useCallback(() => {
+    if (!canvasRef.current || !treeDataRef.current || !shouldLoad) return;
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d")!;
+    const rect = canvas.getBoundingClientRect();
+    const canvasWidth = rect.width;
+    const canvasHeight = rect.height;
+    const { sentence, baseLen, initialTilt, xOffset, angle } =
+      treeDataRef.current;
 
     const treeColor = resolvedTheme === "dark" ? "#6B8E23" : "#228B23";
     const bgColor = resolvedTheme === "dark" ? "#111" : "#eee";
 
-    const sketch = (p: any) => {
-      let axiom = "-X";
-      let sentence = axiom;
-      let rules: { [key: string]: string } = {
-        X: "F+[[X]-X]-F[-FX]+X",
-        F: "FF",
-      };
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-      let len = 400;
-      let angle = p.radians(25);
-      let generation = 0;
-      const targetGenerations = 7;
+    ctx.strokeStyle = treeColor;
+    ctx.lineWidth = 1;
 
-      let windInc = 0.01;
-      let noisePos = 1;
-      let initialTilt = 0;
+    const targetGenerations = 7;
+    const segments: Array<{
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+    }> = [];
 
-      const getScaleFactor = (viewportWidth: number) => {
-        if (viewportWidth >= 768 && viewportWidth <= 1024) {
-          return 1.3;
-        } else if (viewportWidth > 1024) {
-          return 0.46;
+    const stack: Array<{
+      x: number;
+      y: number;
+      angle: number;
+      len: number;
+      depth: number;
+      windOffset: number;
+    }> = [];
+
+    let x = canvasWidth - xOffset;
+    let y = canvasHeight;
+    let currentAngle = initialTilt - Math.PI / 2;
+    let currentLen = baseLen;
+    let currentDepth = 0;
+    let windOffset = 0;
+
+    for (let i = 0; i < sentence.length; i++) {
+      const char = sentence[i];
+
+      if (char === "F") {
+        let windAngle =
+          noise(noiseRef.current + baseLen / 100 + windOffset) * 11.2;
+
+        let windIntensity = Math.min(currentDepth / targetGenerations, 1);
+        windIntensity = windIntensity * windIntensity;
+
+        windAngle *= windIntensity;
+        windAngle = (windAngle * Math.PI) / 180;
+
+        const finalAngle = currentAngle + windAngle;
+        const x2 = x + Math.cos(finalAngle) * currentLen;
+        const y2 = y + Math.sin(finalAngle) * currentLen;
+
+        segments.push({ x1: x, y1: y, x2: x2, y2: y2 });
+
+        x = x2;
+        y = y2;
+        windOffset += windAngle * 0.07;
+      } else if (char === "+") {
+        currentAngle += angle;
+      } else if (char === "-") {
+        currentAngle -= angle;
+      } else if (char === "[") {
+        stack.push({
+          x: x,
+          y: y,
+          angle: currentAngle,
+          len: currentLen,
+          depth: currentDepth,
+          windOffset: windOffset,
+        });
+        currentDepth++;
+      } else if (char === "]") {
+        if (stack.length > 0) {
+          const state = stack.pop()!;
+          x = state.x;
+          y = state.y;
+          currentAngle = state.angle;
+          currentLen = state.len;
+          currentDepth = state.depth;
+          windOffset = state.windOffset;
         }
-        return 0.46;
-      };
-
-      p.setup = () => {
-        const canvasWidth = canvasRef.current?.offsetWidth || 0;
-        const canvasHeight = canvasRef.current?.offsetHeight || 0;
-
-        p.createCanvas(canvasWidth, canvasHeight);
-        p.background(bgColor);
-        p.stroke(treeColor);
-
-        sentence = axiom;
-        len = 400;
-        generation = 0;
-
-        const minDimension = p.min(canvasWidth, canvasHeight);
-        const scaleFactor = getScaleFactor(windowSize.width);
-        len = minDimension * scaleFactor;
-
-        initialTilt =
-          canvasWidth > 1200 && canvasWidth > canvasHeight ? p.radians(-10) : 0;
-
-        while (generation < targetGenerations) {
-          generate();
-        }
-      };
-
-      p.draw = () => {
-        p.background(bgColor);
-        drawTree();
-      };
-
-      p.windowResized = () => {
-        if (canvasRef.current) {
-          const canvasWidth = canvasRef.current.offsetWidth;
-          const canvasHeight = canvasRef.current.offsetHeight;
-          p.resizeCanvas(canvasWidth, canvasHeight);
-
-          sentence = axiom;
-
-          const minDimension = p.min(canvasWidth, canvasHeight);
-          const scaleFactor = getScaleFactor(windowSize.width);
-          len = minDimension * scaleFactor;
-
-          // Debug logging for resize
-          console.log(
-            "Resize - Viewport width:",
-            windowSize.width,
-            "Canvas width:",
-            canvasWidth,
-            "Scale factor:",
-            scaleFactor,
-            "Final len:",
-            len,
-          );
-
-          initialTilt =
-            canvasWidth > 1200 && canvasWidth > canvasHeight
-              ? p.radians(-15)
-              : 0;
-
-          generation = 0;
-
-          while (generation < targetGenerations) {
-            generate();
-          }
-        }
-      };
-
-      const generate = () => {
-        len *= 0.5;
-        let nextSentence = "";
-
-        for (let char of sentence) {
-          let found = false;
-          for (let rule in rules) {
-            if (char === rule) {
-              nextSentence += rules[rule];
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            nextSentence += char;
-          }
-        }
-
-        sentence = nextSentence;
-        generation++;
-      };
-
-      const drawTree = () => {
-        p.resetMatrix();
-        const scaleFactor = getScaleFactor(windowSize.width);
-        const shouldShiftRight = scaleFactor === 1.3;
-        const xOffset = shouldShiftRight ? -100 : 40;
-
-        p.translate(p.width - xOffset, p.height);
-        p.stroke(treeColor);
-
-        if (initialTilt !== 0) {
-          p.rotate(initialTilt);
-        }
-
-        let stack: {
-          len: number;
-          angle: number;
-          matrix: any;
-          depth: number;
-        }[] = [];
-
-        let currentDepth = 0;
-
-        for (let char of sentence) {
-          if (char === "F") {
-            let windAngle = p.noise(noisePos + len / 100) * 20;
-            let windIntensity = p.map(currentDepth, 0, targetGenerations, 0, 1);
-            windAngle *= windIntensity;
-
-            p.rotate(p.radians(windAngle));
-            p.line(0, 0, 0, -len);
-            p.translate(0, -len);
-            p.rotate(p.radians(-windAngle));
-          } else if (char === "+") {
-            p.rotate(angle);
-          } else if (char === "-") {
-            p.rotate(-angle);
-          } else if (char === "[") {
-            stack.push({
-              len: len,
-              angle: angle,
-              matrix: p.drawingContext.getTransform(),
-              depth: currentDepth,
-            });
-            currentDepth++;
-          } else if (char === "]") {
-            if (stack.length > 0) {
-              const state = stack.pop();
-              if (state) {
-                len = state.len;
-                angle = state.angle;
-                p.drawingContext.setTransform(state.matrix);
-                currentDepth = state.depth;
-              }
-            }
-            currentDepth--;
-          }
-        }
-
-        noisePos += windInc;
-      };
-    };
-
-    if (p5Ref.current) {
-      p5Ref.current.remove();
+        currentDepth--;
+      }
     }
 
-    p5Ref.current = new p5(sketch, canvasRef.current);
+    ctx.beginPath();
+    for (let i = 0; i < segments.length; i++) {
+      const seg = segments[i];
+      if (seg) {
+        ctx.moveTo(seg.x1, seg.y1);
+        ctx.lineTo(seg.x2, seg.y2);
+      }
+    }
+    ctx.stroke();
+
+    noiseRef.current += 0.007;
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [resolvedTheme, shouldLoad, noise]);
+
+  const handleResize = useCallback(() => {
+    if (!canvasRef.current) return;
+
+    const canvas = canvasRef.current;
+    const rect = canvas.parentElement!.getBoundingClientRect();
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + "px";
+    canvas.style.height = rect.height + "px";
+
+    const ctx = canvas.getContext("2d")!;
+    ctx.scale(dpr, dpr);
+
+    generateTree();
+  }, [generateTree]);
+
+  useEffect(() => {
+    if (!shouldLoad || !canvasRef.current) return;
+
+    handleResize();
+    animate();
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      if (p5Ref.current) {
-        p5Ref.current.remove();
-        p5Ref.current = null;
+      window.removeEventListener("resize", handleResize);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [resolvedTheme, windowSize, p5, shouldLoad]);
+  }, [shouldLoad, handleResize, animate]);
 
   if (!shouldLoad) {
     return null;
   }
 
-  return <div ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
+  return <canvas ref={canvasRef} style={{ width: "100%", height: "100vh" }} />;
 }
 
 export default SaplingWindow;
