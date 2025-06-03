@@ -21,7 +21,7 @@ const downloadFonts = async () => {
   const [files] = await storage.bucket(bucketName).getFiles({ prefix: "" });
 
   for (const file of files) {
-    if (!file.name.endsWith(".woff2")) continue;
+    if (!file.name.endsWith(".otf")) continue;
 
     const destPath = path.join(destDir, path.basename(file.name));
     console.log(`Downloading ${file.name} → ${destPath}`);

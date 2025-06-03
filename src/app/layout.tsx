@@ -23,6 +23,7 @@ export default function RootLayout({
       <head>
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js" /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="darkreader-lock" content="" />
       </head>
       {/* <ReactScan /> */}
       <body className="overflow-x-clip">

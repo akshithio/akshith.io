@@ -30,15 +30,15 @@ export default async function Image({ params }: { params: { slug: string } }) {
 
   try {
     const dupletSemiBold = await fetch(
-      new URL("/public/fonts/Duplet-Semibold.woff2", import.meta.url),
+      new URL("/public/fonts/Duplet-Semibold.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const passengerRegular = await fetch(
-      new URL("/public/fonts/PassengerSerif-Regular.woff2", import.meta.url),
+      new URL("/public/fonts/PassengerSerif-Regular.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const erikaRegular = await fetch(
-      new URL("/public/fonts/ErikaHand-Regular.woff2", import.meta.url),
+      new URL("/public/fonts/ErikaHand-Regular.otf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     return new ImageResponse(

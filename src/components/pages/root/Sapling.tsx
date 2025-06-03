@@ -70,8 +70,7 @@ function SaplingWindow() {
         ? (-9 * Math.PI) / 180
         : 0;
 
-    const shouldShiftRight = windowSize.width <= 1500;
-    const xOffset = shouldShiftRight ? 400 : 625;
+    const xOffset = 625;
 
     while (generation < targetGenerations) {
       len *= 0.5;
