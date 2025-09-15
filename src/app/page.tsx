@@ -78,8 +78,8 @@ export default function HomePage() {
                 >
                   @purdue
                 </a>{" "}
-                and spend my time primarily tinkering with web systems and
-                machine intelligence models.
+                and spend my time primarily tinkering with web and
+                machine intelligence systems.
               </p>
 
               <br />
@@ -121,7 +121,7 @@ export default function HomePage() {
               <br />
 
               <p>
-                I'm spending this summer building web archival systems{" "}
+                I spent this last summer building web archival systems{" "}
                 <a
                   className="font-semibold"
                   href="https://web.archive.org/"
@@ -130,7 +130,7 @@ export default function HomePage() {
                 >
                   @internetarchive
                 </a>
-                . I also help maintain Purdue's unofficial version of Khan
+                and also help maintain Purdue's unofficial version of Khan
                 Academy with ~8.4 million submissions and counting, called{" "}
                 <a
                   className="italic"
