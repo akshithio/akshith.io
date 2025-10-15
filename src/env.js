@@ -11,7 +11,7 @@ export const env = createEnv({
     FIREBASE_SERVICE_ACCOUNT_KEY: z.string(),
     VIEWER_HASH_SECRET: z.string(),
     WEATHER_API_KEY: z.string(),
-    FONT_ACCESS_GCP: z.string(),
+    GITHUB_TOKEN: z.string(),
   },
 
   /**
@@ -32,7 +32,7 @@ export const env = createEnv({
     FIREBASE_SERVICE_ACCOUNT_KEY: process.env.FIREBASE_SERVICE_ACCOUNT_KEY,
     VIEWER_HASH_SECRET: process.env.VIEWER_HASH_SECRET,
     WEATHER_API_KEY: process.env.WEATHER_API_KEY,
-    FONT_ACCESS_GCP: process.env.FONT_ACCESS_GCP,
+    GITHUB_TOKEN: process.env.GITHUB_TOKEN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
