@@ -130,7 +130,7 @@ export default function HomePage() {
                 >
                   @internetarchive
                 </a>
-                and also help maintain Purdue's unofficial version of Khan
+                {" "}and also help maintain Purdue's unofficial version of Khan
                 Academy with ~8.4 million submissions and counting, called{" "}
                 <a
                   className="italic"
