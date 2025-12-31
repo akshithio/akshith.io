@@ -8,7 +8,7 @@
 
 ![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio describing his work with web systems and AI, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
 
-This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. Additionally, fonts are loaded using Google Cloud Storage before build time to protect font licensing requirements. The project structure is as follows:
+This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. Additionally, fonts are loaded using a private GitHub repo before build time to protect font licensing requirements. The project structure is as follows:
 
 ```
 src/
