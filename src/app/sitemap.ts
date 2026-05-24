@@ -27,6 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
+    {
+      url: `${baseURL}/highlighter-privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: "yearly" as const,
+      priority: 0.2,
+    },
     ...posts.map((post: { filename: string }) => ({
       url: `${baseURL}/writing/${post.filename}`,
       lastModified: new Date(),
