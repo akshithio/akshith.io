@@ -1,7 +1,5 @@
-import Navbar from "@/components/layout/Navbar";
 import LocationStatus from "@/components/pages/root/LocationStatus";
 import MusicStatus from "@/components/pages/root/MusicStatus";
-import Sapling from "@/components/pages/root/Sapling";
 import GithubIcon from "@/icons/GithubIcon";
 import LogoIcon from "@/icons/LogoIcon";
 import TwitterIcon from "@/icons/TwitterIcon";
@@ -22,35 +20,19 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="bg-a-white dark:bg-a-black phone-l:overflow-y-hidden relative h-screen w-screen overflow-x-hidden overflow-y-auto p-6">
-      <Navbar />
+    <div className="phone-l:overflow-y-hidden relative h-screen w-screen overflow-x-hidden overflow-y-auto bg-a-black p-6">
       <div
-        className="fixed inset-0 z-0 h-full w-full"
+        className="fixed inset-0 z-0 h-full w-full bg-cover bg-center bg-no-repeat opacity-55"
         style={{
-          backgroundImage: `
-      linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px)
-    `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0",
+          backgroundImage:
+            "url('/images/monet-artist-garden-giverny.jpg')",
           pointerEvents: "none",
         }}
       />
-      <div
-        className="fixed inset-0 z-0 hidden h-full w-full dark:block"
-        style={{
-          backgroundImage: `
-      linear-gradient(to right, rgba(238, 238, 238, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(238, 238, 238, 0.05) 1px, transparent 1px)
-    `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0",
-          pointerEvents: "none",
-        }}
-      />
+      <div className="pointer-events-none fixed inset-0 z-0 h-full w-full bg-a-black/45" />
 
       <div className="laptop-l:items-stretch flex h-full w-screen grow items-center">
-        <div className="phone-l:pr-[16.6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop-l:px-[9.6%] desktop:px-[10%] desktop-xl:px-[14.7%] text-a-black dark:text-a-white flex min-h-full items-center pr-[12.5%]">
+        <div className="phone-l:pr-[16.6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop-l:px-[9.6%] desktop:px-[10%] desktop-xl:px-[14.7%] flex min-h-full items-center pr-[12.5%] text-a-white">
           <div>
             <LocationStatus />
             <div className="mt-1 flex">
@@ -80,17 +62,6 @@ export default function HomePage() {
                 </a>{" "}
                 and spend my time primarily tinkering with web and
                 machine intelligence systems.
-              </p>
-
-              <br />
-
-              <p>
-                I use this website to write as a way to teach myself, experiment
-                with new pieces of web tech, train my design muscles and{" "}
-                <a href="/writing" className="underline">
-                  overcome the twitter character limit
-                </a>
-                .
               </p>
 
               <br />
@@ -154,7 +125,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <Sapling />
       </div>
       
       <div className="phone-l:absolute phone-l:bottom-2 phone-l:left-2 relative z-10 mt-6 ml-2 flex items-center justify-start gap-x-3">

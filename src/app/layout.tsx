@@ -1,8 +1,6 @@
 import "@/styles/globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import "katex/dist/katex.min.css";
 import { ThemeProvider } from "next-themes";
-import "prismjs/themes/prism-tomorrow.css";
 
 export const metadata = {
   title: "Akshith Garapati",
