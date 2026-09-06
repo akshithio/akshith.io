@@ -1,11 +1,5 @@
-import Navbar from "@/components/layout/Navbar";
+import SiteMenu from "@/components/layout/SiteMenu";
 import LocationStatus from "@/components/pages/root/LocationStatus";
-import MusicStatus from "@/components/pages/root/MusicStatus";
-import Sapling from "@/components/pages/root/Sapling";
-import GithubIcon from "@/icons/GithubIcon";
-import LogoIcon from "@/icons/LogoIcon";
-import TwitterIcon from "@/icons/TwitterIcon";
-import { duplet, passenger } from "@/utils/fonts";
 
 export async function generateMetadata() {
   return {
@@ -22,159 +16,118 @@ export async function generateMetadata() {
 
 export default function HomePage() {
   return (
-    <div className="bg-a-white dark:bg-a-black phone-l:overflow-y-hidden relative h-screen w-screen overflow-x-hidden overflow-y-auto p-6">
-      <Navbar />
-      <div
-        className="fixed inset-0 z-0 h-full w-full"
-        style={{
-          backgroundImage: `
-      linear-gradient(to right, rgba(17, 17, 17, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(17, 17, 17, 0.05) 1px, transparent 1px)
-    `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        className="fixed inset-0 z-0 hidden h-full w-full dark:block"
-        style={{
-          backgroundImage: `
-      linear-gradient(to right, rgba(238, 238, 238, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(238, 238, 238, 0.05) 1px, transparent 1px)
-    `,
-          backgroundSize: "40px 40px",
-          backgroundPosition: "0 0",
-          pointerEvents: "none",
-        }}
-      />
+    <div className="narrow:grid narrow:min-h-screen narrow:max-w-none narrow:grid-cols-[25.2px_450px_1fr] narrow:grid-rows-[auto_1fr_auto] narrow:items-start narrow:p-0 mx-auto flex min-h-0 max-w-[576px] flex-col px-[18px] pt-[21.6px]">
+      <SiteMenu />
 
-      <div className="laptop-l:items-stretch flex h-full w-screen grow items-center">
-        <div className="phone-l:pr-[16.6%] tablet:px-[12.6%] laptop:px-[9.6%] laptop-l:px-[9.6%] desktop:px-[10%] desktop-xl:px-[14.7%] text-a-black dark:text-a-white flex min-h-full items-center pr-[12.5%]">
-          <div>
-            <LocationStatus />
-            <div className="mt-1 flex">
-              <div>
-                <LogoIcon src="root" />
-              </div>
+      <div className="narrow:col-start-2 narrow:order-none narrow:row-start-2 narrow:mt-[21.6px] narrow:pb-[2em] order-2 mt-[14.4px] pb-[1em]">
+        <p className="text-ink leading-[16.2px]">
+          I study computer science at Purdue and spend most of my time tinkering
+          with web & machine intelligence systems. In the past I:
+        </p>
 
-              <h1
-                className={`ml-3 ${passenger.className} desktop:text-3xl phone-l:text-2xl text-xl`}
-              >
-                Akshith Garapati
-              </h1>
-            </div>
-
-            <div
-              className={`${duplet.className} desktop:text-xl desktop-xl:text-2xl desktop:w-100 desktop-xl:w-112 desktop:leading-8 desktop-xl:leading-9 desktop-xl:mt-9 phone-l:w-80 phone-l:text-base phone-l:leading-6 phone-s:w-full phone-s:max-w-[calc(100vw-3rem)] relative mt-6 w-65 text-sm`}
+        <ul className="text-ink my-[1em] list-disc pl-9 leading-[16.2px]">
+          <li className="mb-[0.7em]">
+            was an early engineer at an enterprise-software startup called{" "}
+            <a
+              href="https://dimension.dev"
+              target="_blank"
+              className="text-link underline"
             >
-              <p>
-                I study computer science{" "}
-                <a
-                  className="font-semibold"
-                  href="https://purdue.edu"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  @purdue
-                </a>{" "}
-                and spend my time primarily tinkering with web and
-                machine intelligence systems.
-              </p>
+              Dimension
+            </a>
+            , which is now a part of{" "}
+            <a
+              href="https://granola.ai"
+              target="_blank"
+              className="text-link underline"
+            >
+              Granola
+            </a>
+            .
+          </li>
+          <li className="mb-[0.7em]">
+            built machine learning pipelines for use at MIT OCW{" "}
+            <a
+              href="https://blog.coursetexts.org/automating-copyright-compliance-for-open-courseware"
+              target="_blank"
+              className="text-link underline"
+            >
+              [blog]
+            </a>
+          </li>
+          <li className="mb-[0.7em]">
+            organized one of my city's first high school hackathons with ~85
+            in-person attendees
+          </li>
+          <li className="mb-[0.7em]">
+            researched new crawling infrastructure for the Internet Archive's
+            Wayback Machine{" "}
+            <a
+              href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=bW3Pn9EAAAAJ&citation_for_view=bW3Pn9EAAAAJ:u5HHmVD_uO8C"
+              target="_blank"
+              className="text-link underline"
+            >
+              [paper]
+            </a>{" "}
+            <a
+              href="https://github.com/internetarchive/wbm_seed_stream"
+              target="_blank"
+              className="text-link underline"
+            >
+              [code]
+            </a>
+            .
+          </li>
+        </ul>
 
-              <br />
+        <p className="text-ink mt-[1em] leading-[16.2px]">
+          I'm currently interested in mechanistic interpretability, performant
+          systems, and representation learning.
+        </p>
 
-              <p>
-                I use this website to write as a way to teach myself, experiment
-                with new pieces of web tech, train my design muscles and{" "}
-                <a href="/writing" className="underline">
-                  overcome the twitter character limit
-                </a>
-                .
-              </p>
+        <p className="text-ink mt-[1em] leading-[16.2px]">
+          Things I&apos;ve made that you can use:{" "}
+          <a
+            href="https://github.com/akshithio/highlighter"
+            target="_blank"
+            className="text-link underline"
+          >
+            an extension
+          </a>{" "}
+          for highlighting things on the web, and{" "}
+          <a
+            href="https://parallax.akshith.io"
+            target="_blank"
+            className="text-link underline"
+          >
+            a desktop coding harness
+          </a>{" "}
+          that lets you use ChatGPT web instead.
+        </p>
 
-              <br />
+        <p className="text-ink mt-[1em] leading-[16.2px] empty:hidden">
+          <LocationStatus />
+        </p>
 
-              <p>
-                I've previously built organizational systems for teams{" "}
-                <a
-                  className="font-semibold"
-                  href="https://dimension.dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  @dimension
-                </a>
-                , goofed around with some crazy smart people{" "}
-                <a
-                  className="font-semibold"
-                  href="https://tks.world"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  @tks
-                </a>{" "}
-                and got my hs to agree to hosting an irl hackathon on campus
-                with ~85 ppl participating over the weekend.
-              </p>
-
-              <br />
-
-              <p>
-                I spent this last summer building web archival systems{" "}
-                <a
-                  className="font-semibold"
-                  href="https://web.archive.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  @internetarchive
-                </a>
-                {" "}and also help maintain Purdue's unofficial version of Khan
-                Academy with ~8.4 million submissions and counting, called{" "}
-                <a
-                  className="italic"
-                  href="https://boilerexams.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Boilerexams
-                </a>
-                .
-              </p>
-
-              <br />
-
-              <p>
-                I'm currently interested in & thinking about interpretability
-                research, performant systems & hip-hop.
-              </p>
-
-              <MusicStatus />
-            </div>
-          </div>
-        </div>
-        <Sapling />
-      </div>
-      
-      <div className="phone-l:absolute phone-l:bottom-2 phone-l:left-2 relative z-10 mt-6 ml-2 flex items-center justify-start gap-x-3">
-        <a
-          href="https://github.com/akshithio"
-          target="_blank"
-          aria-label="Link to akshithio on Github"
-        >
-          <GithubIcon />
-        </a>
-
-        <a
-          href="https://x.com/akshithio"
-          target="_blank"
-          aria-label="Link to akshithio on X (formerly Twitter)"
-        >
-          <div className="mt-0.5">
-            <TwitterIcon />
-          </div>
-        </a>
+        <p className="text-ink mt-[14.4px] leading-[16.2px]">
+          <b>@akshithio</b> everywhere on the internet, including{" "}
+          <a
+            href="https://github.com/akshithio"
+            target="_blank"
+            className="text-link underline"
+          >
+            gh
+          </a>{" "}
+          &amp;{" "}
+          <a
+            href="https://x.com/akshithio"
+            target="_blank"
+            className="text-link underline"
+          >
+            x
+          </a>
+          .
+        </p>
       </div>
     </div>
   );

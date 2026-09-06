@@ -1,16 +1,11 @@
 import { adminDb } from "@/firebaseAdminConfig";
 import { z } from "zod";
 
-const TimeDataSchema = z.object({
-  utc: z.string(),
-});
-
 const LocationDataSchema = z.object({
   country: z.string(),
   region: z.string(),
   timezone: z.string(),
   city: z.string(),
-  time: TimeDataSchema,
 });
 
 const ApiResponseSchema = z.object({
@@ -37,7 +32,17 @@ export async function GET() {
       );
     }
 
-    return new Response(JSON.stringify(validationResult.data), { status: 200 });
+    return new Response(JSON.stringify(validationResult.data), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        /* My location changes about once a day. Serve from the CDN for an
+           hour, and keep serving the stale copy for a day while it refreshes
+           behind the scenes, so Firestore sees a handful of reads either way. */
+        "Cache-Control":
+          "public, s-maxage=3600, stale-while-revalidate=86400, max-age=0",
+      },
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {

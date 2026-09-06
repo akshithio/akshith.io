@@ -1,12 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+/** How long a fetched location is considered fresh. Matches the route's CDN cache. */
+const MAX_AGE_MS = 60 * 60 * 1000;
 
 export const useLocation = () => {
   const [locationData, setLocationData] = useState<LocationData | undefined>();
+  const fetchedAt = useRef(0);
 
   useEffect(() => {
     const fetchLocationData = async () => {
+      fetchedAt.current = Date.now();
+
       try {
-        const res = await fetch("/api/location", { cache: "no-store" });
+        const res = await fetch("/api/location");
         const responseData: ApiResponse = await res.json();
 
         if (responseData.data && responseData.data.length > 0) {
@@ -19,9 +25,20 @@ export const useLocation = () => {
 
     fetchLocationData();
 
-    const locationInterval = setInterval(fetchLocationData, 60000);
+    /* My location changes about once a day, so there's nothing to poll for.
+       A tab left open for days refreshes when it's looked at again. */
+    const refetchIfStale = () => {
+      if (
+        document.visibilityState === "visible" &&
+        Date.now() - fetchedAt.current > MAX_AGE_MS
+      ) {
+        fetchLocationData();
+      }
+    };
 
-    return () => clearInterval(locationInterval);
+    document.addEventListener("visibilitychange", refetchIfStale);
+    return () =>
+      document.removeEventListener("visibilitychange", refetchIfStale);
   }, []);
 
   return locationData;

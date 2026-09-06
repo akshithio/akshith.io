@@ -1,18 +1,9 @@
+import { getNotes } from "@/notes";
 import { MetadataRoute } from "next";
-import { headers } from "next/headers";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const host = (await headers()).get("host");
-  const protocol = host?.includes("localhost") ? "http" : "https";
-  const baseURL = `${protocol}://${host}`;
-
-  const postsRes = await fetch(`${baseURL}/api/posts?searchString=all`);
-
-  if (!postsRes.ok) {
-    throw new Error("Failed to fetch posts");
-  }
-
-  const posts = await postsRes.json();
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "https://akshith.io";
+  const notes = await getNotes();
 
   return [
     {
@@ -22,9 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseURL}/writing`,
+      url: `${baseURL}/notes`,
       lastModified: new Date(),
-      changeFrequency: "monthly" as const,
+      changeFrequency: "yearly" as const,
       priority: 0.8,
     },
     {
@@ -33,10 +24,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly" as const,
       priority: 0.2,
     },
-    ...posts.map((post: { filename: string }) => ({
-      url: `${baseURL}/writing/${post.filename}`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
+    ...notes.map((note) => ({
+      url: `${baseURL}/notes/${note.slug}`,
+      lastModified: new Date(`${note.date}T00:00:00Z`),
+      changeFrequency: "yearly" as const,
       priority: 0.6,
     })),
   ];
