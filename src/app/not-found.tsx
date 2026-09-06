@@ -1,29 +1,22 @@
-"use client";
-
-import LogoIcon from "@/icons/LogoIcon";
-import { bitscript, duplet } from "@/utils/fonts";
-import { useTheme } from "next-themes";
+import SiteMenu from "@/components/layout/SiteMenu";
 
 export default function NotFoundPage() {
-  const { theme } = useTheme();
-
   return (
-    <div className="text-a-black dark:bg-a-black bg-a-white dark:text-a-white flex h-screen w-screen items-center justify-center overflow-hidden">
-      <div className="flex flex-col items-center justify-center">
-        <LogoIcon src="/404" />
+    <div className="narrow:grid narrow:min-h-screen narrow:max-w-none narrow:grid-cols-[25.2px_450px_1fr] narrow:grid-rows-[auto_1fr_auto] narrow:items-start narrow:p-0 mx-auto flex min-h-0 max-w-[576px] flex-col px-[18px] pt-[21.6px]">
+      <SiteMenu />
 
-        <h1
-          className={`${duplet.className} my-7 w-96 text-center text-2xl font-semibold`}
-        >
-          we’ve been lookin around but <br /> can’t seem to find what you want.{" "}
-          <br /> go back to{" "}
-          <a className="underline" href="/">
-            square one?
+      <div className="narrow:col-start-2 narrow:order-none narrow:row-start-2 narrow:mt-[21.6px] narrow:pb-[2em] order-2 mt-[14.4px] pb-[1em]">
+        <h3 className="font-display m-0 text-[1.45em] font-bold -tracking-[0.01em]">
+          Page not found
+        </h3>
+
+        <p className="text-ink mt-[1em] leading-[16.2px]">
+          This page doesn&apos;t exist.{" "}
+          <a href="/" className="text-link underline">
+            Go home
           </a>
-        </h1>
-        <h1 className={`${bitscript.className} text-center text-2xl`}>
-          error 404
-        </h1>
+          .
+        </p>
       </div>
     </div>
   );

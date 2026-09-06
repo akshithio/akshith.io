@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -9,13 +8,11 @@
     "moduleDetection": "force",
     "isolatedModules": true,
 
-    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
-    "noImplicitAny": false, // This helps with the Prism language imports
+    "noImplicitAny": false,
 
-    /* Bundled projects */
     "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
     "module": "ESNext",
@@ -25,7 +22,6 @@
     "incremental": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
 
-    /* Path Aliases */
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
@@ -39,8 +35,7 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    "next.config.mjs",
     "src/types/*.d.ts"
-, "download-fonts.mjs"  ],
+  ],
   "exclude": ["node_modules"]
 }

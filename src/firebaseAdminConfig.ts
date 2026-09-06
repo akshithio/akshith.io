@@ -1,5 +1,4 @@
-import { env } from "@/env";
-import { ServiceAccount } from "firebase-admin";
+import type { ServiceAccount } from "firebase-admin";
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { z } from "zod";
@@ -17,8 +16,12 @@ const serviceAccountSchema = z.object({
   client_x509_cert_url: z.string(),
 });
 
+const serviceAccountJson = z
+  .string()
+  .min(1)
+  .parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 const serviceAccount = serviceAccountSchema.parse(
-  JSON.parse(env.FIREBASE_SERVICE_ACCOUNT_KEY),
+  JSON.parse(serviceAccountJson),
 );
 
 if (!getApps().length) {

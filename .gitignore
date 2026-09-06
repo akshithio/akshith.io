@@ -45,6 +45,7 @@ jspm_packages
 # Next
 .vercel
 .next
+*.tsbuildinfo
 
 # macOS
 .DS_Store

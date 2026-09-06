@@ -4,19 +4,21 @@
 
 ---
 
-`akshith.io` is my personal website. It is primarily a visual home for personal context, location, and music status.
+`akshith.io` is my personal website. Much of the work on the website was spent primarily on the writing section of the website which relies on the `.mdx` files available in the `content` folder. If necessary, this system alongside the set of custom components can be succesfully adapted for alternative projects. Other aspects of the website remain primarily visual, with little external utility outside of this project.
 
-![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
+![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio describing his work with web systems and AI, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
 
-This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected. Additionally, fonts are loaded using a private GitHub repo before build time to protect font licensing requirements. The project structure is as follows:
+This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. Additionally, fonts are loaded using a private GitHub repo before build time to protect font licensing requirements. The project structure is as follows:
 
 ```
 src/
 ├── app/                   # Next.js app directory
+│   ├── writing/           # Writing section routes
 │   └── page.tsx           # Home page
 ├── components/            # React components
-│   ├── layout/            # Shared layout components
+│   ├── layout/            # Layout components (Navbar, Tooltip, etc.)
 │   └── pages/             # Page-specific components
+├── content/               # MDX content for blog posts
 ├── icons/                 # SVG icons
 └── utils/                 # Utility functions and fonts
 ```
@@ -33,7 +35,9 @@ Feel free to submit issues and enhancement requests! If you want to contribute:
 
 ### License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE).  
+All blog content is licensed under the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).  
+You are free to share and adapt the content, provided proper attribution is given.
 
 <br />
 
