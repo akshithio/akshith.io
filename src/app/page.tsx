@@ -88,7 +88,7 @@ export default function HomePage() {
         <p className="text-ink mt-[1em] leading-[16.2px]">
           Things I&apos;ve made that you can use:{" "}
           <a
-            href="https://github.com/akshithio/highlighter"
+            href="https://chromewebstore.google.com/detail/highlighter/neobohpenkmnoineeboebhbgfhccbhkk"
             target="_blank"
             className="text-link underline"
           >
