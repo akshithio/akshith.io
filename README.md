@@ -1,26 +1,27 @@
 # akshith.io
 
-🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Additionally you will need to create a `public/fonts` directory and fill that in with the fonts of your choosing, which may require replacing imports across many pages and editing `utils/fonts.ts`. Built with Next, Tailwind & Typescript.
+🔨: You can run it by simply cloning, running `pnpm i` followed by `pnpm dev` and visiting `localhost:3000`. You will also need to create a `.env` and fill in the environment variables listed in `.env.example` for all functionality to work as expected. Built with Next, Tailwind & Typescript.
 
 ---
 
-`akshith.io` is my personal website. Much of the work on the website was spent primarily on the writing section of the website which relies on the `.mdx` files available in the `content` folder. If necessary, this system alongside the set of custom components can be succesfully adapted for alternative projects. Other aspects of the website remain primarily visual, with little external utility outside of this project.
+`akshith.io` is my personal website. It is primarily a visual home for personal context and location, alongside a notes section. Notes live in `src/notes`, and each one is registered in `src/notes/registry.ts` — routing, the index, metadata, and the sitemap all follow from that.
 
-![It shows a personal website for Akshith Garapati, a Purdue computer science student. Features navigation menu, bio describing his work with web systems and AI, project highlights including organizational tools and web archival systems, and a decorative tree illustration.](./akshithio/preview.png)
-
-This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/akshith.io) for the `<LocationStatus>` component to work as expected alongside the microblogging section on the `/writing` route. Additionally, fonts are loaded using a private GitHub repo before build time to protect font licensing requirements. The project structure is as follows:
+This website implicitly relies on my CLI tool [`adot`](https://github.com/akshithio/adot) for the `<LocationStatus>` component to work as expected. The project structure is as follows:
 
 ```
 src/
 ├── app/                   # Next.js app directory
-│   ├── writing/           # Writing section routes
+│   ├── api/location/      # Location endpoint behind <LocationStatus>
+│   ├── notes/             # Notes index and per-note routes
 │   └── page.tsx           # Home page
 ├── components/            # React components
-│   ├── layout/            # Layout components (Navbar, Tooltip, etc.)
+│   ├── layout/            # Shared layout components (SiteMenu, Eyes)
+│   ├── notes/             # Note layout and figures
 │   └── pages/             # Page-specific components
-├── content/               # MDX content for blog posts
-├── icons/                 # SVG icons
-└── utils/                 # Utility functions and fonts
+├── hooks/                 # React hooks
+├── notes/                 # Note registry and loaders
+├── styles/                # Global styles
+└── types/                 # Type declarations
 ```
 
 ### Contributing
@@ -41,4 +42,4 @@ You are free to share and adapt the content, provided proper attribution is give
 
 <br />
 
-&nbsp;<img src="./akshithio/light-logo.png#gh-dark-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /><img src="./akshithio/dark-logo.png#gh-light-mode-only" alt="Logo of Boilerexams" width ="24px" align = "left" /> that's where the username comes from! - akshithio - may 2025
+&nbsp;<img src="./akshithio/light-logo.png#gh-dark-mode-only" alt="Akshith Garapati's Personal Icon - Doodle of Two Eyes Dark Mode" width ="24px" align = "left" /><img src="./akshithio/dark-logo.png#gh-light-mode-only" alt="Akshith Garapati's Personal Icon - Doodle of Two Eyes Dark Mode" width ="24px" align = "left" /> that's where the username comes from! - akshithio - may 2025
