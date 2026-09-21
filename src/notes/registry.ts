@@ -9,4 +9,6 @@ import type { NoteModule } from "@/types/notes";
  *
  * The imports are lazy so a note is only loaded when its page is rendered.
  */
-export const noteLoaders: Record<string, () => Promise<NoteModule>> = {};
+export const noteLoaders: Record<string, () => Promise<NoteModule>> = {
+  macid: () => import("./macid"),
+};
