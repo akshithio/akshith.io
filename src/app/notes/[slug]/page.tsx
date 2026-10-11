@@ -34,10 +34,14 @@ export default async function NotePage({ params }: Params) {
   const note = await getNote(slug);
   if (!note) notFound();
 
-  const { Content, meta } = note;
+  const { Content, Icon, meta } = note;
 
   return (
-    <NoteLayout title={meta.title} date={meta.date}>
+    <NoteLayout
+      title={meta.title}
+      date={meta.date}
+      icon={Icon ? <Icon /> : null}
+    >
       <Content />
     </NoteLayout>
   );

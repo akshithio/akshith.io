@@ -16,7 +16,7 @@ async function loadNote(slug: string): Promise<NoteModule | undefined> {
 export async function getNote(slug: string) {
   const mod = await loadNote(slug);
   if (!mod) return undefined;
-  return { slug, meta: mod.meta, Content: mod.default };
+  return { slug, meta: mod.meta, Content: mod.default, Icon: mod.Icon };
 }
 
 /** Every note, newest first. */

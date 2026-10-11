@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "next build",
+    "build": "node download-fonts.mjs && next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
@@ -12,6 +12,7 @@
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
     "firebase-admin": "^13.0.2",
+    "katex": "^0.18.7",
     "next": "15.3.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.7",
+    "@types/katex": "^0.16.8",
     "@types/node": "^20.11.20",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",

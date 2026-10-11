@@ -94,15 +94,15 @@ export default function HomePage() {
           >
             an extension
           </a>{" "}
-          for highlighting things on the web, and{" "}
+          for highlighting things on the web and{" "}
           <a
-            href="https://parallax.akshith.io"
+            href="https://macid.akshith.io"
             target="_blank"
             className="text-link underline"
           >
-            a desktop coding harness
-          </a>{" "}
-          that lets you use ChatGPT web instead.
+            an app to use Face ID on the Mac
+          </a>
+          .
         </p>
 
         <p className="text-ink mt-[1em] leading-[16.2px] empty:hidden">

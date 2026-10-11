@@ -1,10 +1,29 @@
 @import "tailwindcss";
 
+/* Passenger Serif, already sitting in public/fonts, for note titles and
+   sub-headings. Regular only: headings are not bolded. */
+@font-face {
+  font-family: "Passenger Serif";
+  src: url("/fonts/PassengerSerif-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Passenger Serif";
+  src: url("/fonts/PassengerSerifItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme {
   --breakpoint-narrow: 810px;
 
   --font-sans: Helvetica, "Helvetica Neue", Arial, sans-serif;
   --font-display: "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-serif: "Passenger Serif", ui-serif, Georgia, serif;
   --color-link: #0864c7;
   --color-ink: #333;
   --color-faded: #aaa;
@@ -20,91 +39,138 @@
   }
 }
 
-/* Prose styling for notes — matches the typography used elsewhere on the
-   site (12.6px Helvetica, 16.2px line-height, blue links). */
+/* Long-form notes. Helvetica for everything, like the rest of the site, black on white with no greys or
+   accent colours, a little larger for reading. Colour lives only in a note's
+   own figures. */
 @layer components {
   .note {
-    color: var(--color-ink);
-  }
-
-  .note p,
-  .note li {
-    line-height: 16.2px;
-  }
-
-  .note p {
-    margin-top: 1em;
-  }
-
-  .note h4 {
-    font-family: var(--font-display);
-    font-size: 1.15em;
-    font-weight: bold;
-    letter-spacing: -0.01em;
     color: #000;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    font-family: var(--font-sans);
+    font-size: 12.6px;
+    line-height: 17.82px;
   }
 
-  /* Whatever follows a heading gives up its own top margin, so the gap
-     above and below the heading is exactly the h4's own 1em. */
-  .note h4 + * {
+  .note-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 1.95em;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: #000;
+  }
+
+  /* Anything in a note that scrolls sideways (code boxes, the PAM rule,
+     wide equations) gets a hairline scrollbar instead of the system one: a
+     thin light-grey thumb, no track, so it stays out of the way. */
+  .note .overflow-x-auto {
+    scrollbar-width: thin;
+    scrollbar-color: #c8c8c8 transparent;
+  }
+  .note .overflow-x-auto::-webkit-scrollbar {
+    height: 3px;
+  }
+  .note .overflow-x-auto::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .note .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #c8c8c8;
+  }
+
+  .note-date {
+    margin: 6px 0 0;
+    font-size: 9px;
+    color: #000;
+  }
+
+  /* The header sets the gap to the first block; a paragraph's own top margin
+     would only add to it. */
+  .note > header + * {
     margin-top: 0;
   }
 
-  .note ul,
-  .note ol {
-    margin: 1em 0;
-    padding-left: 2.25rem;
+  .note > p {
+    margin: 1em 0 0;
+    text-wrap: pretty;
   }
 
-  .note ul {
+  .note > h4 {
+    /* The gap above and below a sub-heading is set in pixels so both are
+       equal; the same em value would resolve against two font sizes. */
+    margin: 26px 0 0;
+    font-family: var(--font-serif);
+    font-size: 1.55em;
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #000;
+  }
+
+  .note > p a,
+  .note > ul a {
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .note :not(pre) > code {
+    padding: 1px 4px;
+    background: #f0efec;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.86em;
+    color: #000;
+  }
+
+  .note > ul,
+  .note > ol {
+    margin: 1em 0 0;
+    padding-left: 2.4em;
+  }
+
+  .note > ul {
     list-style: disc;
   }
 
-  .note ol {
+  .note > ol {
     list-style: decimal;
   }
 
-  .note li {
-    margin-bottom: 0.7em;
+  .note > h4 + * {
+    margin-top: 26px;
   }
 
-  .note a {
-    color: var(--color-link);
-    text-decoration: underline;
+  .note > ul > li,
+  .note > ol > li {
+    margin: 0.5em 0 0;
   }
 
   .note hr {
     border: 0;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #000;
     margin: 2.2em 0;
   }
 
   .note blockquote {
-    border-left: 2px solid #e6e6e6;
-    padding-left: 10.8px;
-    margin: 1.1em 0;
-    color: #555;
+    margin: 1.2em 0;
+    padding-left: 12px;
+    border-left: 2px solid #000;
   }
 
   .note table {
     margin: 1.2em 0;
     border-collapse: collapse;
     font-size: 11.7px;
-    line-height: 16.2px;
   }
 
   .note th,
   .note td {
-    border-bottom: 1px solid #eee;
-    padding: 3.6px 12.6px 3.6px 0;
+    border-bottom: 1px solid #000;
+    padding: 4px 14px 4px 0;
     text-align: left;
     vertical-align: top;
   }
 
   .note th {
     font-weight: bold;
-    color: #000;
   }
 }

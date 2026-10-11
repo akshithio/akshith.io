@@ -11,6 +11,8 @@ export type NoteMeta = {
 export type NoteModule = {
   meta: NoteMeta;
   default: ComponentType;
+  /** Optional mark shown above the note's title. */
+  Icon?: ComponentType;
 };
 
 export type Note = NoteMeta & { slug: string };
