@@ -11,4 +11,5 @@ import type { NoteModule } from "@/types/notes";
  */
 export const noteLoaders: Record<string, () => Promise<NoteModule>> = {
   macid: () => import("./macid"),
+  parallax: () => import("./parallax"),
 };
